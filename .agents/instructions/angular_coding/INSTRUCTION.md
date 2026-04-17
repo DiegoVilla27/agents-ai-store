@@ -21,10 +21,10 @@ Instructions for generating high-quality Angular applications with TypeScript, u
 - Use standalone components unless modules are explicitly required 
 - Organize code by standalone feature modules or domains for scalability
 - **Modular Architecture (Vertical Slices)**: Group all related assets within the feature folder:
-  - `/feature/components/`
-  - `/feature/hooks/` (or services)
-  - `/feature/validations/`
-  - `/feature/data/` (models/mocks)
+  - `/features/[feature]/components/`
+  - `/features/[feature]/hooks/` (or services)
+  - `/features/[feature]/validations/`
+  - `/features/[feature]/data/` (models/mocks)
 - **Index Pattern (Barrels)**: Use `index.ts` files within component and feature folders to allow for cleaner imports (e.g., `import { MyComponent } from './features/my-feature'`).
 - Implement lazy loading for feature modules to optimize performance
 - Use Angular's built-in dependency injection system effectively 

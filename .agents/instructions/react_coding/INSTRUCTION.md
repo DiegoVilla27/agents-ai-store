@@ -22,10 +22,10 @@ Instructions for generating high-performance React applications using **React 19
 - **React Compiler**: **NEVER** use `useMemo` or `useCallback` manually. The compiler handles memoization automatically.
 - **Server Components First**: Use Server Components (default) for data fetching and heavy logic. Use `"use client"` only for interactivity or browser APIs.
 - **Modular Architecture (Vertical Slices)**: Organize code by features/screens. Each feature folder should contain its own assets:
-  - `/feature/components/`
-  - `/feature/hooks/`
-  - `/feature/validations/`
-  - `/feature/data/`
+  - `/features/[feature]/components/`
+  - `/features/[feature]/hooks/`
+  - `/features/[feature]/validations/`
+  - `/features/[feature]/data/`
 - **Index Pattern**: Use `index.ts` or `index.tsx` files within folders to keep imports clean.
   - *Example*: `import { Home } from './screens/home'` instead of `./screens/home/home-screen`.
 - **File Naming**: Use **kebab-case** for folders and non-component files, and **PascalCase** for component names (or **kebab-case** for the file name itself if preferred, but always with an `index` export).
