@@ -23,10 +23,35 @@ This project bridges the gap between general-purpose AI and **specialized engine
 ## 📂 Project Structure
 
 ```text
-.agents/skills/
-└── [framework]_[skill_name]/
-    └── SKILL.md       # Metadata, Mission, Protocols, and ✅/❌ Patterns
+.agents/
+├── instructions/      # Framework-specific strict protocols
+│   └── [framework]_coding/INSTRUCTION.md
+└── skills/            # Modular specialized capabilities
+    └── [framework]_[skill_name]/SKILL.md
 ```
+
+---
+
+## 📜 Strategic Development Instructions
+
+This repository implements **Automatic System Protocols** through specialized instruction files. When an AI agent (like Antigravity) enters a workspace with these files, it automatically adopts the following high-level engineering standards:
+
+| Framework | Protocol Path | Architectural Pillars |
+|:---|:---|:---|
+| **Angular** | [INSTRUCTION.md](./.agents/instructions/angular_coding/INSTRUCTION.md) | Signals, `@defer`, Zoneless, Barrels. |
+| **React** | [INSTRUCTION.md](./.agents/instructions/react_coding/INSTRUCTION.md) | React 19, Compiler, Zustand, Index Pattern. |
+| **Flutter** | [INSTRUCTION.md](./.agents/instructions/flutter_coding/INSTRUCTION.md) | Snake_case, Riverpod, No-Index Barrels. |
+| **Next.js** | [INSTRUCTION.md](./.agents/instructions/nextjs_coding/INSTRUCTION.md) | App Router, Server Actions, Private Folders. |
+| **React Native** | [INSTRUCTION.md](./.agents/instructions/react_native_coding/INSTRUCTION.md) | **Styled Components**, Expo, FlatList Opt. |
+
+---
+
+## 🏛️ Global Architectural Standards
+
+Every framework in this store is governed by two uncompromising architectural rules:
+
+1.  **Modular Architecture (Vertical Slicing)**: We do not organize by "type" (all components in one folder, all hooks in another). We organize by **feature**. Each feature folder is a self-contained module containing its own components, hooks, validations, and data models.
+2.  **Index Pattern (Clean Imports)**: We use `index.ts/tsx` files (except in Flutter) to expose the public API of a module. This ensures that imports are clean, professional, and decoupled from the internal file structure.
 
 ---
 
