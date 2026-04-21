@@ -63,6 +63,7 @@ Agents are high-level blueprints that combine specific instructions and skills t
 | `nextjs-agent` | Full-stack Next.js Specialist (App Router & Actions). | [JSON](./.agents/agents/nextjs-agent.json) |
 | `react-native-agent` | Mobile Engineer specialized in Expo and Performance. | [JSON](./.agents/agents/react-native-agent.json) |
 | `flutter-agent` | Senior Flutter Architect (Riverpod & Security). | [JSON](./.agents/agents/flutter-agent.json) |
+| `nestjs-agent` | Master of Backend Scalability and Clean Architecture. | [JSON](./.agents/agents/nestjs-agent.json) |
 
 ### 🛠 How to Activate an Agent
 Once synchronized, you can activate a specific persona in your AI chat (Antigravity, Cursor, etc.) using one of these methods:
@@ -84,6 +85,7 @@ This repository implements **Automatic System Protocols** through specialized in
 | **Flutter** | `flutter-coding` | [INSTRUCTION.md](./.agents/instructions/flutter-coding/INSTRUCTION.md) | Snake_case, Riverpod, No-Index Barrels. |
 | **Next.js** | `nextjs-coding` | [INSTRUCTION.md](./.agents/instructions/nextjs-coding/INSTRUCTION.md) | App Router, Server Actions, Private Folders. |
 | **React Native** | `react-native-coding` | [INSTRUCTION.md](./.agents/instructions/react-native-coding/INSTRUCTION.md) | **Styled Components**, Expo, FlatList Opt. |
+| **NestJS** | `nestjs-coding` | [INSTRUCTION.md](./.agents/instructions/nestjs-coding/INSTRUCTION.md) | Clean Architecture, DDD, Zod, Layers. |
 
 ---
 
@@ -96,7 +98,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (28 Skills)
+## 📚 Full Specialized Skills Catalog (34 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -121,6 +123,14 @@ State-of-the-art patterns for the React universe.
 | `react-zustand` | [SKILL.md](./.agents/skills/react-zustand/SKILL.md) | Global state with selectors, slices, and persistence. |
 | `react-native-core` | [SKILL.md](./.agents/skills/react-native-core/SKILL.md) | Expo-first mobile development and native performance. |
 | `react-zod` | [SKILL.md](./.agents/skills/react-zod/SKILL.md) | Zod 4 schema validation with React Hook Form focus. |
+
+### 🟢 NestJS Ecosystem
+Production-grade backend patterns using NestJS 10+.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `nestjs-core` | [SKILL.md](./.agents/skills/nestjs-core/SKILL.md) | DI, Dynamic Modules, Interceptors & Filters. |
+| `nestjs-security` | [SKILL.md](./.agents/skills/nestjs-security/SKILL.md) | JWT, Passport, Guards and RBAC. |
+| `nestjs-persistence` | [SKILL.md](./.agents/skills/nestjs-persistence/SKILL.md) | Repository Pattern, Prisma/TypeORM & Mappers. |
 
 
 ### 🅰️ Angular Ecosystem
