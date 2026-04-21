@@ -45,13 +45,25 @@ Once the `.agents/` folder is created, your AI agent (Antigravity, Cursor, etc.)
 
 ```text
 .agents/
+├── agents/            # Expert Persona Blueprints (JSON)
 ├── instructions/      # Framework-specific strict protocols
-│   └── [framework]_coding/INSTRUCTION.md
 └── skills/            # Modular specialized capabilities
-    └── [framework]_[skill_name]/SKILL.md
 ```
 
 ---
+
+## 🤖 Expert Personas (Agents)
+
+Agents are high-level blueprints that combine specific instructions and skills to create a domain expert. Syncing an agent automatically downloads all its dependencies.
+
+| Agent Persona | Mission | Configuration |
+|:---|:---|:---|
+| `angular-agent` | Senior Master in Signals and Zoneless architecture. | [JSON](./.agents/agents/angular-agent.json) |
+| `react-agent` | Master in React 19, Server Components, and State. | [JSON](./.agents/agents/react-agent.json) |
+| `nextjs-agent` | Full-stack Next.js Specialist (App Router & Actions). | [JSON](./.agents/agents/nextjs-agent.json) |
+| `react-native-agent` | Mobile Engineer specialized in Expo and Performance. | [JSON](./.agents/agents/react-native-agent.json) |
+| `flutter-agent` | Senior Flutter Architect (Riverpod & Security). | [JSON](./.agents/agents/flutter-agent.json) |
+
 
 ## 📜 Strategic Development Instructions
 
