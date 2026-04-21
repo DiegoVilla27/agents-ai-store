@@ -64,7 +64,15 @@ Agents are high-level blueprints that combine specific instructions and skills t
 | `react-native-agent` | Mobile Engineer specialized in Expo and Performance. | [JSON](./.agents/agents/react-native-agent.json) |
 | `flutter-agent` | Senior Flutter Architect (Riverpod & Security). | [JSON](./.agents/agents/flutter-agent.json) |
 
+### 🛠 How to Activate an Agent
+Once synchronized, you can activate a specific persona in your AI chat (Antigravity, Cursor, etc.) using one of these methods:
 
+1. **Explicit Identification**: Mention the agent name in your first prompt:
+   > *"Act as the **nextjs-agent**. Let's build a new feature."*
+2. **Implicit Detection**: The AI automatically reads the `.agents/` folder and adopts the instructions and skills present in your workspace.
+3. **Role Matching**: If you work in a project with a specific `agent.json`, the AI will align its behavior with the `"role"` defined in that blueprint.
+
+---
 ## 📜 Strategic Development Instructions
 
 This repository implements **Automatic System Protocols** through specialized instruction files. When an AI agent (like Antigravity) enters a workspace with these files, it automatically adopts the following high-level engineering standards:
