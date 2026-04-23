@@ -144,10 +144,18 @@ State-of-the-art patterns for the React universe.
 | `react-core` | [SKILL.md](./react/skills/react-core/SKILL.md) | React 19, Compiler optimization, and Server Components. |
 | `next-core` | [SKILL.md](./nextjs/skills/next-core/SKILL.md) | Next.js 15 App Router, Actions, and Streaming. |
 | `next-routes` | [SKILL.md](./nextjs/skills/next-routes/SKILL.md) | Advanced App Router patterns: Parallel & Intercepting routes. |
+| `framer-motion` | [SKILL.md](./react/skills/framer-motion/SKILL.md) | High-end animations and complex gesture handling. |
+| `react-hook-form` | [SKILL.md](./react/skills/react-hook-form/SKILL.md) | Performant and flexible form management. |
+| `react-hook-form-zod` | [SKILL.md](./react/skills/react-hook-form-zod/SKILL.md) | Schema-based validation for React Hook Form. |
 | `react-tanstack-query` | [SKILL.md](./react/skills/react-tanstack-query/SKILL.md) | v5 Server state, caching, and optimistic updates. |
 | `react-zustand` | [SKILL.md](./react/skills/react-zustand/SKILL.md) | Global state with selectors, slices, and persistence. |
+| `redux-toolkit` | [SKILL.md](./react/skills/redux-toolkit/SKILL.md) | Enterprise state management and RTK Query. |
+| `react-zod` | [SKILL.md](./react/skills/react-zod/SKILL.md) | Zod 4 schema validation and type inference. |
+| `react-a11y` | [SKILL.md](./react/skills/react-a11y/SKILL.md) | Accessibility and inclusive UI standards. |
+| `react-view-transitions` | [SKILL.md](./react/skills/react-view-transitions/SKILL.md) | Native-like page transitions with Browser API. |
+| `vite-react-optimization` | [SKILL.md](./react/skills/vite-react-optimization/SKILL.md) | Build performance, code splitting, and preloading. |
+| `web-typescript-react` | [SKILL.md](./shared/skills/web-typescript-react/SKILL.md) | Advanced TS patterns for React and Next.js. |
 | `react-native-core` | [SKILL.md](./react-native/skills/react-native-core/SKILL.md) | Expo-first mobile development and native performance. |
-| `react-zod` | [SKILL.md](./react/skills/react-zod/SKILL.md) | Zod 4 schema validation with React Hook Form focus. |
 
 ### 🟢 NestJS Ecosystem
 Production-grade backend patterns using NestJS 10+.
