@@ -164,7 +164,16 @@ State-of-the-art patterns for the React universe.
 | `react-view-transitions` | [SKILL.md](./react/skills/react-view-transitions/SKILL.md) | Native-like page transitions with Browser API. |
 | `vite-react-optimization` | [SKILL.md](./react/skills/vite-react-optimization/SKILL.md) | Build performance, code splitting, and preloading. |
 | `web-typescript-react` | [SKILL.md](./shared/skills/web-typescript-react/SKILL.md) | Advanced TS patterns for React and Next.js. |
-| `react-native-core` | [SKILL.md](./react-native/skills/react-native-core/SKILL.md) | Expo-first mobile development and native performance. |
+| `react-native-core` | [SKILL.md](./react-native/skills/react-native-core/SKILL.md) | Universal mobile development and native performance. |
+| `react-native-expo` | [SKILL.md](./react-native/skills/react-native-expo/SKILL.md) | Managed workflow, EAS, and Expo Router. |
+| `react-native-navigation-advanced` | [SKILL.md](./react-native/skills/react-native-navigation-advanced/SKILL.md) | Nested navigators, deep links, and transitions. |
+| `react-native-reanimated` | [SKILL.md](./react-native/skills/react-native-reanimated/SKILL.md) | Worklets, shared values, and 60fps animations. |
+| `react-native-performance` | [SKILL.md](./react-native/skills/react-native-performance/SKILL.md) | FlashList, Hermes, and memory optimization. |
+| `react-native-native-modules` | [SKILL.md](./react-native/skills/react-native-native-modules/SKILL.md) | Bridging Swift/Kotlin and Expo Modules API. |
+| `mobile-offline-support` | [SKILL.md](./react-native/skills/mobile-offline-support/SKILL.md) | MMKV, WatermelonDB, and sync strategies. |
+| `react-native-testing-library` | [SKILL.md](./react-native/skills/react-native-testing-library/SKILL.md) | User-centric unit and integration testing. |
+| `react-native-styling-tailwind` | [SKILL.md](./react-native/skills/react-native-styling-tailwind/SKILL.md) | NativeWind v4 and utility-first mobile UI. |
+| `mobile-debugging-sentry` | [SKILL.md](./react-native/skills/mobile-debugging-sentry/SKILL.md) | Crash reporting and performance monitoring. |
 
 ### 🟢 NestJS Ecosystem
 Production-grade backend patterns using NestJS 10+.

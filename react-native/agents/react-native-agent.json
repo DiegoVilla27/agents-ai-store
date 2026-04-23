@@ -8,6 +8,16 @@
   "skills": [
     "clean-code",
     "conventional-commits",
+    "react-native-core",
+    "react-native-expo",
+    "react-native-navigation-advanced",
+    "react-native-reanimated",
+    "react-native-performance",
+    "react-native-native-modules",
+    "mobile-offline-support",
+    "react-native-testing-library",
+    "react-native-styling-tailwind",
+    "mobile-debugging-sentry",
     "react-core",
     "react-tanstack-query",
     "react-testing-jest",
@@ -15,12 +25,9 @@
     "react-zustand",
     "web-advanced-ui-ux",
     "web-javascript",
-    "web-micro-frontends",
-    "web-modern-testing",
     "web-performance",
     "web-tailwind",
     "web-tsdoc",
-    "web-typescript",
-    "react-native-core"
+    "web-typescript"
   ]
 }
