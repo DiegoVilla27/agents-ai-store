@@ -121,8 +121,8 @@ download_asset() {
             fi
         else
             # Remote Mode
-            local file_url="$GITHUB_RAW/$BRANCH/.agents/$tech/$type/$name/$file"
-            if [ "$type" = "agents" ]; then file_url="$GITHUB_RAW/$BRANCH/.agents/$tech/$type/$file"; fi
+            local file_url="$GITHUB_RAW/$BRANCH/$tech/$type/$name/$file"
+            if [ "$type" = "agents" ]; then file_url="$GITHUB_RAW/$BRANCH/$tech/$type/$file"; fi
             
             # Check if file exists before downloading to avoid noise
             if curl -s --head --fail "$file_url" > /dev/null; then
@@ -200,7 +200,7 @@ sync_tech() {
         folders=$(ls "$source_dir/$tech/agents"/*.json 2>/dev/null | xargs -n 1 basename -s .json)
     else
         if ! command -v jq &> /dev/null; then error "Discovery requires 'jq'."; fi
-        folders=$(curl -s -f "$GITHUB_API/contents/.agents/$tech/agents?ref=$BRANCH" | jq -r '.[] | select(.type == "file" and (.name | endswith(".json"))) | .name' | sed 's/\.json$//' 2>/dev/null)
+        folders=$(curl -s -f "$GITHUB_API/contents/$tech/agents?ref=$BRANCH" | jq -r '.[] | select(.type == "file" and (.name | endswith(".json"))) | .name' | sed 's/\.json$//' 2>/dev/null)
     fi
     
     if [ -n "$folders" ]; then
@@ -218,7 +218,7 @@ sync_tech() {
             if [ -n "$LOCAL_PATH" ]; then
                 subfolders=$(ls -d "$source_dir/$tech/$type"/*/ 2>/dev/null | xargs -n 1 basename)
             else
-                subfolders=$(curl -s -f "$GITHUB_API/contents/.agents/$tech/$type?ref=$BRANCH" | jq -r '.[] | select(.type == "dir") | .name' 2>/dev/null)
+                subfolders=$(curl -s -f "$GITHUB_API/contents/$tech/$type?ref=$BRANCH" | jq -r '.[] | select(.type == "dir") | .name' 2>/dev/null)
             fi
             
             for sub in ${(f)subfolders}; do
@@ -235,7 +235,7 @@ header "🌌 Async Agents Synchronizer"
 
 if [ -n "$LOCAL_PATH" ]; then
     info "LOCAL MODE: Source '$LOCAL_PATH'"
-    SRC_DIR="$LOCAL_PATH/.agents"
+    SRC_DIR="$LOCAL_PATH"
 else
     info "REMOTE MODE: Repository $REPO ($BRANCH)"
     SRC_DIR=""

@@ -83,12 +83,12 @@ Agents are high-level blueprints that combine specific instructions and skills t
 
 | Agent Persona | Mission | Configuration |
 |:---|:---|:---|
-| `angular-agent` | Senior Master in Signals and Zoneless architecture. | [JSON](./.agents/angular/agents/angular-agent.json) |
-| `react-agent` | Master in React 19, Server Components, and State. | [JSON](./.agents/react/agents/react-agent.json) |
-| `nextjs-agent` | Full-stack Next.js Specialist (App Router & Actions). | [JSON](./.agents/nextjs/agents/nextjs-agent.json) |
-| `react-native-agent` | Mobile Engineer specialized in Expo and Performance. | [JSON](./.agents/react-native/agents/react-native-agent.json) |
-| `flutter-agent` | Senior Flutter Architect (Riverpod & Security). | [JSON](./.agents/flutter/agents/flutter-agent.json) |
-| `nestjs-agent` | Master of Backend Scalability and Clean Architecture. | [JSON](./.agents/nestjs/agents/nestjs-agent.json) |
+| `angular-agent` | Senior Master in Signals and Zoneless architecture. | [JSON](./angular/agents/angular-agent.json) |
+| `react-agent` | Master in React 19, Server Components, and State. | [JSON](./react/agents/react-agent.json) |
+| `nextjs-agent` | Full-stack Next.js Specialist (App Router & Actions). | [JSON](./nextjs/agents/nextjs-agent.json) |
+| `react-native-agent` | Mobile Engineer specialized in Expo and Performance. | [JSON](./react-native/agents/react-native-agent.json) |
+| `flutter-agent` | Senior Flutter Architect (Riverpod & Security). | [JSON](./flutter/agents/flutter-agent.json) |
+| `nestjs-agent` | Master of Backend Scalability and Clean Architecture. | [JSON](./nestjs/agents/nestjs-agent.json) |
 
 ### 🛠 How to Activate an Agent
 Once synchronized, you can activate a specific persona in your AI chat (Antigravity, Cursor, etc.) using one of these methods:
@@ -105,12 +105,12 @@ This repository implements **Automatic System Protocols** through specialized in
 
 | Framework | Instruction Name | Protocol Path | Architectural Pillars |
 |:---|:---|:---|:---|
-| **Angular** | `angular-coding` | [INSTRUCTION.md](./.agents/angular/instructions/angular-coding/INSTRUCTION.md) | Signals, `@defer`, Zoneless, Barrels. |
-| **React** | `react-coding` | [INSTRUCTION.md](./.agents/react/instructions/react-coding/INSTRUCTION.md) | React 19, Compiler, Zustand, Index Pattern. |
-| **Flutter** | `flutter-coding` | [INSTRUCTION.md](./.agents/flutter/instructions/flutter-coding/INSTRUCTION.md) | Snake_case, Riverpod, No-Index Barrels. |
-| **Next.js** | `nextjs-coding` | [INSTRUCTION.md](./.agents/nextjs/instructions/nextjs-coding/INSTRUCTION.md) | App Router, Server Actions, Private Folders. |
-| **React Native** | `react-native-coding` | [INSTRUCTION.md](./.agents/react-native/instructions/react-native-coding/INSTRUCTION.md) | **Styled Components**, Expo, FlatList Opt. |
-| **NestJS** | `nestjs-coding` | [INSTRUCTION.md](./.agents/nestjs/instructions/nestjs-coding/INSTRUCTION.md) | Clean Architecture, DDD, Zod, Layers. |
+| **Angular** | `angular-coding` | [INSTRUCTION.md](./angular/instructions/angular-coding/INSTRUCTION.md) | Signals, `@defer`, Zoneless, Barrels. |
+| **React** | `react-coding` | [INSTRUCTION.md](./react/instructions/react-coding/INSTRUCTION.md) | React 19, Compiler, Zustand, Index Pattern. |
+| **Flutter** | `flutter-coding` | [INSTRUCTION.md](./flutter/instructions/flutter-coding/INSTRUCTION.md) | Snake_case, Riverpod, No-Index Barrels. |
+| **Next.js** | `nextjs-coding` | [INSTRUCTION.md](./nextjs/instructions/nextjs-coding/INSTRUCTION.md) | App Router, Server Actions, Private Folders. |
+| **React Native** | `react-native-coding` | [INSTRUCTION.md](./react-native/instructions/react-native-coding/INSTRUCTION.md) | **Styled Components**, Expo, FlatList Opt. |
+| **NestJS** | `nestjs-coding` | [INSTRUCTION.md](./nestjs/instructions/nestjs-coding/INSTRUCTION.md) | Clean Architecture, DDD, Zod, Layers. |
 
 ---
 
@@ -131,70 +131,70 @@ Our library is organized by ecosystem and domain. All skills are authored and ma
 The foundation of high-quality software development.
 | Skill Name | Documentation | Mission |
 |:---|:---|:---|
-| `clean-code` | [SKILL.md](./.agents/shared/skills/clean-code/SKILL.md) | Universal engineering excellence and sustainability. |
-| `conventional-commits` | [SKILL.md](./.agents/shared/skills/conventional-commits/SKILL.md) | Semantic and impeccable Git history. |
-| `web-typescript` | [SKILL.md](./.agents/shared/skills/web-typescript/SKILL.md) | Strict typing and advanced generic patterns. |
-| `web-javascript` | [SKILL.md](./.agents/shared/skills/web-javascript/SKILL.md) | Deep runtime behavior and optimized ESNext. |
-| `web-tsdoc` | [SKILL.md](./.agents/shared/skills/web-tsdoc/SKILL.md) | Standardized TSDoc documentation for TypeScript projects. |
+| `clean-code` | [SKILL.md](./shared/skills/clean-code/SKILL.md) | Universal engineering excellence and sustainability. |
+| `conventional-commits` | [SKILL.md](./shared/skills/conventional-commits/SKILL.md) | Semantic and impeccable Git history. |
+| `web-typescript` | [SKILL.md](./shared/skills/web-typescript/SKILL.md) | Strict typing and advanced generic patterns. |
+| `web-javascript` | [SKILL.md](./shared/skills/web-javascript/SKILL.md) | Deep runtime behavior and optimized ESNext. |
+| `web-tsdoc` | [SKILL.md](./shared/skills/web-tsdoc/SKILL.md) | Standardized TSDoc documentation for TypeScript projects. |
 
 ### ⚛️ React & Next.js Ecosystem
 State-of-the-art patterns for the React universe.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `react-core` | [SKILL.md](./.agents/react/skills/react-core/SKILL.md) | React 19, Compiler optimization, and Server Components. |
-| `next-core` | [SKILL.md](./.agents/nextjs/skills/next-core/SKILL.md) | Next.js 15 App Router, Actions, and Streaming. |
-| `next-routes` | [SKILL.md](./.agents/nextjs/skills/next-routes/SKILL.md) | Advanced App Router patterns: Parallel & Intercepting routes. |
-| `react-tanstack-query` | [SKILL.md](./.agents/react/skills/react-tanstack-query/SKILL.md) | v5 Server state, caching, and optimistic updates. |
-| `react-zustand` | [SKILL.md](./.agents/react/skills/react-zustand/SKILL.md) | Global state with selectors, slices, and persistence. |
-| `react-native-core` | [SKILL.md](./.agents/react-native/skills/react-native-core/SKILL.md) | Expo-first mobile development and native performance. |
-| `react-zod` | [SKILL.md](./.agents/react/skills/react-zod/SKILL.md) | Zod 4 schema validation with React Hook Form focus. |
+| `react-core` | [SKILL.md](./react/skills/react-core/SKILL.md) | React 19, Compiler optimization, and Server Components. |
+| `next-core` | [SKILL.md](./nextjs/skills/next-core/SKILL.md) | Next.js 15 App Router, Actions, and Streaming. |
+| `next-routes` | [SKILL.md](./nextjs/skills/next-routes/SKILL.md) | Advanced App Router patterns: Parallel & Intercepting routes. |
+| `react-tanstack-query` | [SKILL.md](./react/skills/react-tanstack-query/SKILL.md) | v5 Server state, caching, and optimistic updates. |
+| `react-zustand` | [SKILL.md](./react/skills/react-zustand/SKILL.md) | Global state with selectors, slices, and persistence. |
+| `react-native-core` | [SKILL.md](./react-native/skills/react-native-core/SKILL.md) | Expo-first mobile development and native performance. |
+| `react-zod` | [SKILL.md](./react/skills/react-zod/SKILL.md) | Zod 4 schema validation with React Hook Form focus. |
 
 ### 🟢 NestJS Ecosystem
 Production-grade backend patterns using NestJS 10+.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `nestjs-core` | [SKILL.md](./.agents/nestjs/skills/nestjs-core/SKILL.md) | DI, Dynamic Modules, Interceptors & Filters. |
-| `nestjs-security` | [SKILL.md](./.agents/nestjs/skills/nestjs-security/SKILL.md) | JWT, Passport, Guards and RBAC. |
-| `nestjs-persistence` | [SKILL.md](./.agents/nestjs/skills/nestjs-persistence/SKILL.md) | Repository Pattern, Prisma/TypeORM & Mappers. |
+| `nestjs-core` | [SKILL.md](./nestjs/skills/nestjs-core/SKILL.md) | DI, Dynamic Modules, Interceptors & Filters. |
+| `nestjs-security` | [SKILL.md](./nestjs/skills/nestjs-security/SKILL.md) | JWT, Passport, Guards and RBAC. |
+| `nestjs-persistence` | [SKILL.md](./nestjs/skills/nestjs-persistence/SKILL.md) | Repository Pattern, Prisma/TypeORM & Mappers. |
 
 
 ### 🅰️ Angular Ecosystem
 Enterprise-grade patterns for modern Angular apps.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `angular-core` | [SKILL.md](./.agents/angular/skills/angular-core/SKILL.md) | Signals-first components and Zoneless architecture. |
-| `angular-architecture` | [SKILL.md](./.agents/angular/skills/angular-architecture/SKILL.md) | The "Scope Rule" and modular project structure. |
-| `angular-forms` | [SKILL.md](./.agents/angular/skills/angular-forms/SKILL.md) | Signal Forms vs Reactive Forms validation. |
-| `angular-performance` | [SKILL.md](./.agents/angular/skills/angular-performance/SKILL.md) | Defer, NgOptimizedImage, and SSR optimization. |
+| `angular-core` | [SKILL.md](./angular/skills/angular-core/SKILL.md) | Signals-first components and Zoneless architecture. |
+| `angular-architecture` | [SKILL.md](./angular/skills/angular-architecture/SKILL.md) | The "Scope Rule" and modular project structure. |
+| `angular-forms` | [SKILL.md](./angular/skills/angular-forms/SKILL.md) | Signal Forms vs Reactive Forms validation. |
+| `angular-performance` | [SKILL.md](./angular/skills/angular-performance/SKILL.md) | Defer, NgOptimizedImage, and SSR optimization. |
 
 ### 💙 Flutter Ecosystem
 Comprehensive suite for high-performance Cross-Platform apps.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `flutter-architect` | [SKILL.md](./.agents/flutter/skills/flutter-architect/SKILL.md) | Atomic scoping and modular go_router setup. |
-| `flutter-riverpod` | [SKILL.md](./.agents/flutter/skills/flutter-riverpod/SKILL.md) | Reactive data flow with code generation. |
-| `flutter-performance` | [SKILL.md](./.agents/flutter/skills/flutter-performance/SKILL.md) | 120 FPS rendering and memory management. |
-| `flutter-biometrics` | [SKILL.md](./.agents/flutter/skills/flutter-biometrics/SKILL.md) | Face ID / Fingerprint implementation. |
-| `flutter-security-architect` | [SKILL.md](./.agents/flutter/skills/flutter-security-architect/SKILL.md) | Secure storage and encryption protocols. |
-| `flutter-platform-configurator`| [SKILL.md](./.agents/flutter/skills/flutter-platform-configurator/SKILL.md) | Native iOS/Android configurations and Gradle. |
-| `flutter-ui-ux` | [SKILL.md](./.agents/flutter/skills/flutter-ui-ux/SKILL.md) | Premium micro-interactions and animations. |
+| `flutter-architect` | [SKILL.md](./flutter/skills/flutter-architect/SKILL.md) | Atomic scoping and modular go_router setup. |
+| `flutter-riverpod` | [SKILL.md](./flutter/skills/flutter-riverpod/SKILL.md) | Reactive data flow with code generation. |
+| `flutter-performance` | [SKILL.md](./flutter/skills/flutter-performance/SKILL.md) | 120 FPS rendering and memory management. |
+| `flutter-biometrics` | [SKILL.md](./flutter/skills/flutter-biometrics/SKILL.md) | Face ID / Fingerprint implementation. |
+| `flutter-security-architect` | [SKILL.md](./flutter/skills/flutter-security-architect/SKILL.md) | Secure storage and encryption protocols. |
+| `flutter-platform-configurator`| [SKILL.md](./flutter/skills/flutter-platform-configurator/SKILL.md) | Native iOS/Android configurations and Gradle. |
+| `flutter-ui-ux` | [SKILL.md](./flutter/skills/flutter-ui-ux/SKILL.md) | Premium micro-interactions and animations. |
 
 ### 🧪 Testing Strategies
 Ensuring software remains immune to regressions.
 | Skill Name | Documentation | Stack |
 |:---|:---|:---|
-| `web-modern-testing` | [SKILL.md](./.agents/shared/skills/web-modern-testing/SKILL.md) | Vitest, MSW, and Playwright (A11y focus). |
-| `react-testing-jest` | [SKILL.md](./.agents/react/skills/react-testing-jest/SKILL.md) | Industry-standard Jest + Testing Library. |
-| `angular-testing-jasmine` | [SKILL.md](./.agents/angular/skills/angular-testing-jasmine/SKILL.md) | Enterprise-standard Jasmine & Karma. |
-| `flutter-testing` | [SKILL.md](./.agents/flutter/skills/flutter-testing/SKILL.md) | Unit, Widget, and Integration tests in Flutter. |
+| `web-modern-testing` | [SKILL.md](./shared/skills/web-modern-testing/SKILL.md) | Vitest, MSW, and Playwright (A11y focus). |
+| `react-testing-jest` | [SKILL.md](./react/skills/react-testing-jest/SKILL.md) | Industry-standard Jest + Testing Library. |
+| `angular-testing-jasmine` | [SKILL.md](./angular/skills/angular-testing-jasmine/SKILL.md) | Enterprise-standard Jasmine & Karma. |
+| `flutter-testing` | [SKILL.md](./flutter/skills/flutter-testing/SKILL.md) | Unit, Widget, and Integration tests in Flutter. |
 
 ### 🎨 Advanced UI, Performance & Architecture (Shared)
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `web-tailwind` | [SKILL.md](./.agents/shared/skills/web-tailwind/SKILL.md) | Tailwind CSS 4, semantic tokens, and `cn()`. |
-| `web-advanced-ui-ux` | [SKILL.md](./.agents/shared/skills/web-advanced-ui-ux/SKILL.md) | Container Queries, CSS Layers, and Anchor Positioning. |
-| `web-performance` | [SKILL.md](./.agents/shared/skills/web-performance/SKILL.md) | Core Web Vitals (LCP, CLS, INP) optimization. |
-| `web-micro-frontends` | [SKILL.md](./.agents/shared/skills/web-micro-frontends/SKILL.md) | Module Federation and Vite orchestrations. |
+| `web-tailwind` | [SKILL.md](./shared/skills/web-tailwind/SKILL.md) | Tailwind CSS 4, semantic tokens, and `cn()`. |
+| `web-advanced-ui-ux` | [SKILL.md](./shared/skills/web-advanced-ui-ux/SKILL.md) | Container Queries, CSS Layers, and Anchor Positioning. |
+| `web-performance` | [SKILL.md](./shared/skills/web-performance/SKILL.md) | Core Web Vitals (LCP, CLS, INP) optimization. |
+| `web-micro-frontends` | [SKILL.md](./shared/skills/web-micro-frontends/SKILL.md) | Module Federation and Vite orchestrations. |
 
 ---
 
