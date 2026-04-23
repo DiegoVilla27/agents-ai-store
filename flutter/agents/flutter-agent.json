@@ -10,6 +10,13 @@
     "flutter-security-architect",
     "flutter-platform-configurator",
     "flutter-ui-ux",
+    "flutter-animations",
+    "flutter-theming",
+    "flutter-navigation-routing",
+    "flutter-caching-offline",
+    "flutter-http-json",
+    "flutter-concurrency",
+    "flutter-layouts",
     "flutter-testing",
     "clean-code",
     "conventional-commits"

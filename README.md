@@ -178,6 +178,13 @@ Comprehensive suite for high-performance Cross-Platform apps.
 | `flutter-security-architect` | [SKILL.md](./flutter/skills/flutter-security-architect/SKILL.md) | Secure storage and encryption protocols. |
 | `flutter-platform-configurator`| [SKILL.md](./flutter/skills/flutter-platform-configurator/SKILL.md) | Native iOS/Android configurations and Gradle. |
 | `flutter-ui-ux` | [SKILL.md](./flutter/skills/flutter-ui-ux/SKILL.md) | Premium micro-interactions and animations. |
+| `flutter-animations` | [SKILL.md](./flutter/skills/flutter-animations/SKILL.md) | Complex motion, physics, and staggered animations. |
+| `flutter-theming` | [SKILL.md](./flutter/skills/flutter-theming/SKILL.md) | Material 3, dynamic color, and theme extensions. |
+| `flutter-navigation-routing` | [SKILL.md](./flutter/skills/flutter-navigation-routing/SKILL.md) | Declarative routing and deep links with GoRouter. |
+| `flutter-caching-offline` | [SKILL.md](./flutter/skills/flutter-caching-offline/SKILL.md) | Local persistence (Hive/Isar) and sync logic. |
+| `flutter-http-json` | [SKILL.md](./flutter/skills/flutter-http-json/SKILL.md) | Advanced API clients with Dio and Type-safety. |
+| `flutter-concurrency` | [SKILL.md](./flutter/skills/flutter-concurrency/SKILL.md) | Isolate-based multithreading and heavy tasks. |
+| `flutter-layouts` | [SKILL.md](./flutter/skills/flutter-layouts/SKILL.md) | Slivers, adaptive UI, and complex constraints. |
 
 ### 🧪 Testing Strategies
 Ensuring software remains immune to regressions.
