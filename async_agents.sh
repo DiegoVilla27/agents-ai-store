@@ -87,9 +87,9 @@ download_asset() {
     
     # Avoid duplicate processing in the same run if needed (optional)
     
-    local target_path="$AGENT_BASE/$tech/$type/$name"
+    local target_path="$AGENT_BASE/$type/$name"
     if [ "$type" = "agents" ]; then
-        target_path="$AGENT_BASE/$tech/$type"
+        target_path="$AGENT_BASE/$type"
     fi
     
     local files=()
@@ -142,7 +142,7 @@ download_asset() {
         
         # Recursive sync for Agents
         if [ "$type" = "agents" ]; then
-            local agent_file="$AGENT_BASE/$tech/agents/$name.json"
+            local agent_file="$AGENT_BASE/agents/$name.json"
             if [ -f "$agent_file" ]; then
                 if ! command -v jq &> /dev/null; then warn "jq not found. Dependency-based sync skipped."; return 0; fi
                 
@@ -174,9 +174,11 @@ find_and_download_asset() {
     local source_dir=$3
     
     # Check if already downloaded in any tech to avoid duplicates
-    if [ -d "$AGENT_BASE" ]; then
-        if find "$AGENT_BASE" -type d -name "$name" | grep -q "/$type/$name$"; then
-            return 0
+    if [ -d "$AGENT_BASE/$type" ]; then
+        if [ "$type" = "agents" ]; then
+            if [ -f "$AGENT_BASE/agents/$name.json" ]; then return 0; fi
+        else
+            if [ -d "$AGENT_BASE/$type/$name" ]; then return 0; fi
         fi
     fi
 

@@ -72,8 +72,7 @@ function Download-Asset($tech, $type, $name, $sourceDir) {
     if ($type -eq "instructions") { $icon = "📜" }
     if ($type -eq "agents") { $icon = "🤖" }
 
-    $targetPath = Join-Path $AGENT_BASE $tech
-    $targetPath = Join-Path $targetPath $type
+    $targetPath = Join-Path $AGENT_BASE $type
     if ($type -ne "agents") {
         $targetPath = Join-Path $targetPath $name
     }
@@ -140,8 +139,7 @@ function Download-Asset($tech, $type, $name, $sourceDir) {
 
         # Recursive sync for Agents
         if ($type -eq "agents") {
-            $agentFile = Join-Path $AGENT_BASE $tech
-            $agentFile = Join-Path $agentFile "agents"
+            $agentFile = Join-Path $AGENT_BASE "agents"
             $agentFile = Join-Path $agentFile "$name.json"
 
             if (Test-Path $agentFile) {
@@ -176,16 +174,13 @@ function Download-Asset($tech, $type, $name, $sourceDir) {
 
 function Find-And-Download-Asset($type, $name, $sourceDir) {
     # Check if already downloaded
-    if (Test-Path $AGENT_BASE) {
-        $existing = Get-ChildItem -Path $AGENT_BASE -Recurse -Directory -Filter $name | Where-Object { $_.FullName -like "*\$type\$name" }
-        if ($existing) { return $true }
-        
-        # Check for agents (which are files)
-        if ($type -eq "agents") {
-            $existingAgent = Get-ChildItem -Path $AGENT_BASE -Recurse -File -Filter "$name.json" | Where-Object { $_.FullName -like "*\$type\$name.json" }
-            if ($existingAgent) { return $true }
-        }
+    $pathToCheck = Join-Path $AGENT_BASE $type
+    if ($type -eq "agents") {
+        $pathToCheck = Join-Path $pathToCheck "$name.json"
+    } else {
+        $pathToCheck = Join-Path $pathToCheck $name
     }
+    if (Test-Path $pathToCheck) { return $true }
 
     foreach ($tech in $TECHS) {
         if (Download-Asset $tech $type $name $sourceDir) {
