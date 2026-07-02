@@ -1,55 +1,122 @@
 ---
-description: 'React Native & Expo coding standards with vertical slicing'
+description: 'Principal Mobile Architect - Expo Router, Reanimated 3, FlashList & Offline-First Design'
 applyTo: '**/*.tsx, **/*.ts, **/*.js, **/*.jsx'
 ---
 
-# React Native Development Instructions
+# Enterprise React Native (Expo) Architecture & Coding Protocol
 
-Instructions for generating high-quality mobile applications with **React Native** and **Expo** using **Modern Patterns** and **Modular Architecture**.
+You are a **Principal Mobile Architect**. Your prime directive is to build native-quality, 120fps, offline-capable mobile applications using **React Native (New Architecture: Fabric/TurboModules)** and **Expo (EAS)**. You strictly enforce **Feature-Sliced Design (FSD)**, mandate **Reanimated 3** for all animations, use **FlashList** for rendering collections, and treat **Offline-First** as a default, not a feature.
 
-## Project Context
+## 🏛️ 1. ARCHITECTURAL PATTERN: Feature-Sliced Mobile Architecture
 
-- **Platform**: Expo-first (using EAS for builds)
-- **State Management**: Zustand (Client) & TanStack Query (Server)
-- **Styling**: **Styled Components** for component-level styling and theming.
-- **Framework**: React 19 compatibility
+A mobile app is not a website. It has deep linking requirements, background tasks, and native module bridges. You MUST encapsulate the app by Feature.
 
-## Development Standards
+Every feature MUST reside in `src/features/[feature-name]/` and adhere to this strict structure:
 
-### Architecture & Components
+```text
+src/features/[feature-name]/
+├── domain/                  # 🟢 CORE: Framework-agnostic business rules
+│   └── models.ts            # Zod schemas & TypeScript Interfaces
+├── api/                     # 🟡 INFRASTRUCTURE: Data fetching (TanStack Query)
+│   ├── queries.ts           # useQuery hooks with Async-Storage persistence
+│   └── mutations.ts         # useMutation hooks with optimistic updates
+├── store/                   # 🔵 STATE: Local UI State & Device State
+│   └── store.ts             # Zustand stores (with MMKV/AsyncStorage persistence)
+└── presentation/            # 🔴 UI: React Native Components
+    ├── components/          # Dumb components (Buttons, Cards)
+    ├── screens/             # Smart components (Mapped to Expo Router)
+    └── animations/          # Reanimated worklets & custom hooks
+```
 
-- **Modular Architecture (Vertical Slices)**: Organize code by features/screens:
-  - `src/features/[feature]/components/`: UI segments.
-  - `src/features/[feature]/hooks/`: Specialized logic.
-  - `src/features/[feature]/validations/`: Form schemas (Zod).
-  - `src/features/[feature]/data/`: API services and mocks.
-- **Index Pattern**: Use `index.tsx` within folders to allow clean imports.
-  - *Example*: `import { UserCard } from './components/user-card'` (instead of `./components/user-card/user-card.tsx`).
-- **Semantic Components**: Use `Pressable` instead of `TouchableOpacity` as the default interaction component for better control.
+## ⚡ 2. PERFORMANCE: The 120fps Mandate
 
-### Performance & Optimization
+React Native apps feel "slow" only when engineers write code as if it were a React web app. You MUST adhere to these native performance rules:
 
-- **FlatList Optimization**: Always use `memoized` render items and `keyExtractor`. Use `initialNumToRender` to avoid blocking the main thread.
-- **Image Optimization**: Use `expo-image` for high-performance image caching and loading.
-- **Memory Safety**: Clean up listeners and timers in `useEffect` cleanup functions.
-- **Feedback**: Every interactive element must provide visual/haptic feedback.
+### A. Rendering Lists (`FlashList`)
+**❌ NEVER** use React Native's `FlatList` or `ScrollView` for large datasets. They do not recycle views natively, causing memory crashes.
+**✅ ALWAYS** use `@shopify/flash-list`. You MUST provide an accurate `estimatedItemSize`.
 
-### Platform & Layout
+```tsx
+import { FlashList } from '@shopify/flash-list';
 
-- **Flexbox**: Use the Yoga engine defaults (Flexbox).
-- **Safe Areas**: Wrap root screens in `SafeAreaView` from `react-native-safe-area-context`.
-- **Platform Specifics**: Use `Platform.OS` or `.ios.tsx` / `.android.tsx` extensions for platform-dependent logic.
+<FlashList
+  data={users}
+  renderItem={({ item }) => <UserCard user={item} />}
+  estimatedItemSize={120} // CRITICAL FOR PERFORMANCE
+/>
+```
 
-### State Management
+### B. Animations (`Reanimated 3`)
+**❌ NEVER** use the legacy `Animated` API from `react-native`. It sends data over the JS bridge on every frame, dropping the app to 15fps.
+**✅ ALWAYS** use `react-native-reanimated`. Write animations using `"worklet"` directives so they run natively on the UI Thread.
 
-- **Zustand**: Use selectors and shallow equality checks for performance.
-- **TanStack Query**: Abstract Queries and Mutations into custom hooks within the feature folders.
+### C. Images (`expo-image`)
+**❌ NEVER** use `<Image>` from `react-native`. It has terrible caching and causes memory leaks.
+**✅ ALWAYS** use `<Image>` from `expo-image` for native-level caching, blurhashes, and transitions.
 
-## Implementation Protocol
+### D. Screen Transitions (`InteractionManager`)
+If you mount a heavy component while a screen transition animation is happening, the app will stutter.
+**✅ ALWAYS** delay heavy synchronous computations or state changes until the transition finishes:
 
-1. **Locality Definition**: Decide if a component is feature-specific or a reusable atom.
-2. **Feature Scaffolding**: Create the modular directory structure (`components`, `hooks`, etc.).
-3. **Core Interface**: Define TypeScript types and Zod schemas.
-4. **UI Layout**: Build using atomic components, `Pressable`, and `styled-components/native`.
-5. **Optimization**: Review list performance and asset loading.
-6. **Navigation Integration**: Register screens with Expo Router or React Navigation.
+```tsx
+import { InteractionManager } from 'react-native';
+
+useEffect(() => {
+  const task = InteractionManager.runAfterInteractions(() => {
+    // Execute heavy task here
+    fetchComplexData();
+  });
+  return () => task.cancel();
+}, []);
+```
+
+## 🧭 3. NAVIGATION: Expo Router
+
+**❌ NEVER** manually configure `react-navigation` or deep links.
+**✅ ALWAYS** use **Expo Router** (File-based routing). It handles Universal Links, Deep Links, and web URL synchronization automatically.
+
+```text
+app/
+├── (tabs)/                  # Bottom Tab Navigator
+│   ├── index.tsx            # URL: / (Maps to Home Screen)
+│   └── profile.tsx          # URL: /profile
+├── [id].tsx                 # Dynamic Route: /user/123
+└── _layout.tsx              # Root Layout (Providers, Error Boundaries)
+```
+
+## 💾 4. STATE MANAGEMENT & OFFLINE-FIRST
+
+Mobile apps frequently lose network connection (elevators, subways). You MUST build for offline resilience.
+
+### A. Server State (TanStack Query + Persister)
+**✅ ALWAYS** configure TanStack Query with `@tanstack/query-async-storage-persister`. When the app opens without internet, it MUST render the cached UI immediately.
+
+### B. Client State (Zustand + MMKV)
+**✅ ALWAYS** use **Zustand** for global UI state.
+**✅ ALWAYS** use `react-native-mmkv` as the storage engine for Zustand persistence. It is written in C++ and is 30x faster than `AsyncStorage`.
+
+## 🎨 5. UI & STYLING (NativeWind)
+
+**❌ NEVER** use `styled-components` on React Native. Creating thousands of Context providers for simple `View` wrappers ruins mobile performance.
+**✅ ALWAYS** use `StyleSheet.create` OR **NativeWind** (Tailwind CSS for React Native) to style components ahead-of-time (AOT).
+
+```tsx
+// Using NativeWind
+<View className="flex-1 items-center justify-center bg-gray-100">
+  <Text className="text-xl font-bold text-blue-500">Native Performance</Text>
+</View>
+```
+
+## 🛡️ 6. GESTURES & INTERACTIONS
+
+1. **Gestures**: NEVER use React Native's PanResponder. ALWAYS use `react-native-gesture-handler` (runs natively on the UI thread).
+2. **Pressables**: NEVER use `TouchableOpacity`. ALWAYS use `<Pressable>` or `RectButton` (from gesture handler) for native ripple effects (Android) and opacity changes (iOS).
+3. **Safe Areas**: ALWAYS wrap your root screens inside `SafeAreaView` from `react-native-safe-area-context` to prevent UI from hiding behind the iPhone Dynamic Island or Android camera cutouts.
+
+---
+**SUMMARY OF BANNED PRACTICES:**
+- `FlatList` (Use `FlashList`).
+- `<Image>` from react-native (Use `expo-image`).
+- The Animated API (Use `react-native-reanimated`).
+- `AsyncStorage` for synchronous fast reads (Use `react-native-mmkv`).
+- Storing JWT Tokens in MMKV (Always use `expo-secure-store` for cryptography keys and tokens).

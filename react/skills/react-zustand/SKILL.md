@@ -1,218 +1,149 @@
 ---
 name: react-zustand
-description: Zustand state management patterns
+description: The ultimate architectural standard for global client state management using Zustand, focusing on atomic selections, slice patterns, and performance.
 author: Diego Villanueva
-trigger: When managing React state with Zustand
+trigger: When managing global client state, defining stores, or debugging excessive re-renders in Zustand.
 ---
 
-## Basic Store
+# Zustand State Architecture
 
-```typescript
-import { create } from "zustand";
+Zustand is a small, fast, and scalable bearbones state-management solution using simplified flux principles. It replaces Context API and Redux for **Client State** (UI toggles, dark mode, multi-step form data). 
 
-interface CounterStore {
-  count: number;
-  increment: () => void;
-  decrement: () => void;
-  reset: () => void;
+*Do NOT use Zustand for Server State (API responses); use TanStack Query instead.*
+
+## 1. The Core Paradigm & TypeScript Strictness
+
+Always type your store exactly. The syntax requires `create<StoreType>()(...)` to ensure strict inference inside the `set` function.
+
+```tsx
+// ✅ ALWAYS: Strictly typed stores
+import { create } from 'zustand';
+
+interface UIStore {
+  sidebarOpen: boolean;
+  activeTheme: 'light' | 'dark';
+  toggleSidebar: () => void;
+  setTheme: (theme: 'light' | 'dark') => void;
 }
 
-const useCounterStore = create<CounterStore>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 })),
-  reset: () => set({ count: 0 }),
+export const useUIStore = create<UIStore>()((set) => ({
+  sidebarOpen: false,
+  activeTheme: 'light',
+  // Use callback for state dependent on previous state
+  toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+  // Direct object for independent state
+  setTheme: (theme) => set({ activeTheme: theme }),
 }));
+```
 
-// Usage
-function Counter() {
-  const { count, increment, decrement } = useCounterStore();
-  return (
-    <div>
-      <span>{count}</span>
-      <button onClick={increment}>+</button>
-      <button onClick={decrement}>-</button>
-    </div>
+## 2. Atomic Selections (The Re-render Killer)
+
+The biggest mistake developers make with Zustand is destructuring the entire store. If you do this, your component will re-render EVERY time ANY property in the store changes.
+
+```tsx
+// ❌ ATROCIOUS: Component re-renders if `activeTheme` changes!
+const { sidebarOpen } = useUIStore(); 
+
+// ✅ ALWAYS: Atomic selection. Only re-renders when `sidebarOpen` changes.
+const sidebarOpen = useUIStore((state) => state.sidebarOpen);
+```
+
+## 3. Multiple Selections & `useShallow`
+
+If you need multiple properties from the store, calling the hook multiple times is fine. However, returning an object from the selector creates a *new reference* every render, causing infinite re-renders unless you use `useShallow` (Zustand v4.5+).
+
+```tsx
+// ✅ ALWAYS: Use `useShallow` for object selections
+import { useShallow } from 'zustand/react/shallow';
+
+function Header() {
+  const { sidebarOpen, toggleSidebar } = useUIStore(
+    useShallow((state) => ({
+      sidebarOpen: state.sidebarOpen,
+      toggleSidebar: state.toggleSidebar,
+    }))
   );
 }
 ```
 
-## Persist Middleware
+## 4. Reading State Outside of React (No Hooks Needed)
+
+Zustand lives *outside* of React's lifecycle. You don't need a hook to read or write to it. This is invaluable for Axios interceptors, WebSockets, or standard utility functions where React hooks are forbidden.
 
 ```typescript
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+// ✅ ALWAYS: Access state in vanilla JS functions
+import { useUIStore } from './store';
 
-interface SettingsStore {
-  theme: "light" | "dark";
-  language: string;
-  setTheme: (theme: "light" | "dark") => void;
-  setLanguage: (language: string) => void;
+export function handleNetworkError() {
+  const currentTheme = useUIStore.getState().activeTheme;
+  
+  if (currentTheme === 'dark') {
+    // Write state directly!
+    useUIStore.setState({ sidebarOpen: true });
+  }
 }
+```
 
-const useSettingsStore = create<SettingsStore>()(
+## 5. The Slice Pattern (Scaling Large Stores)
+
+Do not create a massive 1000-line store file. Do not create 20 different tiny stores. The ideal architecture for a domain is the **Slice Pattern**: independent functions that are merged into a single bounded context store.
+
+```typescript
+// ✅ ALWAYS: The Slice Pattern for modularity
+import { StateCreator, create } from 'zustand';
+
+// 1. Define Slices
+interface CartSlice { cart: string[]; addToCart: (id: string) => void; }
+interface UserSlice { user: string | null; login: (name: string) => void; }
+
+const createCartSlice: StateCreator<CartSlice & UserSlice, [], [], CartSlice> = (set) => ({
+  cart: [],
+  addToCart: (id) => set((state) => ({ cart: [...state.cart, id] })),
+});
+
+const createUserSlice: StateCreator<CartSlice & UserSlice, [], [], UserSlice> = (set) => ({
+  user: null,
+  login: (name) => set({ user: name }),
+});
+
+// 2. Combine them into one store
+export const useAppStore = create<CartSlice & UserSlice>()((...a) => ({
+  ...createCartSlice(...a),
+  ...createUserSlice(...a),
+}));
+```
+
+## 6. Middlewares: Immer and Persist
+
+Zustand supports powerful middlewares out of the box.
+
+- **Immer**: If your state is deeply nested (e.g., `state.user.profile.settings.theme`), updating it with standard spread operators is a nightmare. Use the `immer` middleware to mutate state directly.
+- **Persist**: Automatically syncs your state to `localStorage` (Web) or `AsyncStorage` (React Native).
+
+```typescript
+// ✅ ALWAYS: Use middlewares for complex stores
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
+
+export const useSettingsStore = create<SettingsStore>()(
   persist(
-    (set) => ({
-      theme: "light",
-      language: "en",
-      setTheme: (theme) => set({ theme }),
-      setLanguage: (language) => set({ language }),
-    }),
-    {
-      name: "settings-storage",  // localStorage key
-    }
+    immer((set) => ({
+      nested: { deeply: { value: 0 } },
+      updateDeep: () => 
+        // Immer allows direct mutation!
+        set((state) => {
+          state.nested.deeply.value += 1; 
+        }),
+    })),
+    { name: 'settings-storage' } // Key in localStorage
   )
 );
 ```
 
-## Selectors (Zustand 5)
+---
 
-```typescript
-// ✅ Select specific fields to prevent unnecessary re-renders
-function UserName() {
-  const name = useUserStore((state) => state.name);
-  return <span>{name}</span>;
-}
-
-// ✅ For multiple fields, use useShallow
-import { useShallow } from "zustand/react/shallow";
-
-function UserInfo() {
-  const { name, email } = useUserStore(
-    useShallow((state) => ({ name: state.name, email: state.email }))
-  );
-  return <div>{name} - {email}</div>;
-}
-
-// ❌ AVOID: Selecting entire store (causes re-render on any change)
-const store = useUserStore();  // Re-renders on ANY state change
-```
-
-## Async Actions
-
-```typescript
-interface UserStore {
-  user: User | null;
-  loading: boolean;
-  error: string | null;
-  fetchUser: (id: string) => Promise<void>;
-}
-
-const useUserStore = create<UserStore>((set) => ({
-  user: null,
-  loading: false,
-  error: null,
-
-  fetchUser: async (id) => {
-    set({ loading: true, error: null });
-    try {
-      const response = await fetch(`/api/users/${id}`);
-      const user = await response.json();
-      set({ user, loading: false });
-    } catch (error) {
-      set({ error: "Failed to fetch user", loading: false });
-    }
-  },
-}));
-```
-
-## Slices Pattern
-
-```typescript
-// userSlice.ts
-interface UserSlice {
-  user: User | null;
-  setUser: (user: User) => void;
-  clearUser: () => void;
-}
-
-const createUserSlice = (set): UserSlice => ({
-  user: null,
-  setUser: (user) => set({ user }),
-  clearUser: () => set({ user: null }),
-});
-
-// cartSlice.ts
-interface CartSlice {
-  items: CartItem[];
-  addItem: (item: CartItem) => void;
-  removeItem: (id: string) => void;
-}
-
-const createCartSlice = (set): CartSlice => ({
-  items: [],
-  addItem: (item) => set((state) => ({ items: [...state.items, item] })),
-  removeItem: (id) => set((state) => ({
-    items: state.items.filter(i => i.id !== id)
-  })),
-});
-
-// store.ts
-type Store = UserSlice & CartSlice;
-
-const useStore = create<Store>()((...args) => ({
-  ...createUserSlice(...args),
-  ...createCartSlice(...args),
-}));
-```
-
-## Immer Middleware
-
-```typescript
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
-
-interface TodoStore {
-  todos: Todo[];
-  addTodo: (text: string) => void;
-  toggleTodo: (id: string) => void;
-}
-
-const useTodoStore = create<TodoStore>()(
-  immer((set) => ({
-    todos: [],
-
-    addTodo: (text) => set((state) => {
-      // Mutate directly with Immer!
-      state.todos.push({ id: crypto.randomUUID(), text, done: false });
-    }),
-
-    toggleTodo: (id) => set((state) => {
-      const todo = state.todos.find(t => t.id === id);
-      if (todo) todo.done = !todo.done;
-    }),
-  }))
-);
-```
-
-## DevTools
-
-```typescript
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-
-const useStore = create<Store>()(
-  devtools(
-    (set) => ({
-      // store definition
-    }),
-    { name: "MyStore" }  // Name in Redux DevTools
-  )
-);
-```
-
-## Outside React
-
-```typescript
-// Access store outside components
-const { count, increment } = useCounterStore.getState();
-increment();
-
-// Subscribe to changes
-const unsubscribe = useCounterStore.subscribe(
-  (state) => console.log("Count changed:", state.count)
-);
-```
-
-## Keywords
-zustand, state management, react, store, persist, middleware
+**Execution Protocol**
+1. **Never sync props to Zustand**: Zustand is global. If a component receives a prop, do not try to dump it into Zustand in a `useEffect`. Zustand should be the single source of truth from the top down.
+2. **Avoid Action Boilerplate**: You do not need Redux-style action types or reducers. Expose functions directly in the store that mutate the state.
+3. **DevTools Middleware**: Always wrap your root stores in the `devtools` middleware so you can time-travel and inspect your state using the Redux DevTools browser extension.

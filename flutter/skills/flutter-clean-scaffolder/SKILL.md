@@ -1,44 +1,144 @@
 ---
 name: flutter-clean-scaffolder
-description: Expert in generating professional Clean Architecture and Feature-First scaffolding for Flutter.
-author: Antigravity
-trigger: When the user wants to initialize a project structure or add a new modular feature.
+description: The ultimate architectural protocol for the AI to generate professional Clean Architecture and Feature-First scaffolding in Flutter projects.
+author: Diego Villanueva
+trigger: When the user asks to initialize a new Flutter project, scaffold a new feature, or generate standard Clean Architecture boilerplate.
 ---
 
-# Flutter Clean Scaffolder
+# Flutter Clean Scaffolder Protocol
 
-This skill automates the creation of a robust, production-grade Flutter directory structure following Clean Architecture and Feature-First patterns.
+This skill dictates EXACTLY how you, the AI agent, must structure files and directories when asked to scaffold a Flutter project or add a new feature. You must not deviate from this standard. It enforces a **Feature-First Clean Architecture**.
 
-## ✅ ARCHITECTURE RULES
-1. **Core First**: Initialize `lib/core` with networking (Dio), routing (GoRouter), and theming.
-2. **Feature Isolation**: Every new feature must live in `lib/features/{feature_name}`.
-3. **Layer Separation**:
-   - **Domain**: Entities, Repositories (interfaces), UseCases. No external dependencies.
-   - **Data**: Models (DTOs), Mappers, Repositories (impl), DataSources.
-   - **Presentation**: Screens, Widgets (local), Providers/Blocs.
-4. **Shared UI**: Global widgets go to `lib/shared/{atoms,molecules,organisms}`.
-5. **Testing**: Mirrors the `lib/` structure in the `test/` directory.
+## 1. The Global Structure (`lib/`)
 
-## 🛠 COMMANDS
-When this skill is triggered, you must:
+If initializing a new project, you MUST create this exact structure first:
 
-### 1. Initialize Base Structure
-Create the following directories if they don't exist:
-- `lib/core/{router,theme,network,error,l10n,utils}`
-- `lib/shared/{atoms,molecules,organisms}`
-- `lib/features`
+```text
+lib/
+├── core/
+│   ├── config/       # Environment variables, constants
+│   ├── error/        # Global exceptions and failures
+│   ├── network/      # Dio clients, interceptors
+│   ├── router/       # GoRouter configuration
+│   ├── theme/        # AppTheme, text styles, colors
+│   └── utils/        # Global helpers (extensions, validators)
+├── shared/
+│   ├── atoms/        # Basic UI (MyButton, MyTextField)
+│   ├── molecules/    # Grouped UI (LoginForm)
+│   └── organisms/    # Complex UI (Header, NavigationBar)
+└── features/         # All business domains live here
+```
 
-### 2. Scaffold a New Feature
-For a given `{feature_name}`, create:
-- `lib/features/{feature_name}/domain/{entities,repositories,usecases}`
-- `lib/features/{feature_name}/data/{models,mappers,repositories,datasources}`
-- `lib/features/{feature_name}/presentation/{screens,widgets,providers}`
-- `test/features/{feature_name}/domain/usecases`
-- `test/features/{feature_name}/data/repositories`
-- `test/features/{feature_name}/presentation/screens`
+## 2. Feature Generation Protocol
 
-## 📝 FILE TEMPLATES
-Always generate boilerplate for:
-- **Failure classes** in `core/error/failures.dart`.
-- **Base UseCase** interface in `core/usecases/usecase.dart`.
-- **Entity to Model Mappers** using extensions.
+When asked to "Create the Auth feature", you MUST generate the following strict Clean Architecture hierarchy inside `lib/features/auth/`:
+
+```text
+lib/features/{feature}/
+├── data/
+│   ├── datasources/    # Remote (API) and Local (DB) data sources
+│   ├── mappers/        # Translates DTOs to Entities and vice versa
+│   ├── models/         # DTOs (Data Transfer Objects) with fromJson/toJson
+│   └── repositories/   # Concrete implementations of Domain Repository interfaces
+├── domain/
+│   ├── entities/       # Pure Dart classes (No JSON, no Flutter imports)
+│   ├── repositories/   # Abstract classes (Ports) defining what the Data layer must do
+│   └── usecases/       # Classes encapsulating a single business rule/action
+└── presentation/
+    ├── providers/      # State Management (Riverpod/Bloc)
+    ├── screens/        # Full page widgets
+    └── widgets/        # Widgets specific to this feature ONLY (Proximity Rule)
+```
+
+## 3. Boilerplate Generation Templates
+
+When scaffolding, you MUST populate the core files with these exact templates to save the developer time.
+
+### A. The Core UseCase Interface (`lib/core/usecases/usecase.dart`)
+Every UseCase in the Domain layer must implement this interface. It ensures predictable return types (Either a Failure or a Success).
+
+```dart
+// ✅ ALWAYS: Generate the Base UseCase
+import 'package:dartz/dartz.dart'; // Or fpdart
+import '../error/failures.dart';
+
+abstract class UseCase<Type, Params> {
+  Future<Either<Failure, Type>> call(Params params);
+}
+
+class NoParams {}
+```
+
+### B. The Core Failure Class (`lib/core/error/failures.dart`)
+```dart
+// ✅ ALWAYS: Generate the Base Failure
+import 'package:equatable/equatable.dart';
+
+abstract class Failure extends Equatable {
+  final String message;
+  const Failure(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class ServerFailure extends Failure {
+  const ServerFailure(super.message);
+}
+
+class CacheFailure extends Failure {
+  const CacheFailure(super.message);
+}
+```
+
+### C. Example Scaffolded UseCase (`lib/features/auth/domain/usecases/login_usecase.dart`)
+```dart
+import 'package:dartz/dartz.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../entities/user.dart';
+import '../repositories/auth_repository.dart';
+
+class LoginParams {
+  final String email;
+  final String password;
+  LoginParams({required this.email, required this.password});
+}
+
+class LoginUseCase implements UseCase<User, LoginParams> {
+  final AuthRepository repository;
+
+  LoginUseCase(this.repository);
+
+  @override
+  Future<Either<Failure, User>> call(LoginParams params) async {
+    return await repository.login(params.email, params.password);
+  }
+}
+```
+
+## 4. Test Mirroring Protocol
+
+You MUST NOT forget the `test/` directory. When scaffolding a feature, you must create a test directory structure that exactly mirrors the `lib/` directory.
+
+```text
+test/
+└── features/
+    └── {feature}/
+        ├── data/
+        │   ├── datasources/
+        │   ├── models/
+        │   └── repositories/
+        ├── domain/
+        │   └── usecases/
+        └── presentation/
+            ├── providers/
+            └── screens/
+```
+
+---
+
+**Execution Protocol**
+1. **Directory Creation**: Use bash commands (like `mkdir -p`) to create the entire tree instantly before writing files.
+2. **Barrel Files**: In large features, generate `index.dart` or `{feature}_exports.dart` files at the root of `domain`, `data`, and `presentation` to clean up imports.
+3. **No Improvised Imports**: When scaffolding, ensure imports correctly target the generated `core` files. Do not invent packages unless the user specifies them (assume `dartz` or `fpdart` for functional error handling, and `equatable` for value equality).

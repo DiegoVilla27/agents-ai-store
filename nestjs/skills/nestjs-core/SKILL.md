@@ -1,62 +1,152 @@
 ---
 name: nestjs-core
-description: Core NestJS patterns Dependency Injection Modules and Global Concerns.
+description: The ultimate architectural standard for NestJS Core Dependency Injection, Module Boundaries, The Request Lifecycle, and SOLID Principles.
 author: Diego Villanueva
-trigger: When configuring modules, providers, or global application logic.
+trigger: When configuring NestJS modules, writing providers, implementing DI, or designing the global request lifecycle (Guards/Interceptors).
 ---
 
-# NestJS Core Mastery
+# NestJS Core Architecture
 
-## 🧩 Module System
+NestJS is an incredibly opinionated framework designed for Enterprise Node.js applications. It relies heavily on Dependency Injection (DI), Decorators, and strict Architectural Boundaries. If you fight the framework or ignore SOLID principles, you will end up with an untestable, tightly coupled monolith.
 
-Standardize on **Modular Monolith** principles before splitting into microservices.
+## 1. Module Architecture (The Modular Monolith)
 
-### Dynamic Modules
-Use the `ConfigurableModuleBuilder` for modern dynamic module definitions.
+Do not put all your controllers and providers into `app.module.ts`. You MUST build a Modular Monolith, separating domains into distinct feature modules.
+
+- **Feature Modules**: Encapsulate a specific domain (e.g., `UsersModule`, `OrdersModule`).
+- **Shared/Core Modules**: Encapsulate cross-cutting concerns (e.g., `DatabaseModule`, `LoggerModule`).
+- **Global Modules**: Use `@Global()` EXTREMELY sparingly (only for configuration or database connections) to avoid silent namespace collisions.
 
 ```typescript
-// ✅ ALWAYS
-export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } =
-  new ConfigurableModuleBuilder<MyModuleOptions>().build();
+// ✅ ALWAYS: Strict Module Encapsulation
+@Module({
+  imports: [DatabaseModule], // Import dependencies
+  controllers: [UsersController],
+  providers: [UsersService, UsersRepository], // Internal providers
+  exports: [UsersService], // Explicitly export what other modules can use
+})
+export class UsersModule {}
 ```
 
-## 💉 Dependency Injection (DI)
+## 2. Dependency Injection (SOLID Principles)
 
-### Interface Injection (The Right Way)
-Use a string or symbol token to inject interfaces, ensuring decoupling.
+In TypeScript, interfaces do not exist at runtime. If you want to adhere to the Dependency Inversion Principle (DIP) and inject an interface rather than a concrete class, you MUST use Custom Providers with string or `Symbol` tokens.
 
 ```typescript
-// ✅ ALWAYS
-export const I_USER_REPO = Symbol('IUserRepository');
+// ❌ ATROCIOUS: Tightly coupled to a concrete class (Hard to mock in tests)
+constructor(private usersRepository: PostgresUsersRepository) {}
+
+// ✅ ALWAYS: Inject by Interface using Tokens
+export const I_USER_REPOSITORY = Symbol('IUserRepository');
+
+export interface IUserRepository {
+  findById(id: string): Promise<User>;
+}
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(
-    @Inject(I_USER_REPO) private readonly userRepo: IUserRepository
+    @Inject(I_USER_REPOSITORY) private readonly usersRepo: IUserRepository
   ) {}
+}
+
+// In your Module:
+providers: [
+  UsersService,
+  {
+    provide: I_USER_REPOSITORY,
+    useClass: PostgresUsersRepository, // Easily swap this with MockUserRepository for tests!
+  }
+]
+```
+
+## 3. The Request Lifecycle (The Pipeline)
+
+You must memorize the exact order of execution in NestJS to know where to place your logic:
+**Middleware** -> **Guards** -> **Interceptors (Pre-Controller)** -> **Pipes** -> **Controller** -> **Service** -> **Interceptors (Post-Controller)** -> **Exception Filters**
+
+- **Guards**: Authentication and Authorization (Can this user access this?).
+- **Pipes**: Validation and Transformation (Is the payload a valid UUID? Is the JSON body matching the DTO?).
+- **Interceptors**: Logging, Caching, and Response Mapping.
+- **Filters**: Catching unhandled errors and formatting the standard HTTP response.
+
+## 4. Global Exception Filters
+
+Never allow a raw 500 error or stack trace to leak to the client. You MUST implement a Global Exception Filter to standardize all error responses.
+
+```typescript
+// ✅ ALWAYS: Standardize Error Responses globally
+@Catch()
+export class AllExceptionsFilter implements ExceptionFilter {
+  catch(exception: unknown, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+    
+    const status = 
+      exception instanceof HttpException 
+        ? exception.getStatus() 
+        : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    const message = 
+      exception instanceof HttpException 
+        ? exception.getResponse() 
+        : 'Internal server error';
+
+    // Log the actual error to your observability platform (e.g., Datadog, Sentry)
+    console.error(exception); 
+
+    response.status(status).json({
+      statusCode: status,
+      timestamp: new Date().toISOString(),
+      path: ctx.getRequest<Request>().url,
+      message,
+    });
+  }
+}
+```
+*Register this globally in `main.ts` using `app.useGlobalFilters(new AllExceptionsFilter());`*
+
+## 5. Custom Decorators (Clean Controllers)
+
+Controllers should be absolutely pristine. They should simply route the request to the service. Do not write logic to extract headers or decode tokens inside the controller.
+
+```typescript
+// ✅ ALWAYS: Use Custom Decorators for repetitive extraction
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+
+export const CurrentUser = createParamDecorator(
+  (data: unknown, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    return request.user; // Assuming a Guard already validated and attached the user
+  },
+);
+
+// In the Controller:
+@Get('me')
+getProfile(@CurrentUser() user: UserEntity) {
+  return this.usersService.getProfile(user.id);
 }
 ```
 
-## 🌍 Global Concerns
+## 6. Provider Scopes (Performance Warning)
 
-### Custom Decorators
-Create semantic decorators for commonly accessed data (current user, roles).
+By default, every Provider in NestJS is a **Singleton**. It is instantiated once when the application starts.
 
-```typescript
-// ✅ ALWAYS
-export const User = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest();
-    return request.user;
-  },
-);
-```
-
-### Global Filters & Interceptors
-Ensure consistent API response shapes.
+**CRITICAL WARNING**: Do not use `Scope.REQUEST` unless absolutely necessary (e.g., multi-tenant DB connections per request). If you mark a service as `Scope.REQUEST`, NestJS will instantiate a NEW copy of that service, and all its dependencies, on *every single incoming HTTP request*. This will destroy your Garbage Collector and tank your performance.
 
 ```typescript
-// ✅ ALWAYS
-app.useGlobalFilters(new HttpExceptionFilter());
-app.useGlobalInterceptors(new ResponseTransformInterceptor());
+// ❌ ATROCIOUS: Will destroy server performance under load
+@Injectable({ scope: Scope.REQUEST })
+export class AnalyticsService {}
+
+// ✅ ALWAYS: Default to Singleton (omit scope)
+@Injectable()
+export class AnalyticsService {}
 ```
+
+---
+
+**Execution Protocol**
+1. **Dynamic Modules**: When building reusable libraries (like a `StripeModule` that needs API keys), use the modern `ConfigurableModuleBuilder` instead of writing the `register()` or `forRoot()` boilerplate by hand.
+2. **DTO Validation**: Always use `class-validator` and `class-transformer` alongside a globally registered `ValidationPipe({ whitelist: true })`. This strips out malicious or unexpected fields from the incoming JSON payload before it even hits your controller.
+3. **Avoid Fat Controllers**: Controllers handle HTTP. Services handle Business Logic. Repositories handle Data. Never inject a database connection or ORM directly into a Controller.

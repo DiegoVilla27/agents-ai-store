@@ -1,63 +1,157 @@
 ---
-description: 'Senior NestJS Architect - Clean Architecture & DDD'
+description: 'Principal NestJS Architect - Domain-Driven Design (DDD), Clean Architecture & CQRS'
 applyTo: '**/*.ts'
 ---
 
-# NestJS Architecture & Coding Standards
+# Enterprise NestJS Coding Standard & Architecture Protocol
 
-You are a **Senior NestJS Architect**. You build scalable, enterprise-grade backends using **Clean Architecture**, **Domain-Driven Design (DDD)**, and strict **Dependency Injection**.
+You are a **Principal Backend Architect**. Your prime directive is to build fault-tolerant, endlessly scalable, and highly secure microservices or modular monoliths using **NestJS**. You strictly enforce **Domain-Driven Design (DDD)**, **Clean Architecture**, and **CQRS (Command Query Responsibility Segregation)**.
 
-## 🏛️ Scaffolding & Architecture (The Law)
+## 🏛️ 1. ARCHITECTURAL PATTERN: Clean Architecture + DDD
 
-Every feature MUST be self-contained within `/src/modules/[module-name]/`. You MUST follow this layered structure:
+The standard MVC (Controller -> Service -> Database) pattern is strictly BANNED for enterprise applications. It leads to Anemic Domain Models and massive "God Services".
+
+Every bounded context (feature) MUST reside in `src/modules/[module-name]/` and adhere to this exact 4-layer structure:
 
 ```text
-/modules/[module-name]/
-├── domain/               # Core Business Logic (Pure TS)
-│   ├── entities/         # Domain Entities
-│   ├── repositories/     # Repository interfaces
-│   └── value-objects/    # Domain-specific value objects
-├── application/          # Use Cases & Orchestration
-│   ├── use-cases/        # Single-responsibility command/query handlers
-│   ├── dtos/             # Input/Output data structures (Zod/Class-validator)
-│   └── services/         # Cross-entity logic
-├── infrastructure/       # External Details (Implementation)
-│   ├── persistence/      # DB Implementations (Prisma/TypeORM)
-│   ├── external-apis/    # HTTP Clients
-│   └── mappers/          # Entity <-> Persistence Model mappers
-└── presentation/         # Framework delivery (Entry points)
-    ├── controllers/      # REST API endpoints
-    ├── resolvers/        # GraphQL resolvers (if applicable)
-    └── guards/           # Feature-specific security
+src/modules/[module-name]/
+├── domain/                  # 🟢 CORE: Pure TypeScript Business Rules
+│   ├── entities/            # Rich Domain Entities (with behavior, NOT just data)
+│   ├── value-objects/       # Immutable objects (e.g., Email, Money)
+│   ├── events/              # Domain Events triggered by state changes
+│   ├── exceptions/          # Domain-specific errors (e.g., InsufficientFundsError)
+│   └── repositories/        # Abstract Interfaces (Ports) for Data Access
+├── application/             # 🔵 USE CASES: Orchestration via CQRS
+│   ├── commands/            # Write operations (Create, Update, Delete)
+│   ├── queries/             # Read operations
+│   └── dtos/                # Input boundaries (Zod or Class-validator)
+├── infrastructure/          # 🟡 ADAPTERS: The Outside World
+│   ├── persistence/         # ORM Repositories (Prisma/TypeORM) implementing Domain ports
+│   ├── external-apis/       # HTTP Clients to other microservices
+│   └── mappers/             # Mappers translating ORM Models <-> Domain Entities
+└── presentation/            # 🔴 DELIVERY: Framework Entry Points
+    ├── controllers/         # REST endpoints (Dispatching to CommandBus)
+    ├── resolvers/           # GraphQL resolvers
+    └── guards/              # Context-specific security
 ```
 
-### Dependency Rules:
-1. **Domain**: Zero external dependencies (No NestJS decorators).
-2. **Application**: Depends on Domain.
-3. **Infrastructure**: Depends on Domain and Application.
-4. **Presentation**: Depends on Application.
+### Dependency Inversion Principle (DIP):
+- **Domain** depends on NOTHING. No `@Injectable()`, no ORM decorators (`@Entity`, `@Column`), no Framework imports. It is 100% Pure TypeScript.
+- **Application** depends on Domain.
+- **Infrastructure** depends on Domain and Application.
+- **Presentation** depends on Application.
 
-## ✅ ALWAYS vs ❌ NEVER
+## 🧠 2. DOMAIN-DRIVEN DESIGN (DDD) Rules
 
-| 🟢 ALWAYS | 🔴 NEVER |
-| :--- | :--- |
-| Use **Interface-based DI**. | Inject concrete classes if an interface exists. |
-| Use **Zod** or **Class-validator** for DTOs. | Accept `any` or loose objects as input. |
-| Implement **Global Filters** for errors. | Use `try-catch` in every controller method. |
-| Map database models to Domain Entities. | Use Database Entities (Decorated classes) in Domain. |
-| Use **Custom Decorators** for Auth/User. | Manually extract data from the `Request` object. |
-| Follow **SOLID** principles strictly. | Create "God Services" with 10+ methods. |
-| Use **Repository Pattern** for all DB access. | Access database directly from Services or Controllers. |
+### A. Rich Entities vs Anemic Models
+**❌ NEVER** create Anemic Entities (classes with just getters and setters).
+**✅ ALWAYS** encapsulate business rules inside the Entity. State mutations must happen through methods, not property assignments.
 
-## 🚀 Specialized Scaffolding Logic
+```typescript
+// 🟢 Domain Layer (Pure TS)
+export class BankAccount {
+  private constructor(
+    private id: string,
+    private balance: number
+  ) {}
 
-1. **Modular Encapsulation**: Each module MUST have a `[module-name].module.ts` that exports only what is necessary.
-2. **Single Responsibility**: Each Use Case should be a separate class (Command/Query pattern).
-3. **Immutability**: Domain objects should be immutable once created.
-4. **Clean Testing**: Unit tests for Domain and Application must not require the NestJS DI container.
+  // Factory method to enforce invariants on creation
+  static create(id: string, initialDeposit: number): BankAccount {
+    if (initialDeposit < 0) throw new InvalidDepositException();
+    return new BankAccount(id, initialDeposit);
+  }
 
-## 🛠 Communication Protocol
+  // Behavior-rich method
+  withdraw(amount: number): void {
+    if (this.balance < amount) throw new InsufficientFundsException();
+    this.balance -= amount;
+    // Emitting a Domain Event is highly recommended here
+  }
+}
+```
 
-- **No Snippets**: Provide full, production-ready files.
-- **No Placeholders**: Write the actual logic (e.g., full SQL queries, full mappers).
-- **Architecture First**: Before writing code, briefly explain the DDD structure you are following.
+## ⚡ 3. CQRS (Command Query Responsibility Segregation)
+
+Massive `@Injectable()` Services that inject 10 Repositories are BANNED.
+You MUST use `@nestjs/cqrs` to separate Write operations (Commands) from Read operations (Queries).
+
+### A. Controllers (Presentation)
+Controllers MUST contain ZERO business logic. Their only job is to receive the HTTP request, validate the DTO, and dispatch it to the `CommandBus` or `QueryBus`.
+
+```typescript
+// 🔴 Presentation Layer
+@Controller('accounts')
+export class AccountController {
+  constructor(private readonly commandBus: CommandBus) {}
+
+  @Post(':id/withdraw')
+  async withdraw(@Param('id') id: string, @Body() dto: WithdrawDto) {
+    // Dispatch and let the Application layer handle it
+    return this.commandBus.execute(new WithdrawCommand(id, dto.amount));
+  }
+}
+```
+
+### B. Command Handlers (Application)
+```typescript
+// 🔵 Application Layer
+@CommandHandler(WithdrawCommand)
+export class WithdrawHandler implements ICommandHandler<WithdrawCommand> {
+  // Inject the Abstract Interface, NEVER the concrete Prisma/TypeORM repository
+  constructor(@Inject(ACCOUNT_REPOSITORY) private readonly repo: IAccountRepository) {}
+
+  async execute(command: WithdrawCommand): Promise<void> {
+    const account = await this.repo.findById(command.accountId);
+    if (!account) throw new NotFoundException('Account not found');
+
+    account.withdraw(command.amount); // Business logic execution
+    await this.repo.save(account);    // Persistence
+  }
+}
+```
+
+## 🔌 4. INFRASTRUCTURE & DEPENDENCY INJECTION
+
+To achieve true DIP, the Application layer asks for an Interface (`IAccountRepository`), and the Infrastructure layer provides the implementation (`PrismaAccountRepository`).
+
+**✅ ALWAYS** bind the interface to the implementation in the Module using Custom Providers.
+
+```typescript
+// 🟡 Infrastructure Layer (Module)
+export const ACCOUNT_REPOSITORY = Symbol('ACCOUNT_REPOSITORY');
+
+@Module({
+  imports: [CqrsModule],
+  controllers: [AccountController],
+  providers: [
+    WithdrawHandler,
+    // Dependency Injection Magic!
+    {
+      provide: ACCOUNT_REPOSITORY,
+      useClass: PrismaAccountRepository 
+    }
+  ]
+})
+export class AccountModule {}
+```
+
+## 🛡️ 5. SECURITY & VALIDATION
+
+1. **Validation Boundaries**: You MUST validate every incoming request using `class-validator` (with `ValidationPipe(whitelist: true)`) or `Zod`. Never trust client data.
+2. **Exception Filters**: Domain Exceptions (`InsufficientFundsException`) MUST be caught by a Global Exception Filter and translated into appropriate HTTP Status Codes (e.g., `400 Bad Request`). Controllers should NEVER catch and throw `HttpException` manually.
+3. **Guards & RBAC**: Every endpoint MUST be protected by an authentication guard by default (opt-out via `@Public()`). Use Role-Based Access Control (RBAC) via custom `@Roles()` decorators and `RolesGuard`.
+4. **Helmet & Throttling**: The `main.ts` file MUST implement `helmet()` for HTTP header security and a global `RateLimiter` to prevent DDoS and brute-force attacks.
+
+## 🚀 6. PERFORMANCE & TRANSACTIONALITY
+
+1. **Transactions**: When a Command mutates multiple aggregates, it MUST be wrapped in a Database Transaction. (e.g., using Prisma's `$transaction` or TypeORM's `QueryRunner`).
+2. **N+1 Problem**: In GraphQL Resolvers or nested REST endpoints, ALWAYS use `DataLoader` to batch and cache database queries, preventing the N+1 query performance killer.
+3. **Event-Driven Architecture**: If an action needs to send an email, update analytics, and charge a credit card, DO NOT await all of them synchronously. Publish a Domain Event (e.g., `AccountCreatedEvent`) and let independent Event Handlers process the side-effects asynchronously in the background.
+
+---
+**SUMMARY OF BANNED PRACTICES:**
+- "God Services" (`UserService` with 2000 lines of code) - Use CQRS Handlers.
+- Anemic Domain Models (Entities that just mirror DB tables).
+- Business logic in Controllers.
+- Directly importing Prisma/TypeORM into the Application Layer (Use Interfaces).
+- Throwing `HttpException` from the Domain Layer (Domain must not know about HTTP).

@@ -1,547 +1,164 @@
 ---
 name: next-routes
-description: >
-  Advanced Next.js 15 routing patterns: Parallel Routes, Intercepting Routes (Modals), 
-  Streaming UI, and SEO Metadata. 
+description: The ultimate architectural standard for Advanced Next.js Routing: Parallel Routes, Intercepting Routes (Modals), Streaming, and Middleware.
 author: Diego Villanueva
-trigger: When implementing complex layouts, modals controlled by URL, or optimizing page rendering.
+trigger: When building complex layouts, URL-driven modals, streaming UIs, or configuring Edge Middleware.
 ---
 
-# Next.js App Router Patterns
+# Next.js Advanced Routing Architecture
 
-Comprehensive patterns for Next.js 14+ App Router architecture, Server Components, and modern full-stack React development.
+The Next.js App Router is a powerful, nested routing engine. Mastering it means understanding that the URL is the ultimate state manager.
 
-## When to Use This Skill
+## 1. Intercepting Routes (The "Instagram Modal" Pattern)
 
-- Building new Next.js applications with App Router
-- Migrating from Pages Router to App Router
-- Implementing Server Components and streaming
-- Setting up parallel and intercepting routes
-- Optimizing data fetching and caching
-- Building full-stack features with Server Actions
+Intercepting routes allow you to load a route from another part of your application within the current layout (usually as a Modal). 
 
-## Core Concepts
+**The Goal**: When a user clicks a photo in the feed, it opens in a Modal (`/photo/123`). If they copy the URL and send it to a friend, or hit refresh, the friend sees the full, standalone page (`/photo/123`), NOT a modal over an empty background.
 
-### 1. Rendering Modes
+- **`(.)`**: Match segments on the same level.
+- **`(..)`**: Match segments one level above.
+- **`(...)`**: Match segments from the root `app` directory.
 
-| Mode                  | Where        | When to Use                               |
-| --------------------- | ------------ | ----------------------------------------- |
-| **Server Components** | Server only  | Data fetching, heavy computation, secrets |
-| **Client Components** | Browser      | Interactivity, hooks, browser APIs        |
-| **Static**            | Build time   | Content that rarely changes               |
-| **Dynamic**           | Request time | Personalized or real-time data            |
-| **Streaming**         | Progressive  | Large pages, slow data sources            |
-
-### 2. File Conventions
-
-```
+```text
+// ✅ ALWAYS: Directory structure for Intercepting Routes
 app/
-├── layout.tsx       # Shared UI wrapper
-├── page.tsx         # Route UI
-├── loading.tsx      # Loading UI (Suspense)
-├── error.tsx        # Error boundary
-├── not-found.tsx    # 404 UI
-├── route.ts         # API endpoint
-├── template.tsx     # Re-mounted layout
-├── default.tsx      # Parallel route fallback
-└── opengraph-image.tsx  # OG image generation
+├── feed/
+│   ├── page.tsx          # Feed page with <Link href="/photo/123">
+│   └── @modal/           # Parallel route slot for the modal
+│       ├── default.tsx   # Returns null when no modal is open
+│       └── (..)photo/    # INTERCEPTOR: Triggers when navigating to /photo/* from /feed
+│           └── [id]/page.tsx # Renders the Modal UI
+└── photo/
+    └── [id]/page.tsx     # STANDALONE: Renders the full page (hard refresh)
 ```
 
-## Quick Start
+## 2. Parallel Routes (Dashboards & Conditional UIs)
 
-```typescript
-// app/layout.tsx
-import { Inter } from 'next/font/google'
-import { Providers } from './providers'
+Parallel routes (`@folder`) allow you to render multiple pages simultaneously within the same layout, and manage their loading and error states independently.
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata = {
-  title: { default: 'My App', template: '%s | My App' },
-  description: 'Built with Next.js App Router',
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  )
-}
-
-// app/page.tsx - Server Component by default
-async function getProducts() {
-  const res = await fetch('https://api.example.com/products', {
-    next: { revalidate: 3600 }, // ISR: revalidate every hour
-  })
-  return res.json()
-}
-
-export default async function HomePage() {
-  const products = await getProducts()
-
-  return (
-    <main>
-      <h1>Products</h1>
-      <ProductGrid products={products} />
-    </main>
-  )
-}
-```
-
-## Patterns
-
-### Pattern 1: Server Components with Data Fetching
-
-```typescript
-// app/products/page.tsx
-import { Suspense } from 'react'
-import { ProductList, ProductListSkeleton } from '@/components/products'
-import { FilterSidebar } from '@/components/filters'
-
-interface SearchParams {
-  category?: string
-  sort?: 'price' | 'name' | 'date'
-  page?: string
-}
-
-export default async function ProductsPage({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>
-}) {
-  const params = await searchParams
-
-  return (
-    <div className="flex gap-8">
-      <FilterSidebar />
-      <Suspense
-        key={JSON.stringify(params)}
-        fallback={<ProductListSkeleton />}
-      >
-        <ProductList
-          category={params.category}
-          sort={params.sort}
-          page={Number(params.page) || 1}
-        />
-      </Suspense>
-    </div>
-  )
-}
-
-// components/products/ProductList.tsx - Server Component
-async function getProducts(filters: ProductFilters) {
-  const res = await fetch(
-    `${process.env.API_URL}/products?${new URLSearchParams(filters)}`,
-    { next: { tags: ['products'] } }
-  )
-  if (!res.ok) throw new Error('Failed to fetch products')
-  return res.json()
-}
-
-export async function ProductList({ category, sort, page }: ProductFilters) {
-  const { products, totalPages } = await getProducts({ category, sort, page })
-
-  return (
-    <div>
-      <div className="grid grid-cols-3 gap-4">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-      <Pagination currentPage={page} totalPages={totalPages} />
-    </div>
-  )
-}
-```
-
-### Pattern 2: Client Components with 'use client'
-
-```typescript
-// components/products/AddToCartButton.tsx
-'use client'
-
-import { useState, useTransition } from 'react'
-import { addToCart } from '@/app/actions/cart'
-
-export function AddToCartButton({ productId }: { productId: string }) {
-  const [isPending, startTransition] = useTransition()
-  const [error, setError] = useState<string | null>(null)
-
-  const handleClick = () => {
-    setError(null)
-    startTransition(async () => {
-      const result = await addToCart(productId)
-      if (result.error) {
-        setError(result.error)
-      }
-    })
-  }
-
-  return (
-    <div>
-      <button
-        onClick={handleClick}
-        disabled={isPending}
-        className="btn-primary"
-      >
-        {isPending ? 'Adding...' : 'Add to Cart'}
-      </button>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-    </div>
-  )
-}
-```
-
-### Pattern 3: Server Actions
-
-```typescript
-// app/actions/cart.ts
-"use server";
-
-import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-
-export async function addToCart(productId: string) {
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get("session")?.value;
-
-  if (!sessionId) {
-    redirect("/login");
-  }
-
-  try {
-    await db.cart.upsert({
-      where: { sessionId_productId: { sessionId, productId } },
-      update: { quantity: { increment: 1 } },
-      create: { sessionId, productId, quantity: 1 },
-    });
-
-    revalidateTag("cart");
-    return { success: true };
-  } catch (error) {
-    return { error: "Failed to add item to cart" };
-  }
-}
-
-export async function checkout(formData: FormData) {
-  const address = formData.get("address") as string;
-  const payment = formData.get("payment") as string;
-
-  // Validate
-  if (!address || !payment) {
-    return { error: "Missing required fields" };
-  }
-
-  // Process order
-  const order = await processOrder({ address, payment });
-
-  // Redirect to confirmation
-  redirect(`/orders/${order.id}/confirmation`);
-}
-```
-
-### Pattern 4: Parallel Routes
-
-```typescript
-// app/dashboard/layout.tsx
+```tsx
+// ✅ ALWAYS: Parallel Route Layout (app/dashboard/layout.tsx)
 export default function DashboardLayout({
-  children,
-  analytics,
-  team,
+  children, // The main page.tsx
+  team,     // The @team/page.tsx
+  analytics // The @analytics/page.tsx
 }: {
-  children: React.ReactNode
-  analytics: React.ReactNode
-  team: React.ReactNode
+  children: React.ReactNode;
+  team: React.ReactNode;
+  analytics: React.ReactNode;
 }) {
   return (
-    <div className="dashboard-grid">
+    <div className="grid">
       <main>{children}</main>
-      <aside className="analytics-panel">{analytics}</aside>
-      <aside className="team-panel">{team}</aside>
+      <aside>
+        {team}
+        {analytics}
+      </aside>
     </div>
-  )
-}
-
-// app/dashboard/@analytics/page.tsx
-export default async function AnalyticsSlot() {
-  const stats = await getAnalytics()
-  return <AnalyticsChart data={stats} />
-}
-
-// app/dashboard/@analytics/loading.tsx
-export default function AnalyticsLoading() {
-  return <ChartSkeleton />
-}
-
-// app/dashboard/@team/page.tsx
-export default async function TeamSlot() {
-  const members = await getTeamMembers()
-  return <TeamList members={members} />
+  );
 }
 ```
 
-### Pattern 5: Intercepting Routes (Modal Pattern)
+**CRITICAL RULE (`default.tsx`)**: If the URL changes (e.g., the user clicks a link inside `@team` that navigates to `/dashboard/settings`), Next.js doesn't know what to render inside `@analytics` because it doesn't have a `settings` route. You MUST provide a `default.tsx` file inside every parallel route to act as a fallback, otherwise the app will crash with a 404.
 
-```typescript
-// File structure for photo modal
-// app/
-// ├── @modal/
-// │   ├── (.)photos/[id]/page.tsx  # Intercept
-// │   └── default.tsx
-// ├── photos/
-// │   └── [id]/page.tsx            # Full page
-// └── layout.tsx
+## 3. Streaming UI (Progressive Rendering)
 
-// app/@modal/(.)photos/[id]/page.tsx
-import { Modal } from '@/components/Modal'
-import { PhotoDetail } from '@/components/PhotoDetail'
+If a page takes 3 seconds to fetch data, the user should not stare at a blank white screen for 3 seconds.
 
-export default async function PhotoModal({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
-  const { id } = await params
-  const photo = await getPhoto(id)
+- **`loading.tsx`**: Automatically wraps the `page.tsx` in a `<Suspense>` boundary. It streams the shell of the page instantly while the server finishes fetching the data.
+- **Granular `<Suspense>`**: For massive pages, don't wait for the slowest query. Fetch fast data at the page level, and wrap slow components in their own Suspense boundaries.
+
+```tsx
+// ✅ ALWAYS: Granular Streaming for slow data
+import { Suspense } from 'react';
+import { SkeletonCard } from '@/components/ui/skeleton';
+import { SlowProductRecommendations } from './SlowRecommendations';
+
+export default function ProductPage({ params }) {
+  // Fast query
+  const product = await db.getProduct(params.id); 
 
   return (
-    <Modal>
-      <PhotoDetail photo={photo} />
-    </Modal>
-  )
-}
-
-// app/photos/[id]/page.tsx - Full page version
-export default async function PhotoPage({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
-  const { id } = await params
-  const photo = await getPhoto(id)
-
-  return (
-    <div className="photo-page">
-      <PhotoDetail photo={photo} />
-      <RelatedPhotos photoId={id} />
-    </div>
-  )
-}
-
-// app/layout.tsx
-export default function RootLayout({
-  children,
-  modal,
-}: {
-  children: React.ReactNode
-  modal: React.ReactNode
-}) {
-  return (
-    <html>
-      <body>
-        {children}
-        {modal}
-      </body>
-    </html>
-  )
-}
-```
-
-### Pattern 6: Streaming with Suspense
-
-```typescript
-// app/product/[id]/page.tsx
-import { Suspense } from 'react'
-
-export default async function ProductPage({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
-  const { id } = await params
-
-  // This data loads first (blocking)
-  const product = await getProduct(id)
-
-  return (
-    <div>
-      {/* Immediate render */}
-      <ProductHeader product={product} />
-
-      {/* Stream in reviews */}
-      <Suspense fallback={<ReviewsSkeleton />}>
-        <Reviews productId={id} />
+    <article>
+      <h1>{product.title}</h1>
+      
+      {/* 
+        This boundary streams HTML instantly. 
+        The server keeps the connection open and streams the Recommendations 
+        when they finish 5 seconds later.
+      */}
+      <Suspense fallback={<SkeletonCard />}>
+        <SlowProductRecommendations productId={product.id} />
       </Suspense>
-
-      {/* Stream in recommendations */}
-      <Suspense fallback={<RecommendationsSkeleton />}>
-        <Recommendations productId={id} />
-      </Suspense>
-    </div>
-  )
-}
-
-// These components fetch their own data
-async function Reviews({ productId }: { productId: string }) {
-  const reviews = await getReviews(productId) // Slow API
-  return <ReviewList reviews={reviews} />
-}
-
-async function Recommendations({ productId }: { productId: string }) {
-  const products = await getRecommendations(productId) // ML-based, slow
-  return <ProductCarousel products={products} />
+    </article>
+  );
 }
 ```
 
-### Pattern 7: Route Handlers (API Routes)
+## 4. Middleware (Edge Routing & Auth)
+
+`middleware.ts` runs at the Edge, BEFORE a request is completed. It is used for Auth redirects, i18n routing, and manipulating request headers.
+
+- **The Edge Constraint**: Middleware does NOT run in a Node.js environment. You cannot use heavy Node modules (like `bcrypt`, `pg`, or standard ORMs). 
+- **The Matcher**: ALWAYS configure the `config.matcher` to ignore static files and images. If your middleware runs on every `.png` request, you will destroy your site's performance and skyrocket your hosting bill.
 
 ```typescript
-// app/api/products/route.ts
-import { NextRequest, NextResponse } from "next/server";
+// ✅ ALWAYS: Optimize Middleware Execution
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const category = searchParams.get("category");
-
-  const products = await db.product.findMany({
-    where: category ? { category } : undefined,
-    take: 20,
-  });
-
-  return NextResponse.json(products);
-}
-
-export async function POST(request: NextRequest) {
-  const body = await request.json();
-
-  const product = await db.product.create({
-    data: body,
-  });
-
-  return NextResponse.json(product, { status: 201 });
-}
-
-// app/api/products/[id]/route.ts
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  const { id } = await params;
-  const product = await db.product.findUnique({ where: { id } });
-
-  if (!product) {
-    return NextResponse.json({ error: "Product not found" }, { status: 404 });
-  }
-
-  return NextResponse.json(product);
-}
-```
-
-### Pattern 8: Metadata and SEO
-
-```typescript
-// app/products/[slug]/page.tsx
-import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-
-type Props = {
-  params: Promise<{ slug: string }>
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const product = await getProduct(slug)
-
-  if (!product) return {}
-
-  return {
-    title: product.name,
-    description: product.description,
-    openGraph: {
-      title: product.name,
-      description: product.description,
-      images: [{ url: product.image, width: 1200, height: 630 }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: product.name,
-      description: product.description,
-      images: [product.image],
-    },
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get('auth-token');
+  
+  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 }
 
-export async function generateStaticParams() {
-  const products = await db.product.findMany({ select: { slug: true } })
-  return products.map((p) => ({ slug: p.slug }))
-}
-
-export default async function ProductPage({ params }: Props) {
-  const { slug } = await params
-  const product = await getProduct(slug)
-
-  if (!product) notFound()
-
-  return <ProductDetail product={product} />
-}
+// ❌ NEVER let middleware run on static assets
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
+};
 ```
 
-## Caching Strategies
+## 5. Route Handlers (`route.ts`)
 
-### Data Cache
+Route Handlers replace the old `/pages/api` directory. They allow you to create custom request handlers for a given route using the Web Request and Response APIs.
+
+- **Mutations**: Do NOT use Route Handlers for form submissions. Use **Server Actions** instead.
+- **When to use**: Use Route Handlers ONLY for Webhooks (e.g., Stripe events), OAuth callbacks, dynamic image generation (OG images), or public REST APIs consumed by third parties.
 
 ```typescript
-// No cache (always fresh)
-fetch(url, { cache: "no-store" });
+// ✅ ALWAYS: Route Handlers for Webhooks
+import { NextResponse } from 'next/server';
+import { verifyStripeSignature } from '@/lib/stripe';
 
-// Cache forever (static)
-fetch(url, { cache: "force-cache" });
-
-// ISR - revalidate after 60 seconds
-fetch(url, { next: { revalidate: 60 } });
-
-// Tag-based invalidation
-fetch(url, { next: { tags: ["products"] } });
-
-// Invalidate via Server Action
-("use server");
-import { revalidateTag, revalidatePath } from "next/cache";
-
-export async function updateProduct(id: string, data: ProductData) {
-  await db.product.update({ where: { id }, data });
-  revalidateTag("products");
-  revalidatePath("/products");
+export async function POST(request: Request) {
+  const payload = await request.text();
+  const signature = request.headers.get('stripe-signature');
+  
+  try {
+    const event = verifyStripeSignature(payload, signature);
+    await processPayment(event);
+    return NextResponse.json({ received: true });
+  } catch (err) {
+    return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
+  }
 }
 ```
 
-## Best Practices
+---
 
-### Do's
-
-- **Start with Server Components** - Add 'use client' only when needed
-- **Colocate data fetching** - Fetch data where it's used
-- **Use Suspense boundaries** - Enable streaming for slow data
-- **Leverage parallel routes** - Independent loading states
-- **Use Server Actions** - For mutations with progressive enhancement
-
-### Don'ts
-
-- **Don't pass serializable data** - Server → Client boundary limitations
-- **Don't use hooks in Server Components** - No useState, useEffect
-- **Don't fetch in Client Components** - Use Server Components or React Query
-- **Don't over-nest layouts** - Each layout adds to the component tree
-- **Don't ignore loading states** - Always provide loading.tsx or Suspense
-
-## Resources
-
-- [Next.js App Router Documentation](https://nextjs.org/docs/app)
-- [Server Components RFC](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md)
-- [Vercel Templates](https://vercel.com/templates/next.js)
+**Execution Protocol**
+1. **Dynamic Segments**: Use `[id]` for required params (e.g. `/users/1`). Use `[...slug]` for catch-all (e.g. `/docs/a/b/c`). Use `[[...slug]]` for optional catch-all (matches `/docs` as well).
+2. **Route Groups `(folder)`**: Use route groups to bypass massive root layouts. If your `app/layout.tsx` has a huge navigation bar, put your marketing pages inside `app/(marketing)/layout.tsx` and your app inside `app/(app)/layout.tsx`. The URL will still be `/pricing`, ignoring the `(marketing)` folder name.
+3. **Hard Navigation**: If you need to force a hard reload (bypassing the client-side router cache), use `window.location.href = '/path'` instead of `router.push('/path')`.

@@ -1,63 +1,191 @@
 ---
-description: 'Senior React Architect - Clean Architecture & React 19'
-applyTo: '**/*.tsx, **/*.ts, **/*.js, **/*.jsx, **/*.scss, **/*.css'
+description: 'Principal React Architect - Feature-Sliced Design, React 19 & High-Performance State'
+applyTo: '**/*.tsx, **/*.ts, **/*.js, **/*.jsx'
 ---
 
-# React Architecture & Coding Standards
+# Enterprise React Coding Standard & Architecture Protocol (React 19+)
 
-You are a **Senior React Architect**. You build professional-grade applications using **React 19**, **Next.js App Router**, and **Zustand**. You follow a strict **Clean Architecture** within **Vertical Slices**.
+You are a **Principal React Architect**. Your prime directive is to build highly resilient, performant, and maintainable Web Applications using **React 19+**. You strictly enforce **Feature-Sliced Design (FSD)** blended with **Clean Architecture**. You mandate the use of **TanStack Query** for server state, **Zustand** for client state, and strictly utilize the latest React 19 primitives (`use`, `useActionState`, `useOptimistic`).
 
-## 🏛️ Scaffolding & Architecture (The Law)
+## 🏛️ 1. ARCHITECTURAL PATTERN: Feature-Sliced Clean Architecture
 
-Every feature MUST be self-contained within `/src/features/[feature-name]/`. You MUST follow this tripartite structure for every feature:
+Traditional React apps suffer from the "Giant Components Folder" anti-pattern. You MUST encapsulate the application by Feature.
+
+Every feature MUST reside in `src/features/[feature-name]/` and adhere to this strict structure:
 
 ```text
-/features/[feature-name]/
-├── domain/               # Core Business Logic (Framework Agnostic)
-│   ├── entities/         # Pure Models (interfaces/types)
-│   └── repositories/     # Interface definitions for data access
-├── application/          # Use cases, Mappers, and Services
-│   ├── use-cases/        # Logic orchestrators
-│   └── services/         # Domain-specific logic
-├── infrastructure/       # External Details (API, DB, Implementation)
-│   ├── repositories/     # Implementations of Domain interfaces
-│   ├── data-sources/     # API Clients (Axios, Fetch)
-│   └── mappers/          # DTO to Entity mappers
-└── presentation/         # Framework-specific delivery (UI)
-    ├── components/       # UI Components
-    ├── hooks/            # Custom hooks for UI state
-    ├── state/            # Zustand stores
-    └── views/            # Main entry points/Screens
+src/features/[feature-name]/
+├── domain/                  # 🟢 CORE: Framework-agnostic business rules
+│   ├── entities/            # TypeScript Interfaces / Zod Schemas
+│   └── services/            # Pure business logic functions
+├── api/                     # 🟡 INFRASTRUCTURE: Data fetching
+│   ├── queries.ts           # TanStack Query queryOptions & useQuery hooks
+│   ├── mutations.ts         # TanStack Query useMutation hooks
+│   └── dto.ts               # Data Transfer Objects
+├── store/                   # 🔵 STATE: Client-side UI State
+│   └── store.ts             # Zustand stores specific to this feature
+└── components/              # 🔴 PRESENTATION: React UI
+    ├── FeatureSmart.tsx     # Container component (Subscribes to hooks/store)
+    └── FeatureDumb.tsx      # Pure UI component (Props only)
 ```
 
-### Dependency Rules:
-1. **Domain**: Must have ZERO dependencies on other layers or React.
-2. **Infrastructure**: Depends on Domain (to implement interfaces).
-3. **Presentation**: Depends on Domain and Application layer.
-4. **NO CROSS-FEATURE IMPORTS**: Use a `shared` module for common components/utils.
+### The Golden Dependency Rules:
+1. Components (Presentation) NEVER make `fetch()` calls directly. They call custom hooks from the `api/` layer.
+2. The `api/` layer handles data fetching, caching, and DTO-to-Entity mapping.
+3. Features cannot cross-import internal components. They must use an `index.ts` file to expose a strictly controlled Public API.
 
-## ✅ ALWAYS vs ❌ NEVER
+## ⚡ 2. STATE MANAGEMENT (The Separation of State)
 
-| 🟢 ALWAYS | 🔴 NEVER |
-| :--- | :--- |
-| Use **React 19 Actions** for forms. | Use `useEffect` for data fetching. |
-| Use **Zustand** for client-side state. | Use `useState` for complex global state. |
-| Use **TanStack Query v5** for server data. | Manually manage loading/error flags. |
-| Use **Index Pattern** (`index.ts`) for exports. | Import from internal files (No deep nesting). |
-| Trust the **React Compiler**. | Use `useMemo` or `useCallback` manually. |
-| Use **Server Components** by default. | Use `"use client"` unless necessary. |
-| Use **Zod** for all schema validations. | Rely on loose TypeScript types. |
-| Use **Tailwind CSS** with `cn()` utility. | Use inline styles or CSS Modules. |
+The biggest mistake in React is treating all state equally. You MUST separate Server State from Client State.
 
-## 🚀 Specialized Scaffolding Logic
+### A. Server State (Data from APIs)
+**❌ NEVER** use `useEffect` to fetch data and store it in `useState`, `Redux`, or `Zustand`.
+**✅ ALWAYS** use **TanStack Query (React Query)** for server state. It handles caching, deduplication, background refetching, and pagination automatically.
 
-1. **Vertical Slicing**: A feature folder contains EVERYTHING it needs. If it doesn't fit, it's shared.
-2. **Action Pattern**: Use React 19 `useActionState` and `useFormStatus` for all interactions.
-3. **Public API**: The `index.ts` file in the root of the feature is the ONLY allowed export point.
-4. **Repository Pattern**: Never call `fetch` or `axios` inside a component. Always use an Infrastructure Repository.
+```tsx
+// 🟢 api/queries.ts
+import { useQuery } from '@tanstack/react-query';
 
-## 🛠 Communication Protocol
+export const useUserQuery = (userId: string) => {
+  return useQuery({
+    queryKey: ['users', userId],
+    queryFn: async () => {
+      const res = await fetch(`/api/users/${userId}`);
+      if (!res.ok) throw new Error('Network response was not ok');
+      return res.json() as Promise<User>;
+    },
+  });
+};
+```
 
-- **No Snippets**: Provide full, production-ready files.
-- **No Placeholders**: Write the actual logic (e.g., full Zod validation, full API error handling).
-- **Architecture First**: Before writing code, briefly explain the vertical slice you are creating.
+### B. Client State (UI Toggles, Themes, Complex Forms)
+**❌ NEVER** use Redux unless mandated by a legacy codebase (too much boilerplate).
+**✅ ALWAYS** use **Zustand** for global client state.
+**✅ ALWAYS** use `useState` for highly localized state (e.g., an accordion open/close toggle).
+
+```typescript
+// 🟢 store/ui-store.ts
+import { create } from 'zustand';
+
+interface UIState {
+  sidebarOpen: boolean;
+  toggleSidebar: () => void;
+}
+
+export const useUIStore = create<UIState>((set) => ({
+  sidebarOpen: false,
+  toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+}));
+```
+
+## 🧱 3. REACT 19 PRIMITIVES & THE COMPILER
+
+React 19 introduces native primitives that eliminate the need for common external libraries and boilerplate.
+
+### A. Data Fetching & Promises (`use`)
+**✅ ALWAYS** use the new `use()` hook to read Promises or Context conditionally. It integrates natively with `<Suspense>`.
+
+```tsx
+import { use, Suspense } from 'react';
+
+// 'userPromise' is passed from a parent Server Component or fetched via a library
+function UserProfile({ userPromise }: { userPromise: Promise<User> }) {
+  const user = use(userPromise); // Pauses rendering until Promise resolves
+  return <h1>{user.name}</h1>;
+}
+
+// In the parent:
+// <Suspense fallback={<Spinner />}><UserProfile userPromise={fetchUser()} /></Suspense>
+```
+
+### B. Actions and Form State (`useActionState`, `useFormStatus`)
+**❌ NEVER** manually manage `isSubmitting`, `error`, and `success` states for basic forms.
+**✅ ALWAYS** use `useActionState` to handle form submissions gracefully.
+
+```tsx
+import { useActionState } from 'react';
+
+async function updateNameAction(previousState: any, formData: FormData) {
+  const name = formData.get('name');
+  const res = await api.updateName(name);
+  return res.success ? { success: true } : { error: 'Failed' };
+}
+
+export function NameForm() {
+  const [state, formAction, isPending] = useActionState(updateNameAction, null);
+
+  return (
+    <form action={formAction}>
+      <input name="name" />
+      <button disabled={isPending}>Update</button>
+      {state?.error && <p>{state.error}</p>}
+    </form>
+  );
+}
+```
+
+### C. Optimistic Updates (`useOptimistic`)
+**✅ ALWAYS** use `useOptimistic` to update the UI instantly before the server responds, ensuring a Premium 0-latency UX.
+
+```tsx
+import { useOptimistic } from 'react';
+
+function LikeButton({ initialLikes }: { initialLikes: number }) {
+  const [optimisticLikes, addOptimisticLike] = useOptimistic(
+    initialLikes,
+    (state, amount: number) => state + amount
+  );
+
+  return (
+    <form action={async () => {
+      addOptimisticLike(1); // UI updates instantly
+      await api.likePost(); // Network request in background
+    }}>
+      <button>Likes: {optimisticLikes}</button>
+    </form>
+  );
+}
+```
+
+## 🛡️ 4. FORMS & VALIDATION (Strict Typing)
+
+Building complex forms with vanilla React is an anti-pattern due to excessive re-renders.
+
+**✅ ALWAYS** use **React Hook Form** combined with **Zod** for schema validation.
+**❌ NEVER** build controlled forms with 10 `useState` hooks for each input.
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const schema = z.object({ email: z.string().email() });
+type FormData = z.infer<typeof schema>;
+
+export function EmailForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(schema)
+  });
+
+  return (
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <input {...register('email')} />
+      {errors.email && <span>{errors.email.message}</span>}
+    </form>
+  );
+}
+```
+
+## 🧪 5. PERFORMANCE & RENDER OPTIMIZATION
+
+1. **The React Compiler**: React 19 introduces an optimizing compiler. You should write pure, idiomatic React. Do not prematurely optimize with `useMemo` or `useCallback` unless specifically required, as the compiler handles memoization automatically.
+2. **Prop Drilling**: If you pass a prop down more than 3 levels, STOP. Use `Context` (via the `use()` hook) or `Zustand`.
+3. **Suspense Boundaries**: ALWAYS wrap lazy-loaded components or async data-fetching components in `<Suspense fallback={<Skeleton />}>` to implement the "Render-as-you-fetch" pattern.
+
+---
+**SUMMARY OF BANNED PRACTICES:**
+- `useEffect` for data fetching (Use TanStack Query or `use()`).
+- `useState` for form fields in large forms (Use React Hook Form).
+- Redux for API caching (Use TanStack Query).
+- Deeply nested directories without a Domain boundary.
+- Mutating props or state directly (Always treat state as immutable).

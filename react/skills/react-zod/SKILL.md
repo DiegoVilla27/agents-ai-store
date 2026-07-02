@@ -1,212 +1,143 @@
 ---
 name: react-zod
-description: Zod 4 schema validation patterns
+description: The ultimate architectural standard for runtime validation, type coercion, and data transformation using Zod (v4).
 author: Diego Villanueva
-trigger: When using Zod for validation - breaking changes from v3.
+trigger: When validating API responses, parsing URL parameters, defining form schemas, or migrating to Zod 4.
 ---
 
-## Breaking Changes from Zod 3
+# Zod Architecture (v4)
+
+TypeScript is a lie at runtime. When you fetch data from an API or read a URL parameter, TypeScript assumes the data matches your `interface`, but if the API changes, your app crashes silently. Zod is the boundary layer that validates untrusted data at runtime and forces it to match your static types.
+
+## 1. Zod 4 Breaking Changes (CRITICAL)
+
+Zod 4 overhauled string-specific validators to be top-level functions and simplified error messages.
 
 ```typescript
-// ❌ Zod 3 (OLD)
-z.string().email()
-z.string().uuid()
-z.string().url()
-z.string().nonempty()
-z.object({ name: z.string() }).required_error("Required")
+import { z } from 'zod';
 
-// ✅ Zod 4 (NEW)
-z.email()
-z.uuid()
-z.url()
-z.string().min(1)
-z.object({ name: z.string() }, { error: "Required" })
+// ❌ NEVER (Zod 3 syntax - will crash in v4)
+const oldEmail = z.string().email();
+const oldRequired = z.object({ name: z.string() }).required_error("Required");
+const oldNonEmpty = z.string().nonempty();
+
+// ✅ ALWAYS (Zod 4 syntax)
+const newEmail = z.email();
+const newUuid = z.uuid();
+const newUrl = z.url();
+const newNonEmpty = z.string().min(1);
+
+// Error mapping is now passed in the config object
+const newRequired = z.object({ name: z.string() }, { error: "Name is required" });
 ```
 
-## Basic Schemas
+## 2. The Single Source of Truth
+
+Never write a TypeScript interface manually if a Zod schema exists for it.
 
 ```typescript
-import { z } from "zod";
-
-// Primitives
-const stringSchema = z.string();
-const numberSchema = z.number();
-const booleanSchema = z.boolean();
-const dateSchema = z.date();
-
-// Top-level validators (Zod 4)
-const emailSchema = z.email();
-const uuidSchema = z.uuid();
-const urlSchema = z.url();
-
-// With constraints
-const nameSchema = z.string().min(1).max(100);
-const ageSchema = z.number().int().positive().max(150);
-const priceSchema = z.number().min(0).multipleOf(0.01);
-```
-
-## Object Schemas
-
-```typescript
-const userSchema = z.object({
+// ✅ ALWAYS: Infer the type from the schema
+const UserSchema = z.object({
   id: z.uuid(),
-  email: z.email({ error: "Invalid email address" }),
-  name: z.string().min(1, { error: "Name is required" }),
-  age: z.number().int().positive().optional(),
-  role: z.enum(["admin", "user", "guest"]),
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  name: z.string().min(2),
+  role: z.enum(["admin", "user"])
 });
 
-type User = z.infer<typeof userSchema>;
-
-// Parsing
-const user = userSchema.parse(data);  // Throws on error
-const result = userSchema.safeParse(data);  // Returns { success, data/error }
-
-if (result.success) {
-  console.log(result.data);
-} else {
-  console.log(result.error.issues);
-}
+export type User = z.infer<typeof UserSchema>;
 ```
 
-## Arrays and Records
+## 3. Safe Parsing (Defensive Programming)
+
+If you use `.parse()`, Zod will throw an Error if validation fails. This crashes React if not caught.
+
+- **External Data**: ALWAYS use `.safeParse()` for API responses, URL parameters, or localStorage. Handle the `success: false` case gracefully.
 
 ```typescript
-// Arrays
-const tagsSchema = z.array(z.string()).min(1).max(10);
-const numbersSchema = z.array(z.number()).nonempty();
+// ✅ ALWAYS: Safe parsing for untrusted data
+function loadSettings() {
+  const rawData = localStorage.getItem('settings');
+  const result = SettingsSchema.safeParse(JSON.parse(rawData || '{}'));
 
-// Records (objects with dynamic keys)
-const scoresSchema = z.record(z.string(), z.number());
-// { [key: string]: number }
-
-// Tuples
-const coordinatesSchema = z.tuple([z.number(), z.number()]);
-// [number, number]
-```
-
-## Unions and Discriminated Unions
-
-```typescript
-// Simple union
-const stringOrNumber = z.union([z.string(), z.number()]);
-
-// Discriminated union (more efficient)
-const resultSchema = z.discriminatedUnion("status", [
-  z.object({ status: z.literal("success"), data: z.unknown() }),
-  z.object({ status: z.literal("error"), error: z.string() }),
-]);
-```
-
-## Transformations
-
-```typescript
-// Transform during parsing
-const lowercaseEmail = z.email().transform(email => email.toLowerCase());
-
-// Coercion (convert types)
-const numberFromString = z.coerce.number();  // "42" → 42
-const dateFromString = z.coerce.date();      // "2024-01-01" → Date
-
-// Preprocessing
-const trimmedString = z.preprocess(
-  val => typeof val === "string" ? val.trim() : val,
-  z.string()
-);
-```
-
-## Refinements
-
-```typescript
-const passwordSchema = z.string()
-  .min(8)
-  .refine(val => /[A-Z]/.test(val), {
-    message: "Must contain uppercase letter",
-  })
-  .refine(val => /[0-9]/.test(val), {
-    message: "Must contain number",
-  });
-
-// With superRefine for multiple errors
-const formSchema = z.object({
-  password: z.string(),
-  confirmPassword: z.string(),
-}).superRefine((data, ctx) => {
-  if (data.password !== data.confirmPassword) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Passwords don't match",
-      path: ["confirmPassword"],
-    });
+  if (!result.success) {
+    console.error("Invalid settings, resetting to default", result.error.format());
+    return defaultSettings;
   }
-});
-```
 
-## Optional and Nullable
-
-```typescript
-// Optional (T | undefined)
-z.string().optional()
-
-// Nullable (T | null)
-z.string().nullable()
-
-// Both (T | null | undefined)
-z.string().nullish()
-
-// Default values
-z.string().default("unknown")
-z.number().default(() => Math.random())
-```
-
-## Error Handling
-
-```typescript
-// Zod 4: Use 'error' param instead of 'message'
-const schema = z.object({
-  name: z.string({ error: "Name must be a string" }),
-  email: z.email({ error: "Invalid email format" }),
-  age: z.number().min(18, { error: "Must be 18 or older" }),
-});
-
-// Custom error map
-const customSchema = z.string({
-  error: (issue) => {
-    if (issue.code === "too_small") {
-      return "String is too short";
-    }
-    return "Invalid string";
-  },
-});
-```
-
-## React Hook Form Integration
-
-```typescript
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-const schema = z.object({
-  email: z.email(),
-  password: z.string().min(8),
-});
-
-type FormData = z.infer<typeof schema>;
-
-function Form() {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("email")} />
-      {errors.email && <span>{errors.email.message}</span>}
-    </form>
-  );
+  return result.data; // Fully typed and validated
 }
 ```
 
-## Keywords
-zod, validation, schema, typescript, forms, parsing
+## 4. Coercion (URL Params & FormData)
+
+Data coming from URLs (e.g., `?page=2`) or native `FormData` is ALWAYS a string. Do not parse it manually.
+
+```typescript
+// ✅ ALWAYS: Let Zod handle string coercion
+const SearchParamsSchema = z.object({
+  page: z.coerce.number().min(1).default(1),
+  isActive: z.coerce.boolean().default(true)
+});
+
+// If URL has ?page=5, it becomes the number 5
+const params = SearchParamsSchema.parse(Object.fromEntries(urlSearchParams));
+```
+
+## 5. Transformations (The Boundary Layer)
+
+Sometimes the API sends data in a format you don't want to use in your UI (e.g., ISO strings instead of Date objects, or all-caps text).
+
+- **`.transform()`**: Run the data through a function *during* validation. The inferred TypeScript type will automatically be the *output* of the transform.
+
+```typescript
+// ✅ ALWAYS: Transform data at the boundary
+const EventSchema = z.object({
+  title: z.string().trim(),
+  // Input is string, Output is a Date object
+  startDate: z.string().transform((val) => new Date(val)), 
+});
+
+type Event = z.infer<typeof EventSchema>; 
+// Event.startDate is natively typed as Date!
+```
+
+## 6. Discriminated Unions (Polymorphic Data)
+
+If an API returns different shapes of data based on a "type" field (e.g., an activity feed with "posts", "images", and "links"), standard `z.union()` is slow and has terrible TypeScript inference.
+
+- **`z.discriminatedUnion`**: Orders of magnitude faster because it checks a single literal field to know which schema to apply.
+
+```typescript
+// ✅ ALWAYS: Use discriminatedUnion for polymorphic objects
+const BlockSchema = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("text"), content: z.string() }),
+  z.object({ type: z.literal("image"), url: z.url(), alt: z.string() })
+]);
+
+const block = BlockSchema.parse(data);
+if (block.type === "text") {
+  // TS knows 'content' exists, and 'url' does not!
+  console.log(block.content); 
+}
+```
+
+## 7. Refinements (Cross-field Validation)
+
+When a validation rule depends on multiple fields in an object (e.g., `endDate` must be after `startDate`), you cannot validate the fields individually. You must refine the entire object.
+
+```typescript
+// ✅ ALWAYS: Use object-level refinements
+const DateRangeSchema = z.object({
+  start: z.coerce.date(),
+  end: z.coerce.date()
+}).refine(data => data.end > data.start, {
+  message: "End date must be after start date",
+  path: ["end"] // Attaches the error to the 'end' field specifically
+});
+```
+
+---
+
+**Execution Protocol**
+1. **Never Trust the Backend**: The backend is an external system. Even if you share types via a monorepo, always pass the `fetch` response through a Zod `.safeParse()` before putting it in your global state or passing it to components.
+2. **Partial Updates**: If you are sending a PATCH request or building a multi-step form, use `UserSchema.partial()` to make all properties temporarily optional while retaining their base validation rules.
+3. **Catch-All for Objects**: By default, Zod strips out unrecognized keys from objects. If you absolutely need to retain them, use `.passthrough()`. If you want to strictly reject unknown keys (useful for config files), use `.strict()`.
