@@ -81,12 +81,14 @@ Once the `.agents/` folder is created, your AI agent (Antigravity, Cursor, etc.)
 ```text
 .agents/
 ├── angular/           # Agents, Instructions, and Skills for Angular
-├── react/             # Agents, Instructions, and Skills for React
+├── digital-marketer/  # Agents, Instructions, and Skills for Digital Marketing
 ├── flutter/           # Agents, Instructions, and Skills for Flutter
-├── nextjs/            # Agents, Instructions, and Skills for Next.js
 ├── nestjs/            # Agents, Instructions, and Skills for NestJS
+├── nextjs/            # Agents, Instructions, and Skills for Next.js
+├── react/             # Agents, Instructions, and Skills for React
 ├── react-native/      # Agents, Instructions, and Skills for React Native
-└── shared/            # Common skills (Clean Code, Web Standards, etc.)
+├── shared/            # Common skills (Clean Code, Web Standards, etc.)
+└── ui-ux-designer/    # Agents, Instructions, and Skills for UI/UX Design
 ```
 
 ---
@@ -103,6 +105,8 @@ Agents are high-level blueprints that combine specific instructions and skills t
 | `react-native-agent` | Mobile Engineer specialized in Expo and Performance. | [JSON](./react-native/agents/react-native-agent.json) |
 | `flutter-agent` | Senior Flutter Architect (Riverpod & Security). | [JSON](./flutter/agents/flutter-agent.json) |
 | `nestjs-agent` | Master of Backend Scalability and Clean Architecture. | [JSON](./nestjs/agents/nestjs-agent.json) |
+| `ui-ux-designer-agent` | Master of Aesthetics, Accessibility, and User Experience. | [JSON](./ui-ux-designer/agents/ui-ux-designer-agent.json) |
+| `digital-marketer-agent` | Expert in Conversion Optimization, SEO, and Copywriting. | [JSON](./digital-marketer/agents/digital-marketer-agent.json) |
 
 ### 🛠 How to Activate an Agent
 Once synchronized, you can activate a specific persona in your AI chat (Antigravity, Cursor, etc.) using one of these methods:
@@ -125,6 +129,8 @@ This repository implements **Automatic System Protocols** through specialized in
 | **Next.js** | `nextjs-coding` | [INSTRUCTION.md](./nextjs/instructions/nextjs-coding/INSTRUCTION.md) | App Router, Server Actions, Private Folders. |
 | **React Native** | `react-native-coding` | [INSTRUCTION.md](./react-native/instructions/react-native-coding/INSTRUCTION.md) | **Styled Components**, Expo, FlatList Opt. |
 | **NestJS** | `nestjs-coding` | [INSTRUCTION.md](./nestjs/instructions/nestjs-coding/INSTRUCTION.md) | Clean Architecture, DDD, Zod, Layers. |
+| **UI/UX Design** | `ui-ux-design` | [INSTRUCTION.md](./ui-ux-designer/instructions/ui-ux-design/INSTRUCTION.md) | Accessibility, Visual Hierarchy, Micro-interactions. |
+| **Digital Marketing** | `digital-marketing-strategy` | [INSTRUCTION.md](./digital-marketer/instructions/digital-marketing-strategy/INSTRUCTION.md) | SEO, Conversion Optimization, Persuasive Copy. |
 
 ---
 
@@ -137,7 +143,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (34 Skills)
+## 📚 Full Specialized Skills Catalog (49 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -266,6 +272,31 @@ Ensuring software remains immune to regressions.
 | `web-advanced-ui-ux` | [SKILL.md](./shared/skills/web-advanced-ui-ux/SKILL.md) | Container Queries, CSS Layers, and Anchor Positioning. |
 | `web-performance` | [SKILL.md](./shared/skills/web-performance/SKILL.md) | Core Web Vitals (LCP, CLS, INP) optimization. |
 | `web-micro-frontends` | [SKILL.md](./shared/skills/web-micro-frontends/SKILL.md) | Module Federation and Vite orchestrations. |
+
+### 🎨 UI/UX Design Ecosystem
+Professional design patterns and visual excellence.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `3d-and-spatial-design` | [SKILL.md](./ui-ux-designer/skills/3d-and-spatial-design/SKILL.md) | Depth, spatial UI, and 3D implementations. |
+| `accessibility-and-inclusion` | [SKILL.md](./ui-ux-designer/skills/accessibility-and-inclusion/SKILL.md) | WCAG compliance, screen readers, and high contrast. |
+| `branding-and-identity` | [SKILL.md](./ui-ux-designer/skills/branding-and-identity/SKILL.md) | Visual consistency, logo usage, and brand voice. |
+| `color-theory` | [SKILL.md](./ui-ux-designer/skills/color-theory/SKILL.md) | Palettes, contrast ratios, and emotional impact. |
+| `gestalt-psychology` | [SKILL.md](./ui-ux-designer/skills/gestalt-psychology/SKILL.md) | Proximity, similarity, and cognitive load reduction. |
+| `illustration-and-iconography` | [SKILL.md](./ui-ux-designer/skills/illustration-and-iconography/SKILL.md) | Cohesive iconography and custom SVG usage. |
+| `layout-composition` | [SKILL.md](./ui-ux-designer/skills/layout-composition/SKILL.md) | Grids, whitespace, and responsive layouts. |
+| `micro-interactions` | [SKILL.md](./ui-ux-designer/skills/micro-interactions/SKILL.md) | Delightful details and state transitions. |
+| `typography-mastery` | [SKILL.md](./ui-ux-designer/skills/typography-mastery/SKILL.md) | Font pairings, readability, and scale. |
+
+### 📈 Digital Marketing Ecosystem
+Strategies for growth, conversion, and compelling messaging.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `conversion-rate-optimization` | [SKILL.md](./digital-marketer/skills/conversion-rate-optimization/SKILL.md) | A/B testing, funnels, and reducing friction. |
+| `direct-response-copywriting` | [SKILL.md](./digital-marketer/skills/direct-response-copywriting/SKILL.md) | Actionable, high-converting persuasive writing. |
+| `email-marketing-automation` | [SKILL.md](./digital-marketer/skills/email-marketing-automation/SKILL.md) | Drip campaigns, segmentation, and retention. |
+| `performance-marketing` | [SKILL.md](./digital-marketer/skills/performance-marketing/SKILL.md) | ROI, CAC/LTV, and ad spend efficiency. |
+| `persuasive-psychology` | [SKILL.md](./digital-marketer/skills/persuasive-psychology/SKILL.md) | Social proof, urgency, and cognitive biases. |
+| `seo-and-sem` | [SKILL.md](./digital-marketer/skills/seo-and-sem/SKILL.md) | On-page SEO, keyword targeting, and SERP visibility. |
 
 ---
 
