@@ -82,12 +82,14 @@ Once the `.agents/` folder is created, your AI agent (Antigravity, Cursor, etc.)
 .agents/
 ├── angular/           # Agents, Instructions, and Skills for Angular
 ├── digital-marketer/  # Agents, Instructions, and Skills for Digital Marketing
+├── express/           # Agents, Instructions, and Skills for Express.js
 ├── flutter/           # Agents, Instructions, and Skills for Flutter
 ├── nestjs/            # Agents, Instructions, and Skills for NestJS
 ├── nextjs/            # Agents, Instructions, and Skills for Next.js
 ├── react/             # Agents, Instructions, and Skills for React
 ├── react-native/      # Agents, Instructions, and Skills for React Native
 ├── shared/            # Common skills (Clean Code, Web Standards, etc.)
+├── spring-boot/       # Agents, Instructions, and Skills for Spring Boot
 └── ui-ux-designer/    # Agents, Instructions, and Skills for UI/UX Design
 ```
 
@@ -105,6 +107,8 @@ Agents are high-level blueprints that combine specific instructions and skills t
 | `react-native-agent` | Mobile Engineer specialized in Expo and Performance. | [JSON](./react-native/agents/react-native-agent.json) |
 | `flutter-agent` | Senior Flutter Architect (Riverpod & Security). | [JSON](./flutter/agents/flutter-agent.json) |
 | `nestjs-agent` | Master of Backend Scalability and Clean Architecture. | [JSON](./nestjs/agents/nestjs-agent.json) |
+| `express-agent` | Master of High-Performance REST APIs and Security Hardening. | [JSON](./express/agents/express-agent.json) |
+| `spring-boot-agent` | Master of Enterprise Spring Services and Hexagonal Architecture. | [JSON](./spring-boot/agents/spring-boot-agent.json) |
 | `ui-ux-designer-agent` | Master of Aesthetics, Accessibility, and User Experience. | [JSON](./ui-ux-designer/agents/ui-ux-designer-agent.json) |
 | `digital-marketer-agent` | Expert in Conversion Optimization, SEO, and Copywriting. | [JSON](./digital-marketer/agents/digital-marketer-agent.json) |
 
@@ -129,6 +133,8 @@ This repository implements **Automatic System Protocols** through specialized in
 | **Next.js** | `nextjs-coding` | [INSTRUCTION.md](./nextjs/instructions/nextjs-coding/INSTRUCTION.md) | App Router, Server Actions, Private Folders. |
 | **React Native** | `react-native-coding` | [INSTRUCTION.md](./react-native/instructions/react-native-coding/INSTRUCTION.md) | **Styled Components**, Expo, FlatList Opt. |
 | **NestJS** | `nestjs-coding` | [INSTRUCTION.md](./nestjs/instructions/nestjs-coding/INSTRUCTION.md) | Clean Architecture, DDD, Zod, Layers. |
+| **Express.js** | `express-coding` | [INSTRUCTION.md](./express/instructions/express-coding/INSTRUCTION.md) | Clean Architecture, DDD, Zod Validation, Async Safety. |
+| **Spring Boot** | `spring-boot-coding` | [INSTRUCTION.md](./spring-boot/instructions/spring-boot-coding/INSTRUCTION.md) | Clean/Hexagonal Arch, DDD, Constructor DI, Global Interceptors. |
 | **UI/UX Design** | `ui-ux-design` | [INSTRUCTION.md](./ui-ux-designer/instructions/ui-ux-design/INSTRUCTION.md) | Accessibility, Visual Hierarchy, Micro-interactions. |
 | **Digital Marketing** | `digital-marketing-strategy` | [INSTRUCTION.md](./digital-marketer/instructions/digital-marketing-strategy/INSTRUCTION.md) | SEO, Conversion Optimization, Persuasive Copy. |
 
@@ -143,7 +149,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (49 Skills)
+## 📚 Full Specialized Skills Catalog (63 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -211,6 +217,32 @@ Production-grade backend patterns using NestJS 10+.
 | `nestjs-guards-interceptors` | [SKILL.md](./nestjs/skills/nestjs-guards-interceptors/SKILL.md) | Request lifecycle and response mapping. |
 | `nestjs-lgtm-metrics` | [SKILL.md](./nestjs/skills/nestjs-lgtm-metrics/SKILL.md) | Prometheus metrics, logging, and tracing. |
 | `nestjs-modular-monolith`| [SKILL.md](./nestjs/skills/nestjs-modular-monolith/SKILL.md) | Scaling with Bounded Contexts and DDD. |
+
+
+### 🚂 Express.js Ecosystem
+Production-grade backend patterns using Express.js.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `express-core-middleware` | [SKILL.md](./express/skills/express-core-middleware/SKILL.md) | Custom middleware patterns, global chains, and types. |
+| `express-routing-controllers` | [SKILL.md](./express/skills/express-routing-controllers/SKILL.md) | Decoupled routing, controller DI, and method binding. |
+| `express-security-hardening` | [SKILL.md](./express/skills/express-security-hardening/SKILL.md) | Helmet headers, CORS policies, and rate-limiting. |
+| `express-error-handling` | [SKILL.md](./express/skills/express-error-handling/SKILL.md) | Asynchronous wrappers, operational errors, and boundaries. |
+| `express-database-persistence` | [SKILL.md](./express/skills/express-database-persistence/SKILL.md) | Client singletons, repositories, and transaction blocks. |
+| `express-testing-expert` | [SKILL.md](./express/skills/express-testing-expert/SKILL.md) | Integration API testing with Supertest and unit mock runs. |
+| `express-performance-scalability` | [SKILL.md](./express/skills/express-performance-scalability/SKILL.md) | Event loop optimization, compression, and graceful exit. |
+
+
+### 🍃 Spring Boot Ecosystem
+Production-grade backend patterns using Spring Boot 3.x.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `spring-boot-core-di` | [SKILL.md](./spring-boot/skills/spring-boot-core-di/SKILL.md) | IoC container, constructor DI, and validated configuration properties. |
+| `spring-boot-security-jwt` | [SKILL.md](./spring-boot/skills/spring-boot-security-jwt/SKILL.md) | Stateless security filters, JWT token parsing, and method authorization. |
+| `spring-boot-data-jpa` | [SKILL.md](./spring-boot/skills/spring-boot-data-jpa/SKILL.md) | Hibernate mappings, query fetches (N+1 solution), and transactions. |
+| `spring-boot-testing-expert` | [SKILL.md](./spring-boot/skills/spring-boot-testing-expert/SKILL.md) | Mockito unit tests, WebMvc/DataJpa slice tests, and Testcontainers. |
+| `spring-boot-performance-scalability` | [SKILL.md](./spring-boot/skills/spring-boot-performance-scalability/SKILL.md) | JVM tuning, HikariCP pools, Project Loom Virtual Threads, and graceful exits. |
+| `spring-boot-reactive-webflux` | [SKILL.md](./spring-boot/skills/spring-boot-reactive-webflux/SKILL.md) | Asynchronous pipelines, Netty, Reactor Mono/Flux, and R2DBC. |
+| `spring-boot-messaging-queues` | [SKILL.md](./spring-boot/skills/spring-boot-messaging-queues/SKILL.md) | Kafka message listeners, retry backoffs, DLQ routing, and Outbox writes. |
 
 
 ### 🅰️ Angular Ecosystem
