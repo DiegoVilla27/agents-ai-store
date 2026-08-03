@@ -1,13 +1,18 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 
 # ==============================================================================
 # 🌌 Async Agents - Specialized AI Asset Synchronizer
 # ==============================================================================
-# This script synchronizes specialized AI instructions, skills, and personas
-# from the central repository and integrates them into any local project.
+# Synchronizes specialized AI AGENTS.md and skills from the central repository
+# directly into your local project's .agents/ root folder.
 #
 # Usage:
-#   ./async_agents.sh [tech|asset] [--clean] [--branch name]
+#   ./async_agents.sh [tech|skill] [--clean] [--branch name] [--local path]
+#
+# Examples:
+#   ./async_agents.sh angular
+#   ./async_agents.sh nestjs --clean
+#   ./async_agents.sh clean-code
 # ==============================================================================
 
 # --- Configuration ---
@@ -29,7 +34,6 @@ NC='\033[0m' # No Color
 
 # --- Global Counters ---
 SYNC_COUNT_SKILLS=0
-SYNC_COUNT_INST=0
 SYNC_COUNT_AGENTS=0
 
 # --- Utility Functions ---
@@ -40,13 +44,10 @@ error() { echo -e "${RED}❌ $1${NC}"; exit 1; }
 header() { echo -e "\n${PURPLE}=== $1 ===${NC}"; }
 
 usage() {
-    echo "Usage: $0 [techs|assets...] [options]"
+    echo "Usage: $0 [techs|skills...] [options]"
     echo ""
-    echo "Techs:"
+    echo "Available Technologies:"
     echo "  ${TECHS[*]}"
-    echo ""
-    echo "Assets:"
-    echo "  The name of a specific skill, instruction, or agent."
     echo ""
     echo "Options:"
     echo "  --clean         Deletes the .agents directory before downloading."
@@ -74,161 +75,143 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# --- Download Logic ---
-download_asset() {
-    local tech=$1
-    local type=$2    # "skills", "instructions", or "agents"
-    local name=$3    # folder or file name
-    local source_dir=$4
-    local icon="🛠"
-    
-    if [ "$type" = "instructions" ]; then icon="📜"; fi
-    if [ "$type" = "agents" ]; then icon="🤖"; fi
-    
-    # Avoid duplicate processing in the same run if needed (optional)
-    
-    local target_path="$AGENT_BASE/$type/$name"
-    if [ "$type" = "agents" ]; then
-        target_path="$AGENT_BASE/$type"
-    fi
-    
-    local files=()
-    if [ "$type" = "skills" ]; then
-        files=("SKILL.md" "config.json" "EXAMPLES.md")
-    elif [ "$type" = "instructions" ]; then
-        files=("INSTRUCTION.md")
-    elif [ "$type" = "agents" ]; then
-        files=("$name.json")
-    fi
-    
-    local found=false
-    for file in "${files[@]}"; do
-        local target_file="$target_path/$file"
-        
-        if [ -n "$LOCAL_PATH" ]; then
-            # Local Mode
-            local src_file="$source_dir/$tech/$type/$name/$file"
-            if [ "$type" = "agents" ]; then src_file="$source_dir/$tech/$type/$file"; fi
-            
-            if [ -f "$src_file" ]; then
-                mkdir -p "$target_path"
-                cp "$src_file" "$target_file"
-                if [ "$file" = "${files[1]}" ] || [ "$type" != "skills" ]; then 
-                    info "Processing $icon $name ($tech/$type)..."
-                fi
-                echo "  📁 $file [COPIED]"
-                found=true
-            fi
-        else
-            # Remote Mode
-            local file_url="$GITHUB_RAW/$BRANCH/$tech/$type/$name/$file"
-            if [ "$type" = "agents" ]; then file_url="$GITHUB_RAW/$BRANCH/$tech/$type/$file"; fi
-            
-            # Check if file exists before downloading to avoid noise
-            if curl -s --head --fail "$file_url" > /dev/null; then
-                mkdir -p "$target_path"
-                curl -s -L "$file_url" -o "$target_file"
-                if [ "$file" = "${files[1]}" ] || [ "$type" != "skills" ]; then 
-                    info "Processing $icon $name ($tech/$type)..."
-                fi
-                echo "  🌐 $file [DOWNLOADED]"
-                found=true
-            fi
+# --- Download / Copy Helper ---
+sync_file() {
+    local src_rel_path=$1
+    local dst_rel_path=$2
+    local label=$3
+
+    local target_file="$AGENT_BASE/$dst_rel_path"
+    mkdir -p "$(dirname "$target_file")"
+
+    if [ -n "$LOCAL_PATH" ]; then
+        local src_file="$LOCAL_PATH/$src_rel_path"
+        if [ -f "$src_file" ]; then
+            cp "$src_file" "$target_file"
+            echo "  📁 $label [COPIED]"
+            return 0
         fi
-    done
-    
-    if [ "$found" = true ]; then
-        if [ "$type" = "skills" ]; then ((SYNC_COUNT_SKILLS++)); elif [ "$type" = "instructions" ]; then ((SYNC_COUNT_INST++)); else ((SYNC_COUNT_AGENTS++)); fi
-        
-        # Recursive sync for Agents
-        if [ "$type" = "agents" ]; then
-            local agent_file="$AGENT_BASE/agents/$name.json"
-            if [ -f "$agent_file" ]; then
-                if ! command -v jq &> /dev/null; then warn "jq not found. Dependency-based sync skipped."; return 0; fi
-                
-                # Sync Instructions
-                local inst_list=$(jq -r '.instructions[]?' "$agent_file" 2>/dev/null)
-                for inst in ${(f)inst_list}; do
-                    if [ -n "$inst" ]; then
-                        find_and_download_asset "instructions" "$inst" "$source_dir"
-                    fi
-                done
-                # Sync Skills
-                local skill_list=$(jq -r '.skills[]?' "$agent_file" 2>/dev/null)
-                for skill in ${(f)skill_list}; do
-                    if [ -n "$skill" ]; then
-                        find_and_download_asset "skills" "$skill" "$source_dir"
-                    fi
-                done
-            fi
-        fi
-        return 0
     else
-        return 1
+        local file_url="$GITHUB_RAW/$BRANCH/$src_rel_path"
+        if curl -s --head --fail "$file_url" > /dev/null 2>&1; then
+            curl -s -L "$file_url" -o "$target_file"
+            echo "  🌐 $label [DOWNLOADED]"
+            return 0
+        fi
     fi
+    return 1
 }
 
-find_and_download_asset() {
-    local type=$1
-    local name=$2
-    local source_dir=$3
-    
-    # Check if already downloaded in any tech to avoid duplicates
-    if [ -d "$AGENT_BASE/$type" ]; then
-        if [ "$type" = "agents" ]; then
-            if [ -f "$AGENT_BASE/agents/$name.json" ]; then return 0; fi
-        else
-            if [ -d "$AGENT_BASE/$type/$name" ]; then return 0; fi
+# --- Skill Sync Logic ---
+sync_skill_by_path() {
+    local tech=$1
+    local skill_name=$2
+
+    if [ -f "$AGENT_BASE/skills/$skill_name/SKILL.md" ]; then
+        return 0
+    fi
+
+    local found=false
+    if [ -n "$LOCAL_PATH" ]; then
+        local skill_dir="$LOCAL_PATH/$tech/skills/$skill_name"
+        if [ -d "$skill_dir" ]; then
+            info "Processing 🛠 Skill: $skill_name ($tech)..."
+            mkdir -p "$AGENT_BASE/skills/$skill_name"
+            cp -r "$skill_dir/"* "$AGENT_BASE/skills/$skill_name/"
+            echo "  📁 SKILL.md [COPIED]"
+            found=true
         fi
+    else
+        local skill_url="$GITHUB_RAW/$BRANCH/$tech/skills/$skill_name/SKILL.md"
+        if curl -s --head --fail "$skill_url" > /dev/null 2>&1; then
+            info "Processing 🛠 Skill: $skill_name ($tech)..."
+            mkdir -p "$AGENT_BASE/skills/$skill_name"
+            curl -s -L "$skill_url" -o "$AGENT_BASE/skills/$skill_name/SKILL.md"
+            echo "  🌐 SKILL.md [DOWNLOADED]"
+
+            for aux in "config.json" "EXAMPLES.md"; do
+                local aux_url="$GITHUB_RAW/$BRANCH/$tech/skills/$skill_name/$aux"
+                if curl -s --head --fail "$aux_url" > /dev/null 2>&1; then
+                    curl -s -L "$aux_url" -o "$AGENT_BASE/skills/$skill_name/$aux"
+                    echo "  🌐 $aux [DOWNLOADED]"
+                fi
+            done
+            found=true
+        fi
+    fi
+
+    if [ "$found" = true ]; then
+        ((SYNC_COUNT_SKILLS++))
+        return 0
+    fi
+    return 1
+}
+
+find_and_sync_skill() {
+    local skill_name=$1
+
+    if [ -f "$AGENT_BASE/skills/$skill_name/SKILL.md" ]; then
+        return 0
     fi
 
     for tech in "${TECHS[@]}"; do
-        if download_asset "$tech" "$type" "$name" "$source_dir"; then
+        if sync_skill_by_path "$tech" "$skill_name"; then
             return 0
         fi
     done
     return 1
 }
 
-sync_tech() {
+# --- Technology Sync Logic ---
+sync_technology() {
     local tech=$1
-    local source_dir=$2
-    
-    header "Syncing Technology: $tech"
-    
-    # 1. Discover Agents in this tech folder
-    local folders=()
-    if [ -n "$LOCAL_PATH" ]; then
-        folders=$(ls "$source_dir/$tech/agents"/*.json 2>/dev/null | xargs -n 1 basename -s .json)
-    else
-        if ! command -v jq &> /dev/null; then error "Discovery requires 'jq'."; fi
-        folders=$(curl -s -f "$GITHUB_API/contents/$tech/agents?ref=$BRANCH" | jq -r '.[] | select(.type == "file" and (.name | endswith(".json"))) | .name' | sed 's/\.json$//' 2>/dev/null)
+    header "Syncing Technology Package: $tech"
+
+    if [ "$tech" != "shared" ]; then
+        info "Processing 🤖 Agent protocol ($tech/AGENTS.md)..."
+        if sync_file "$tech/AGENTS.md" "AGENTS.md" "AGENTS.md ($tech)"; then
+            ((SYNC_COUNT_AGENTS++))
+        else
+            warn "AGENTS.md not found for technology '$tech'."
+        fi
     fi
-    
-    if [ -n "$folders" ]; then
-        # Agent-Centric Sync: The agent will pull its own dependencies
-        for folder in ${(f)folders}; do
-            if [ -n "$folder" ]; then
-                download_asset "$tech" "agents" "$folder" "$source_dir"
-            fi
-        done
-    else
-        # Fallback: Sync everything if no agents found (useful for 'shared' folder)
-        local types=("instructions" "skills")
-        for type in "${types[@]}"; do
-            local subfolders=()
-            if [ -n "$LOCAL_PATH" ]; then
-                subfolders=$(ls -d "$source_dir/$tech/$type"/*/ 2>/dev/null | xargs -n 1 basename)
-            else
-                subfolders=$(curl -s -f "$GITHUB_API/contents/$tech/$type?ref=$BRANCH" | jq -r '.[] | select(.type == "dir") | .name' 2>/dev/null)
-            fi
-            
-            for sub in ${(f)subfolders}; do
-                if [ -n "$sub" ]; then
-                    download_asset "$tech" "$type" "$sub" "$source_dir"
+
+    local skill_names=()
+    if [ -n "$LOCAL_PATH" ]; then
+        if [ -d "$LOCAL_PATH/$tech/skills" ]; then
+            for d in "$LOCAL_PATH/$tech/skills"/*/; do
+                if [ -d "$d" ]; then
+                    skill_names+=("$(basename "$d")")
                 fi
             done
-        done
+        fi
+    else
+        if command -v jq &> /dev/null; then
+            local api_res
+            api_res=$(curl -s -f "$GITHUB_API/contents/$tech/skills?ref=$BRANCH" 2>/dev/null)
+            if [ -n "$api_res" ]; then
+                while IFS= read -r sname; do
+                    if [ -n "$sname" ]; then
+                        skill_names+=("$sname")
+                    fi
+                done < <(echo "$api_res" | jq -r '.[] | select(.type == "dir") | .name' 2>/dev/null)
+            fi
+        fi
+    fi
+
+    for sname in "${skill_names[@]}"; do
+        sync_skill_by_path "$tech" "$sname"
+    done
+
+    if [ -f "$AGENT_BASE/AGENTS.md" ]; then
+        info "Resolving dependency skills referenced in AGENTS.md..."
+        local ref_skills
+        ref_skills=$(grep -E "^\s*-\s*\`[a-zA-Z0-9_-]+\`" "$AGENT_BASE/AGENTS.md" 2>/dev/null | sed -E 's/.*\`([a-zA-Z0-9_-]+)\`/\1/')
+        while IFS= read -r rskill; do
+            if [ -n "$rskill" ]; then
+                find_and_sync_skill "$rskill"
+            fi
+        done <<< "$ref_skills"
     fi
 }
 
@@ -237,10 +220,8 @@ header "🌌 Async Agents Synchronizer"
 
 if [ -n "$LOCAL_PATH" ]; then
     info "LOCAL MODE: Source '$LOCAL_PATH'"
-    SRC_DIR="$LOCAL_PATH"
 else
     info "REMOTE MODE: Repository $REPO ($BRANCH)"
-    SRC_DIR=""
 fi
 
 if [ "$CLEAN_MODE" = true ]; then
@@ -249,14 +230,12 @@ if [ "$CLEAN_MODE" = true ]; then
 fi
 
 if [ ${#SELECTED_ITEMS[@]} -eq 0 ]; then
-    # Full Sync: All Techs
+    info "No specific technology provided. Syncing all technologies..."
     for tech in "${TECHS[@]}"; do
-        sync_tech "$tech" "$SRC_DIR"
+        sync_technology "$tech"
     done
 else
-    # Targeted Sync
     for item in "${SELECTED_ITEMS[@]}"; do
-        # Check if item is a technology
         is_tech=false
         for t in "${TECHS[@]}"; do
             if [ "$item" = "$t" ]; then
@@ -264,28 +243,21 @@ else
                 break
             fi
         done
-        
+
         if [ "$is_tech" = true ]; then
-            sync_tech "$item" "$SRC_DIR"
+            sync_technology "$item"
         else
-            header "Searching for asset: $item"
-            found=false
-            # Try as Agent, then Instruction, then Skill
-            if find_and_download_asset "agents" "$item" "$SRC_DIR"; then
-                found=true
-            elif find_and_download_asset "instructions" "$item" "$SRC_DIR"; then
-                found=true
-            elif find_and_download_asset "skills" "$item" "$SRC_DIR"; then
-                found=true
+            header "Searching for skill: $item"
+            if ! find_and_sync_skill "$item"; then
+                warn "Skill or technology '$item' not found."
             fi
-            
-            if [ "$found" = false ]; then warn "Asset '$item' not found in any technology category."; fi
         fi
     done
 fi
 
-header "Summary"
-success "🤖 Agents synced: $SYNC_COUNT_AGENTS"
+header "Sync Summary"
+if [ $SYNC_COUNT_AGENTS -gt 0 ]; then
+    success "🤖 AGENTS.md protocol synced to $AGENT_BASE/AGENTS.md"
+fi
 success "🛠 Skills synced: $SYNC_COUNT_SKILLS"
-success "📜 Instructions synced: $SYNC_COUNT_INST"
 info "✨ All assets are ready in $AGENT_BASE/"

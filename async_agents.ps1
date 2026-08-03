@@ -1,11 +1,11 @@
 # ==============================================================================
 # 🌌 Async Agents - Specialized AI Asset Synchronizer (Windows Edition)
 # ==============================================================================
-# This script synchronizes specialized AI instructions, skills, and personas
-# from the central repository and integrates them into any local project.
+# Synchronizes specialized AI AGENTS.md and skills from the central repository
+# directly into your local project's .agents/ root folder.
 #
 # Usage:
-#   .\async_agents.ps1 [tech|asset] [-Clean] [-Branch name]
+#   .\async_agents.ps1 [tech|skill] [-Clean] [-Branch name] [-Local path]
 # ==============================================================================
 
 # --- Configuration ---
@@ -19,7 +19,6 @@ $TECHS = @("angular", "react", "flutter", "nextjs", "nestjs", "react-native", "s
 
 # --- Global Counters ---
 $SYNC_COUNT_SKILLS = 0
-$SYNC_COUNT_INST = 0
 $SYNC_COUNT_AGENTS = 0
 
 # --- Utility Functions ---
@@ -30,13 +29,10 @@ function error_msg($msg) { Write-Host "❌ $msg" -ForegroundColor Red; exit 1 }
 function header($msg) { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
 
 function usage() {
-    Write-Host "Usage: .\async_agents.ps1 [techs|assets...] [options]"
+    Write-Host "Usage: .\async_agents.ps1 [techs|skills...] [options]"
     Write-Host ""
-    Write-Host "Techs:"
+    Write-Host "Available Technologies:"
     Write-Host "  $($TECHS -join ' ')"
-    Write-Host ""
-    Write-Host "Assets:"
-    Write-Host "  The name of a specific skill, instruction, or agent."
     Write-Host ""
     Write-Host "Options:"
     Write-Host "  -Clean         Deletes the .agents directory before downloading."
@@ -55,189 +51,158 @@ $LOCAL_PATH = ""
 $i = 0
 while ($i -lt $args.Count) {
     $arg = $args[$i]
-    switch ($arg) {
-        "-Clean" { $CLEAN_MODE = $true }
-        "-Branch" { $i++; $BRANCH = $args[$i] }
-        "-Local" { $i++; $LOCAL_PATH = $args[$i] }
-        "-Help" { usage }
-        { $_ -like "-*" } { warn "Unknown option: $arg" }
+    switch -regex ($arg) {
+        "^-Clean$" { $CLEAN_MODE = $true }
+        "^-Branch$" { $i++; $BRANCH = $args[$i] }
+        "^-Local$" { $i++; $LOCAL_PATH = $args[$i] }
+        "^-Help$" { usage }
+        "^-.*" { warn "Unknown option: $arg" }
         Default { $SELECTED_ITEMS += $arg }
     }
     $i++
 }
 
-# --- Download Logic ---
-function Download-Asset($tech, $type, $name, $sourceDir) {
-    $icon = "🛠"
-    if ($type -eq "instructions") { $icon = "📜" }
-    if ($type -eq "agents") { $icon = "🤖" }
-
-    $targetPath = Join-Path $AGENT_BASE $type
-    if ($type -ne "agents") {
-        $targetPath = Join-Path $targetPath $name
+# --- Sync Helper ---
+function Sync-File($srcRelPath, $dstRelPath, $label) {
+    $targetFile = Join-Path $AGENT_BASE $dstRelPath
+    $parentDir = Split-Path -Path $targetFile -Parent
+    if (-not (Test-Path $parentDir)) {
+        New-Item -ItemType Directory -Path $parentDir -Force | Out-Null
     }
 
-    $files = @()
-    if ($type -eq "skills") {
-        $files = @("SKILL.md", "config.json", "EXAMPLES.md")
-    } elseif ($type -eq "instructions") {
-        $files = @("INSTRUCTION.md")
-    } elseif ($type -eq "agents") {
-        $files = @("$name.json")
+    if ($LOCAL_PATH) {
+        $srcFile = Join-Path $LOCAL_PATH $srcRelPath
+        if (Test-Path $srcFile) {
+            Copy-Item -Path $srcFile -Destination $targetFile -Force
+            Write-Host "  📁 $label [COPIED]"
+            return $true
+        }
+    } else {
+        $fileUrl = "$GITHUB_RAW/$BRANCH/$srcRelPath"
+        try {
+            Invoke-WebRequest -Uri $fileUrl -OutFile $targetFile -ErrorAction Stop
+            Write-Host "  🌐 $label [DOWNLOADED]"
+            return $true
+        } catch {
+            return $false
+        }
+    }
+    return $false
+}
+
+function Sync-SkillByPath($tech, $skillName) {
+    $skillMdCheck = Join-Path $AGENT_BASE "skills"
+    $skillMdCheck = Join-Path $skillMdCheck $skillName
+    $skillMdCheck = Join-Path $skillMdCheck "SKILL.md"
+
+    if (Test-Path $skillMdCheck) {
+        return $true
     }
 
     $found = $false
-    foreach ($file in $files) {
-        if (-not (Test-Path $targetPath)) {
-            New-Item -ItemType Directory -Path $targetPath -Force | Out-Null
+    if ($LOCAL_PATH) {
+        $skillDir = Join-Path $LOCAL_PATH $tech
+        $skillDir = Join-Path $skillDir "skills"
+        $skillDir = Join-Path $skillDir $skillName
+
+        if (Test-Path $skillDir) {
+            info "Processing 🛠 Skill: $skillName ($tech)..."
+            $targetDir = Join-Path $AGENT_BASE "skills"
+            $targetDir = Join-Path $targetDir $skillName
+            if (-not (Test-Path $targetDir)) {
+                New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+            }
+            Copy-Item -Path "$skillDir\*" -Destination $targetDir -Recurse -Force
+            Write-Host "  📁 SKILL.md [COPIED]"
+            $found = $true
         }
-        
-        $targetFile = Join-Path $targetPath $file
+    } else {
+        $skillUrl = "$GITHUB_RAW/$BRANCH/$tech/skills/$skillName/SKILL.md"
+        try {
+            $targetDir = Join-Path $AGENT_BASE "skills"
+            $targetDir = Join-Path $targetDir $skillName
+            if (-not (Test-Path $targetDir)) {
+                New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+            }
+            $targetFile = Join-Path $targetDir "SKILL.md"
+            Invoke-WebRequest -Uri $skillUrl -OutFile $targetFile -ErrorAction Stop
+            info "Processing 🛠 Skill: $skillName ($tech)..."
+            Write-Host "  🌐 SKILL.md [DOWNLOADED]"
 
-        if ($LOCAL_PATH) {
-            # Local Mode
-            $srcFile = Join-Path $sourceDir $tech
-            $srcFile = Join-Path $srcFile $type
-            if ($type -ne "agents") {
-                $srcFile = Join-Path $srcFile $name
+            foreach ($aux in @("config.json", "EXAMPLES.md")) {
+                $auxUrl = "$GITHUB_RAW/$BRANCH/$tech/skills/$skillName/$aux"
+                $auxTarget = Join-Path $targetDir $aux
+                try {
+                    Invoke-WebRequest -Uri $auxUrl -OutFile $auxTarget -ErrorAction Stop
+                    Write-Host "  🌐 $aux [DOWNLOADED]"
+                } catch {}
             }
-            $srcFile = Join-Path $srcFile $file
-
-            if (Test-Path $srcFile) {
-                Copy-Item -Path $srcFile -Destination $targetFile -Force
-                if ($file -eq $files[1] -or $type -ne "skills") {
-                    info "Processing $icon $name ($tech/$type)..."
-                }
-                Write-Host "  📁 $file [COPIED]"
-                $found = $true
-            }
-        } else {
-            # Remote Mode
-            $fileUrl = "$GITHUB_RAW/$BRANCH/$tech/$type/"
-            if ($type -ne "agents") {
-                $fileUrl += "$name/"
-            }
-            $fileUrl += "$file"
-
-            try {
-                Invoke-WebRequest -Uri $fileUrl -OutFile $targetFile -ErrorAction Stop
-                if ($file -eq $files[1] -or $type -ne "skills") {
-                    info "Processing $icon $name ($tech/$type)..."
-                }
-                Write-Host "  🌐 $file [DOWNLOADED]"
-                $found = $true
-            } catch {
-                # Skip if file not found
-            }
-        }
+            $found = $true
+        } catch {}
     }
 
     if ($found) {
-        if ($type -eq "skills") { $script:SYNC_COUNT_SKILLS++ }
-        elseif ($type -eq "instructions") { $script:SYNC_COUNT_INST++ }
-        else { $script:SYNC_COUNT_AGENTS++ }
-
-        # Recursive sync for Agents
-        if ($type -eq "agents") {
-            $agentFile = Join-Path $AGENT_BASE "agents"
-            $agentFile = Join-Path $agentFile "$name.json"
-
-            if (Test-Path $agentFile) {
-                try {
-                    $agentData = Get-Content -Raw $agentFile | ConvertFrom-Json
-                    
-                    # Sync Instructions
-                    if ($agentData.instructions) {
-                        foreach ($inst in $agentData.instructions) {
-                            if ($inst) {
-                                Find-And-Download-Asset "instructions" $inst $sourceDir
-                            }
-                        }
-                    }
-                    # Sync Skills
-                    if ($agentData.skills) {
-                        foreach ($skill in $agentData.skills) {
-                            if ($skill) {
-                                Find-And-Download-Asset "skills" $skill $sourceDir
-                            }
-                        }
-                    }
-                } catch {
-                    warn "Failed to parse $name.json for dependencies."
-                }
-            }
-        }
+        $script:SYNC_COUNT_SKILLS++
         return $true
     }
     return $false
 }
 
-function Find-And-Download-Asset($type, $name, $sourceDir) {
-    # Check if already downloaded
-    $pathToCheck = Join-Path $AGENT_BASE $type
-    if ($type -eq "agents") {
-        $pathToCheck = Join-Path $pathToCheck "$name.json"
-    } else {
-        $pathToCheck = Join-Path $pathToCheck $name
-    }
-    if (Test-Path $pathToCheck) { return $true }
+function Find-And-Sync-Skill($skillName) {
+    $skillMdCheck = Join-Path $AGENT_BASE "skills"
+    $skillMdCheck = Join-Path $skillMdCheck $skillName
+    $skillMdCheck = Join-Path $skillMdCheck "SKILL.md"
+
+    if (Test-Path $skillMdCheck) { return $true }
 
     foreach ($tech in $TECHS) {
-        if (Download-Asset $tech $type $name $sourceDir) {
+        if (Sync-SkillByPath $tech $skillName) {
             return $true
         }
     }
     return $false
 }
 
-function Sync-Tech($tech, $sourceDir) {
-    header "Syncing Technology: $tech"
+function Sync-Technology($tech) {
+    header "Syncing Technology Package: $tech"
 
-    $folders = @()
-    if ($LOCAL_PATH) {
-        $agentDir = Join-Path $sourceDir $tech
-        $agentDir = Join-Path $agentDir "agents"
-        if (Test-Path $agentDir) {
-            $folders = Get-ChildItem -Path $agentDir -Filter "*.json" | ForEach-Object { $_.BaseName }
-        }
-    } else {
-        try {
-            $apiUrl = "$GITHUB_API/contents/$tech/agents?ref=$BRANCH"
-            $response = Invoke-RestMethod -Uri $apiUrl
-            $folders = $response | Where-Object { $_.type -eq "file" -and $_.name -like "*.json" } | ForEach-Object { $_.name.Replace(".json", "") }
-        } catch {
-            # No agents found or error
+    if ($tech -ne "shared") {
+        info "Processing 🤖 Agent protocol ($tech/AGENTS.md)..."
+        if (Sync-File "$tech/AGENTS.md" "AGENTS.md" "AGENTS.md ($tech)") {
+            $script:SYNC_COUNT_AGENTS++
+        } else {
+            warn "AGENTS.md not found for technology '$tech'."
         }
     }
 
-    if ($folders) {
-        foreach ($folder in $folders) {
-            if ($folder) {
-                Download-Asset $tech "agents" $folder $sourceDir
-            }
+    $skillNames = @()
+    if ($LOCAL_PATH) {
+        $skillsDir = Join-Path $LOCAL_PATH $tech
+        $skillsDir = Join-Path $skillsDir "skills"
+        if (Test-Path $skillsDir) {
+            $skillNames = Get-ChildItem -Path $skillsDir -Directory | ForEach-Object { $_.Name }
         }
     } else {
-        # Fallback: Sync everything
-        $types = @("instructions", "skills")
-        foreach ($type in $types) {
-            $subfolders = @()
-            if ($LOCAL_PATH) {
-                $typeDir = Join-Path $sourceDir $tech
-                $typeDir = Join-Path $typeDir $type
-                if (Test-Path $typeDir) {
-                    $subfolders = Get-ChildItem -Path $typeDir -Directory | ForEach-Object { $_.Name }
-                }
-            } else {
-                try {
-                    $apiUrl = "$GITHUB_API/contents/$tech/$type?ref=$BRANCH"
-                    $response = Invoke-RestMethod -Uri $apiUrl
-                    $subfolders = $response | Where-Object { $_.type -eq "dir" } | ForEach-Object { $_.name }
-                } catch { }
-            }
+        try {
+            $apiUrl = "$GITHUB_API/contents/$tech/skills?ref=$BRANCH"
+            $res = Invoke-RestMethod -Uri $apiUrl -ErrorAction Stop
+            $skillNames = $res | Where-Object { $_.type -eq "dir" } | ForEach-Object { $_.name }
+        } catch {}
+    }
 
-            foreach ($sub in $subfolders) {
-                if ($sub) {
-                    Download-Asset $tech $type $sub $sourceDir
+    foreach ($sname in $skillNames) {
+        Sync-SkillByPath $tech $sname
+    }
+
+    $agentsMdFile = Join-Path $AGENT_BASE "AGENTS.md"
+    if (Test-Path $agentsMdFile) {
+        info "Resolving dependency skills referenced in AGENTS.md..."
+        $content = Get-Content -Path $agentsMdFile
+        foreach ($line in $content) {
+            if ($line -match "^\s*-\s*`([^`]+)`") {
+                $refSkill = $matches[1]
+                if ($refSkill) {
+                    Find-And-Sync-Skill $refSkill | Out-Null
                 }
             }
         }
@@ -249,10 +214,8 @@ header "🌌 Async Agents Synchronizer"
 
 if ($LOCAL_PATH) {
     info "LOCAL MODE: Source '$LOCAL_PATH'"
-    $SRC_DIR = $LOCAL_PATH
 } else {
     info "REMOTE MODE: Repository $REPO ($BRANCH)"
-    $SRC_DIR = ""
 }
 
 if ($CLEAN_MODE) {
@@ -263,37 +226,26 @@ if ($CLEAN_MODE) {
 }
 
 if ($SELECTED_ITEMS.Count -eq 0) {
-    # Full Sync
+    info "No specific technology provided. Syncing all technologies..."
     foreach ($tech in $TECHS) {
-        Sync-Tech $tech $SRC_DIR
+        Sync-Technology $tech
     }
 } else {
-    # Targeted Sync
     foreach ($item in $SELECTED_ITEMS) {
-        $isTech = $false
-        foreach ($t in $TECHS) {
-            if ($item -eq $t) {
-                $isTech = $true
-                break
-            }
-        }
-
-        if ($isTech) {
-            Sync-Tech $item $SRC_DIR
+        if ($TECHS -contains $item) {
+            Sync-Technology $item
         } else {
-            header "Searching for asset: $item"
-            $found = $false
-            if (Find-And-Download-Asset "agents" $item $SRC_DIR) { $found = $true }
-            elseif (Find-And-Download-Asset "instructions" $item $SRC_DIR) { $found = $true }
-            elseif (Find-And-Download-Asset "skills" $item $SRC_DIR) { $found = $true }
-
-            if (-not $found) { warn "Asset '$item' not found in any technology category." }
+            header "Searching for skill: $item"
+            if (-not (Find-And-Sync-Skill $item)) {
+                warn "Skill or technology '$item' not found."
+            }
         }
     }
 }
 
-header "Summary"
-success "🤖 Agents synced: $SYNC_COUNT_AGENTS"
+header "Sync Summary"
+if ($SYNC_COUNT_AGENTS -gt 0) {
+    success "🤖 AGENTS.md protocol synced to $AGENT_BASE/AGENTS.md"
+}
 success "🛠 Skills synced: $SYNC_COUNT_SKILLS"
-success "📜 Instructions synced: $SYNC_COUNT_INST"
 info "✨ All assets are ready in $AGENT_BASE/"
