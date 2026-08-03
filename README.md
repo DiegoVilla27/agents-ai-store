@@ -38,36 +38,56 @@ Features are organized into self-contained **Feature Modules**:
 
 ## ⚡ Quick Start
 
-Integrate these expert-level engineering standards into any project in seconds.
+Integrate expert-level engineering standards into any project in seconds with a **single 1-line command**. No manual file downloads or script setup required!
 
-### 1. Download the Synchronizer
-Run the command corresponding to your operating system in the root of your project:
+### Option A: NPX (Recommended for Node/Web Developers)
 
-#### 🍎 Mac / 🐧 Linux
+Run directly in the root of your project:
 ```bash
-curl -O https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.sh && chmod +x async_agents.sh
+npx github:DiegoVilla27/agents-ai-store <technology>
 ```
+
+**Examples:**
+```bash
+# Sync Angular protocol & skills into .agents/
+npx github:DiegoVilla27/agents-ai-store angular
+
+# Sync NestJS into .agents/ (Smart Merges with existing protocols for full-stack apps!)
+npx github:DiegoVilla27/agents-ai-store nestjs
+
+# Clean sync (wipes .agents/ first and installs fresh)
+npx github:DiegoVilla27/agents-ai-store react --clean
+```
+
+---
+
+### Option B: 1-Line Terminal Execution (No Node/npm required)
+
+#### 🍎 Mac / 🐧 Linux (Bash/Zsh)
+```bash
+curl -sSL https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.sh | bash -s -- <technology>
+```
+*Example:* `curl -sSL https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.sh | bash -s -- flutter`
 
 #### 🪟 Windows (PowerShell)
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.ps1" -OutFile "async_agents.ps1"
+iwr -useb https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.ps1 | iex -args "<technology>"
 ```
+*Example:* `iwr -useb https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.ps1 | iex -args "spring-boot"`
 
-### 2. Synchronize Assets
-Sync everything (Skills + Instructions) with one command:
+---
 
-#### 🍎 Mac / 🐧 Linux
-```bash
-./async_agents.sh
-```
+### 🔀 Multi-Technology Projects (Smart Protocol Merging)
 
-#### 🪟 Windows (PowerShell)
-```powershell
-.\async_agents.ps1
-```
+When building full-stack or multi-tech applications (e.g. Next.js + NestJS):
+1. Sync your first technology: `npx github:DiegoVilla27/agents-ai-store nextjs`
+2. Sync your second technology: `npx github:DiegoVilla27/agents-ai-store nestjs`
+3. The synchronizer **Smart Merges** the NestJS protocols into the existing `.agents/AGENTS.md` and populates all skills into `.agents/skills/`. Your AI assistant instantly becomes a multi-disciplinary architect!
+
+---
 
 ### 3. Start Coding
-Once the `.agents/` folder is created, your AI agent (Antigravity, Cursor, etc.) will automatically adopt the professional standards documented in the store.
+Once the `.agents/` folder is populated, your AI assistant (Antigravity, Cursor, Copilot, etc.) will automatically adopt the professional protocols and skills!
 
 ## 📂 Project Structure
 
@@ -332,21 +352,16 @@ Strategies for growth, conversion, and compelling messaging.
 
 ---
 
-## 🛠 Automation: `async_agents`
+## 🛠 Automation: Command Reference
 
-Integrate these skills and instructions into any project instantly. No manual copy-pasting required.
+Integrate specialized AI protocols and skills into any project instantly using NPX or 1-line terminal execution.
 
-### Commands by Platform:
-
-| Feature | 🍎 Mac / 🐧 Linux | 🪟 Windows (PowerShell) |
-|:---|:---|:---|
-| **Sync All** | `./async_agents.sh` | `.\async_agents.ps1` |
-| **Sync Tech** | `./async_agents.sh angular` | `.\async_agents.ps1 angular` |
-| **Sync Assets**| `./async_agents.sh react-core` | `.\async_agents.ps1 react-core` |
-| **Clean Sync** | `./async_agents.sh --clean` | `.\async_agents.ps1 -Clean` |
-| **Local Mode** | `./async_agents.sh --local path`| `.\async_agents.ps1 -Local path` |
-
-> **Note**: Windows parameters use PascalCase (e.g., `-Clean`) while Unix parameters use kebab-case (e.g., `--clean`).
+| Action | NPX (Node / JS) | 🍎 Mac / 🐧 Linux (Bash/Zsh) | 🪟 Windows (PowerShell) |
+|:---|:---|:---|:---|
+| **Sync Tech** | `npx github:DiegoVilla27/agents-ai-store angular` | `curl -sSL https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.sh \| bash -s -- angular` | `iwr -useb https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.ps1 \| iex -args "angular"` |
+| **Sync Skill** | `npx github:DiegoVilla27/agents-ai-store clean-code` | `curl -sSL https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.sh \| bash -s -- clean-code` | `iwr -useb https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.ps1 \| iex -args "clean-code"` |
+| **Clean Sync** | `npx github:DiegoVilla27/agents-ai-store react --clean` | `curl -sSL https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.sh \| bash -s -- react --clean` | `iwr -useb https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.ps1 \| iex -args "react -Clean"` |
+| **Sync All** | `npx github:DiegoVilla27/agents-ai-store` | `curl -sSL https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.sh \| bash -s` | `iwr -useb https://raw.githubusercontent.com/DiegoVilla27/agents-ai-store/main/async_agents.ps1 \| iex` |
 
 ---
 
@@ -360,4 +375,3 @@ Every skill in this store must follow the **Diego Villanueva instructional forma
 ---
 
 Made with 🌌 by **Diego Villanueva** | *Empowering the next generation of AI-native developers.*
- by **Diego Villanueva** | *Empowering the next generation of AI-native developers.*
