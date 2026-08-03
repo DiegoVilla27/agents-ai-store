@@ -2,7 +2,7 @@
 name: angular-architecture
 description: The ultimate architectural standard for modern Angular 17+ Standalone Components, Feature-First Structure, Smart/Dumb Components, and Core/Shared boundaries.
 author: Diego Villanueva
-trigger: When structuring a new project, deciding where to place files, generating components, or enforcing clean architecture in Angular.
+trigger: When structuring a new project, deciding where to place files, generating components, or enforcing modular architecture in Angular.
 ---
 
 # Enterprise Angular Architecture (Standalone Era)

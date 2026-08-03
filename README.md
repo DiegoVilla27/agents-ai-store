@@ -13,8 +13,8 @@ Welcome to the **Agents AI Store**. This repository is a premium ecosystem of sp
 ## 🚀 The Mission
 
 This project bridges the gap between general-purpose AI and **specialized engineering authority**. Every "Skill" and "Instruction" in this store is not just a prompt; it is a full **System Protocol** that enforces:
-- **Architectural Integrity**: Clean Architecture (Domain, Application, Infrastructure, Presentation).
-- **Vertical Slicing**: Modular features that are self-contained and scalable.
+- **Architectural Integrity**: Modular Feature-First Architecture (self-contained modules).
+- **Vertical Slicing**: Modular features that are self-contained, independent, and scalable.
 - **Performance Excellence**: Core Web Vitals, 60/120 FPS, and minimal bundle sizes.
 - **Security-First Development**: Biometrics, secure storage, and token management.
 
@@ -22,25 +22,16 @@ This project bridges the gap between general-purpose AI and **specialized engine
 
 ## 🏛️ Strict Architectural Scaffolding
 
-This store follows a **Zero Tolerance** policy for poor architecture. All instructions are hard-coded to enforce a specific scaffolding pattern based on the technology:
+This store follows a **Zero Tolerance** policy for poor architecture. All instructions are hard-coded to enforce **Modular Feature-First Architecture** across all technology stacks:
 
-### Web Ecosystem (Angular, React, Next.js, NestJS)
-Features are organized into **Vertical Slices** with nested **Clean Architecture** layers:
+### Feature Modules
+Features are organized into self-contained **Feature Modules**:
 ```text
 /features/[name]/
-├── domain/         # Entities & Repository Interfaces
-├── application/    # Use Cases & Mappers
-├── infrastructure/ # Repository Implementations & Data Sources
-└── presentation/   # Components, Signals/Stores, & Views
-```
-
-### Flutter Ecosystem
-Features follow the **Tripartite Pattern**:
-```text
-lib/features/[name]/
-├── domain/         # Entities & Interfaces
-├── data/           # DTOs, Mappers & Implementations
-└── presentation/   # Widgets & Controllers
+├── models/         # Data models, DTOs & Schemas
+├── services/       # Business logic & API clients
+├── controllers/    # State management & component controllers
+└── components/     # UI components & Views
 ```
 
 ---
@@ -76,67 +67,74 @@ Sync everything (Skills + Instructions) with one command:
 ```
 
 ### 3. Start Coding
-Once the `.agents/` folder is created, your AI agent (Antigravity, Cursor, etc.) will automatically adopt the professional standards documented in the store.## 📂 Project Structure
+Once the `.agents/` folder is created, your AI agent (Antigravity, Cursor, etc.) will automatically adopt the professional standards documented in the store.
+
+## 📂 Project Structure
+
+Each technology package follows the professional **`AGENTS.md` + `skills/`** pattern:
 
 ```text
 .agents/
-├── angular/           # Agents, Instructions, and Skills for Angular
-├── digital-marketer/  # Agents, Instructions, and Skills for Digital Marketing
-├── express/           # Agents, Instructions, and Skills for Express.js
-├── flutter/           # Agents, Instructions, and Skills for Flutter
-├── nestjs/            # Agents, Instructions, and Skills for NestJS
-├── nextjs/            # Agents, Instructions, and Skills for Next.js
-├── react/             # Agents, Instructions, and Skills for React
-├── react-native/      # Agents, Instructions, and Skills for React Native
-├── shared/            # Common skills (Clean Code, Web Standards, etc.)
-├── spring-boot/       # Agents, Instructions, and Skills for Spring Boot
-└── ui-ux-designer/    # Agents, Instructions, and Skills for UI/UX Design
+├── angular/
+│   ├── AGENTS.md              # Agent identity, rules & architecture protocol
+│   └── skills/                # Modular knowledge (20 skills)
+├── nestjs/
+│   ├── AGENTS.md
+│   └── skills/                # 12 skills
+├── react/
+│   ├── AGENTS.md
+│   └── skills/                # 12 skills
+├── nextjs/
+│   ├── AGENTS.md
+│   └── skills/                # 11 skills
+├── express/
+│   ├── AGENTS.md
+│   └── skills/                # 7 skills
+├── flutter/
+│   ├── AGENTS.md
+│   └── skills/                # 16 skills
+├── spring-boot/
+│   ├── AGENTS.md
+│   └── skills/                # 8 skills
+├── react-native/
+│   ├── AGENTS.md
+│   └── skills/                # 10 skills
+├── digital-marketer/
+│   ├── AGENTS.md
+│   └── skills/                # 6 skills
+├── ui-ux-designer/
+│   ├── AGENTS.md
+│   └── skills/                # 9 skills
+└── shared/
+    └── skills/                # 12 shared skills (Clean Code, GSAP, TSDoc, etc.)
 ```
 
 ---
 
 ## 🤖 Expert Personas (Agents)
 
-Agents are high-level blueprints that combine specific instructions and skills to create a domain expert. Syncing an agent automatically downloads all its dependencies.
+Each `AGENTS.md` file defines a complete expert persona: identity, role, skills, and strict coding/architecture protocols. When an AI agent enters a workspace with these files, it automatically adopts the professional standards.
 
-| Agent Persona | Mission | Configuration |
+| Agent Persona | Mission | Protocol |
 |:---|:---|:---|
-| `angular-agent` | Senior Master in Signals and Zoneless architecture. | [JSON](./angular/agents/angular-agent.json) |
-| `react-agent` | Master in React 19, Server Components, and State. | [JSON](./react/agents/react-agent.json) |
-| `nextjs-agent` | Full-stack Next.js Specialist (App Router & Actions). | [JSON](./nextjs/agents/nextjs-agent.json) |
-| `react-native-agent` | Mobile Engineer specialized in Expo and Performance. | [JSON](./react-native/agents/react-native-agent.json) |
-| `flutter-agent` | Senior Flutter Architect (Riverpod & Security). | [JSON](./flutter/agents/flutter-agent.json) |
-| `nestjs-agent` | Master of Backend Scalability and Clean Architecture. | [JSON](./nestjs/agents/nestjs-agent.json) |
-| `express-agent` | Master of High-Performance REST APIs and Security Hardening. | [JSON](./express/agents/express-agent.json) |
-| `spring-boot-agent` | Master of Enterprise Spring Services and Hexagonal Architecture. | [JSON](./spring-boot/agents/spring-boot-agent.json) |
-| `ui-ux-designer-agent` | Master of Aesthetics, Accessibility, and User Experience. | [JSON](./ui-ux-designer/agents/ui-ux-designer-agent.json) |
-| `digital-marketer-agent` | Expert in Conversion Optimization, SEO, and Copywriting. | [JSON](./digital-marketer/agents/digital-marketer-agent.json) |
+| **Angular Architect** | Senior Master in Signals and Zoneless architecture. | [AGENTS.md](./angular/AGENTS.md) |
+| **React Architect** | Master in React 19, Server Components, and State. | [AGENTS.md](./react/AGENTS.md) |
+| **Next.js Architect** | Full-stack Next.js Specialist (App Router & Actions). | [AGENTS.md](./nextjs/AGENTS.md) |
+| **React Native Architect** | Mobile Engineer specialized in Expo and Performance. | [AGENTS.md](./react-native/AGENTS.md) |
+| **Flutter Architect** | Senior Flutter Architect (Riverpod & Security). | [AGENTS.md](./flutter/AGENTS.md) |
+| **NestJS Architect** | Master of Backend Scalability and Modular Architecture. | [AGENTS.md](./nestjs/AGENTS.md) |
+| **Express.js Architect** | Master of High-Performance REST APIs and Security Hardening. | [AGENTS.md](./express/AGENTS.md) |
+| **Spring Boot Architect** | Master of Enterprise Spring Services and Modular Architecture. | [AGENTS.md](./spring-boot/AGENTS.md) |
+| **UI/UX Designer** | Master of Aesthetics, Accessibility, and User Experience. | [AGENTS.md](./ui-ux-designer/AGENTS.md) |
+| **Digital Marketer** | Expert in Conversion Optimization, SEO, and Copywriting. | [AGENTS.md](./digital-marketer/AGENTS.md) |
 
 ### 🛠 How to Activate an Agent
 Once synchronized, you can activate a specific persona in your AI chat (Antigravity, Cursor, etc.) using one of these methods:
 
 1. **Explicit Identification**: Mention the agent name in your first prompt:
-   > *"Act as the **nextjs-agent**. Let's build a new feature."*
-2. **Implicit Detection**: The AI automatically reads the `.agents/` folder and adopts the instructions and skills present in your workspace.
-3. **Role Matching**: If you work in a project with a specific `agent.json`, the AI will align its behavior with the `"role"` defined in that blueprint.
-
----
-## 📜 Strategic Development Instructions
-
-This repository implements **Automatic System Protocols** through specialized instruction files. When an AI agent (like Antigravity) enters a workspace with these files, it automatically adopts the following high-level engineering standards:
-
-| Framework | Instruction Name | Protocol Path | Architectural Pillars |
-|:---|:---|:---|:---|
-| **Angular** | `angular-coding` | [INSTRUCTION.md](./angular/instructions/angular-coding/INSTRUCTION.md) | Signals, `@defer`, Zoneless, Barrels. |
-| **React** | `react-coding` | [INSTRUCTION.md](./react/instructions/react-coding/INSTRUCTION.md) | React 19, Compiler, Zustand, Index Pattern. |
-| **Flutter** | `flutter-coding` | [INSTRUCTION.md](./flutter/instructions/flutter-coding/INSTRUCTION.md) | Snake_case, Riverpod, No-Index Barrels. |
-| **Next.js** | `nextjs-coding` | [INSTRUCTION.md](./nextjs/instructions/nextjs-coding/INSTRUCTION.md) | App Router, Server Actions, Private Folders. |
-| **React Native** | `react-native-coding` | [INSTRUCTION.md](./react-native/instructions/react-native-coding/INSTRUCTION.md) | **Styled Components**, Expo, FlatList Opt. |
-| **NestJS** | `nestjs-coding` | [INSTRUCTION.md](./nestjs/instructions/nestjs-coding/INSTRUCTION.md) | Clean Architecture, DDD, Zod, Layers. |
-| **Express.js** | `express-coding` | [INSTRUCTION.md](./express/instructions/express-coding/INSTRUCTION.md) | Clean Architecture, DDD, Zod Validation, Async Safety. |
-| **Spring Boot** | `spring-boot-coding` | [INSTRUCTION.md](./spring-boot/instructions/spring-boot-coding/INSTRUCTION.md) | Clean/Hexagonal Arch, DDD, Constructor DI, Global Interceptors. |
-| **UI/UX Design** | `ui-ux-design` | [INSTRUCTION.md](./ui-ux-designer/instructions/ui-ux-design/INSTRUCTION.md) | Accessibility, Visual Hierarchy, Micro-interactions. |
-| **Digital Marketing** | `digital-marketing-strategy` | [INSTRUCTION.md](./digital-marketer/instructions/digital-marketing-strategy/INSTRUCTION.md) | SEO, Conversion Optimization, Persuasive Copy. |
+   > *"Act as the **Next.js Architect**. Let's build a new feature."*
+2. **Implicit Detection**: The AI automatically reads the `.agents/` folder and adopts the `AGENTS.md` protocols and skills present in your workspace.
+3. **File Matching**: The `applyTo` glob pattern in each `AGENTS.md` frontmatter ensures the agent activates automatically when you work on matching file types (e.g., `**/*.dart` triggers the Flutter Architect).
 
 ---
 
@@ -243,6 +241,7 @@ Production-grade backend patterns using Spring Boot 3.x.
 | `spring-boot-performance-scalability` | [SKILL.md](./spring-boot/skills/spring-boot-performance-scalability/SKILL.md) | JVM tuning, HikariCP pools, Project Loom Virtual Threads, and graceful exits. |
 | `spring-boot-reactive-webflux` | [SKILL.md](./spring-boot/skills/spring-boot-reactive-webflux/SKILL.md) | Asynchronous pipelines, Netty, Reactor Mono/Flux, and R2DBC. |
 | `spring-boot-messaging-queues` | [SKILL.md](./spring-boot/skills/spring-boot-messaging-queues/SKILL.md) | Kafka message listeners, retry backoffs, DLQ routing, and Outbox writes. |
+| `spring-boot-javadoc` | [SKILL.md](./spring-boot/skills/spring-boot-javadoc/SKILL.md) | Enterprise Javadoc standards for Java 17/21, Records, Controllers, and Services. |
 
 
 ### 🅰️ Angular Ecosystem
@@ -251,7 +250,7 @@ Enterprise-grade patterns for modern Angular apps.
 |:---|:---|:---|
 | `angular-core` | [SKILL.md](./angular/skills/angular-core/SKILL.md) | Standalone components and modern Signal inputs. |
 | `angular-signals` | [SKILL.md](./angular/signals/SKILL.md) | Fine-grained reactivity, computed and effects. |
-| `angular-architecture` | [SKILL.md](./angular/skills/angular-architecture/SKILL.md) | Clean Architecture and Vertical Slicing. |
+| `angular-architecture` | [SKILL.md](./angular/skills/angular-architecture/SKILL.md) | Modular Architecture and Feature-First design. |
 | `angular-routing` | [SKILL.md](./angular/skills/angular-routing/SKILL.md) | Functional guards, lazy loading, and deep links. |
 | `angular-http` | [SKILL.md](./angular/skills/angular-http/SKILL.md) | Type-safe API communication and rxResource. |
 | `angular-di` | [SKILL.md](./angular/skills/angular-di/SKILL.md) | Mastery of inject() and modern DI patterns. |
@@ -302,6 +301,7 @@ Ensuring software remains immune to regressions.
 |:---|:---|:---|
 | `web-tailwind` | [SKILL.md](./shared/skills/web-tailwind/SKILL.md) | Tailwind CSS 4, semantic tokens, and `cn()`. |
 | `web-advanced-ui-ux` | [SKILL.md](./shared/skills/web-advanced-ui-ux/SKILL.md) | Container Queries, CSS Layers, and Anchor Positioning. |
+| `web-gsap-animation` | [SKILL.md](./shared/skills/web-gsap-animation/SKILL.md) | GSAP 3, ScrollTrigger, pinning, scrub, and responsive motion. |
 | `web-performance` | [SKILL.md](./shared/skills/web-performance/SKILL.md) | Core Web Vitals (LCP, CLS, INP) optimization. |
 | `web-micro-frontends` | [SKILL.md](./shared/skills/web-micro-frontends/SKILL.md) | Module Federation and Vite orchestrations. |
 

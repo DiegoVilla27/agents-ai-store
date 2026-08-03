@@ -1,107 +1,55 @@
 ---
 name: flutter-architect
-description: The ultimate architectural standard for Enterprise Flutter Feature-First Structure, Clean Architecture Layers (Domain, Data, Presentation), and Dependency Injection.
+description: The ultimate architectural standard for Enterprise Flutter Modular Feature-First Structure, self-contained modules, and Dependency Injection.
 author: Diego Villanueva
-trigger: When structuring a new Flutter project, defining folder hierarchies, implementing Clean Architecture, or organizing layers.
+trigger: When structuring a new Flutter project, defining folder hierarchies, implementing Modular Architecture, or organizing feature modules.
 ---
 
 # Enterprise Flutter Architecture
 
 Flutter is a UI toolkit, not a framework like Angular or NestJS. It provides absolutely no architectural opinions. If you do not enforce strict boundaries, your app will devolve into a "Big Ball of Mud" where API calls happen inside `onTap` callbacks using `setState`.
 
-This document defines the strictly enforced **Feature-First Clean Architecture** standard.
+This document defines the strictly enforced **Modular Feature-First Architecture** standard.
 
-## 1. Feature-First Project Structure (Domain-Driven)
+## 1. Modular Feature-First Project Structure
 
-Layer-First architecture (grouping all controllers together, all models together) fails at scale. You MUST group files by **Feature** (Business Domain).
+Layer-First architecture (grouping all controllers together, all models together) fails at scale. You MUST group files by **Feature Module**.
 
 ```text
 lib/
 ├── core/                  # Global utilities, network clients, DI setup, theme
 ├── shared/                # Widgets/UI components used across multiple features
 ├── features/
-│   ├── auth/              # Bounded Context: Authentication
-│   │   ├── data/          # Data Layer (Data Sources, Models, Repositories Impl)
-│   │   ├── domain/        # Domain Layer (Entities, Repository Interfaces, UseCases)
-│   │   └── presentation/  # Presentation Layer (Widgets, State/Bloc/Riverpod)
-│   └── checkout/          # Bounded Context: Checkout
+│   ├── auth/              # Feature Module: Authentication
+│   │   ├── models/        # Data models and DTOs
+│   │   ├── services/      # Business logic and API communication
+│   │   ├── controllers/   # State management (Riverpod/Notifier)
+│   │   ├── widgets/       # Feature-specific UI components
+│   │   └── views/         # Screen pages
+│   └── checkout/          # Feature Module: Checkout
 └── main.dart
 ```
 
-## 2. The Three Layers (Clean Architecture Boundaries)
+## 2. Module Boundary Rules
 
-Every Feature must strictly separate UI, Business Logic, and Data. Dependencies can only point INWARD toward the Domain layer.
+Every Feature Module must be self-contained and loosely coupled:
 
-### A. The Domain Layer (The Core)
-This layer is **Pure Dart**. It knows absolutely nothing about Flutter (no `import 'package:flutter/material.dart'`), HTTP, Firebase, or State Management.
-
-```dart
-// ✅ ALWAYS: Define pure Entities (No JSON serialization here)
-class User {
-  final String id;
-  final String email;
-  User({required this.id, required this.email});
-}
-
-// ✅ ALWAYS: Define Repository Interfaces (Ports)
-abstract class AuthRepository {
-  Future<User> login(String email, String password);
-}
-
-// ✅ ALWAYS: Define UseCases (Business Logic Actions)
-class LoginUseCase {
-  final AuthRepository repository;
-  LoginUseCase(this.repository);
-
-  Future<User> execute(String email, String password) {
-    if (!email.contains('@')) throw ValidationException('Invalid email');
-    return repository.login(email, password);
-  }
-}
-```
-
-### B. The Data Layer (The Infrastructure)
-This layer implements the Domain's interfaces and talks to the outside world (APIs, SQL, Firebase).
+1. **Self-Contained**: Each feature owns its models, services, controllers, widgets, and views.
+2. **No Cross-Feature Internal Imports**: Features communicate via Riverpod providers, shared services, or route parameters.
+3. **Services Handle Business & Data**: Services communicate with APIs/DBs and contain business logic.
+4. **UI Connects via Controllers**: Widgets and Views consume state via Riverpod controllers, never calling raw network endpoints.
 
 ```dart
-// ✅ ALWAYS: Data Models (DTOs) handle JSON serialization
-class UserModel extends User {
-  UserModel({required super.id, required super.email});
-
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json['id'],
-    email: json['email'],
-  );
-}
-
-// ✅ ALWAYS: Implement the Repository Interface (Adapter)
-class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource remoteDataSource;
-  
-  AuthRepositoryImpl(this.remoteDataSource);
-
-  @override
-  Future<User> login(String email, String password) async {
-    // Converts the DTO (UserModel) back to the pure Entity (User)
-    return await remoteDataSource.login(email, password);
-  }
-}
-```
-
-### C. The Presentation Layer (UI & State)
-This layer connects Flutter to the Domain. It manages state and draws pixels. It MUST NOT do business logic or API calls.
-
-```dart
-// ✅ ALWAYS: State Management calls UseCases, NEVER Repositories directly
+// ✅ ALWAYS: State Management calls Services injected via Riverpod
 class AuthNotifier extends StateNotifier<AuthState> {
-  final LoginUseCase loginUseCase;
+  final AuthService authService;
   
-  AuthNotifier(this.loginUseCase) : super(const AuthInitial());
+  AuthNotifier(this.authService) : super(const AuthInitial());
 
   Future<void> login(String email, String password) async {
     state = const AuthLoading();
     try {
-      final user = await loginUseCase.execute(email, password);
+      final user = await authService.login(email, password);
       state = AuthSuccess(user);
     } catch (e) {
       state = AuthError(e.toString());

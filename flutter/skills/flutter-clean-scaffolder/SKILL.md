@@ -1,13 +1,13 @@
 ---
 name: flutter-clean-scaffolder
-description: The ultimate architectural protocol for the AI to generate professional Clean Architecture and Feature-First scaffolding in Flutter projects.
+description: The ultimate architectural protocol for the AI to generate professional Modular Architecture and Feature-First scaffolding in Flutter projects.
 author: Diego Villanueva
-trigger: When the user asks to initialize a new Flutter project, scaffold a new feature, or generate standard Clean Architecture boilerplate.
+trigger: When the user asks to initialize a new Flutter project, scaffold a new feature, or generate standard Modular Architecture boilerplate.
 ---
 
-# Flutter Clean Scaffolder Protocol
+# Flutter Modular Scaffolder Protocol
 
-This skill dictates EXACTLY how you, the AI agent, must structure files and directories when asked to scaffold a Flutter project or add a new feature. You must not deviate from this standard. It enforces a **Feature-First Clean Architecture**.
+This skill dictates EXACTLY how you, the AI agent, must structure files and directories when asked to scaffold a Flutter project or add a new feature. You must not deviate from this standard. It enforces a **Modular Feature-First Architecture**.
 
 ## 1. The Global Structure (`lib/`)
 
@@ -26,28 +26,20 @@ lib/
 │   ├── atoms/        # Basic UI (MyButton, MyTextField)
 │   ├── molecules/    # Grouped UI (LoginForm)
 │   └── organisms/    # Complex UI (Header, NavigationBar)
-└── features/         # All business domains live here
+└── features/         # All business feature modules live here
 ```
 
 ## 2. Feature Generation Protocol
 
-When asked to "Create the Auth feature", you MUST generate the following strict Clean Architecture hierarchy inside `lib/features/auth/`:
+When asked to "Create the Auth feature", you MUST generate the following self-contained module hierarchy inside `lib/features/auth/`:
 
 ```text
 lib/features/{feature}/
-├── data/
-│   ├── datasources/    # Remote (API) and Local (DB) data sources
-│   ├── mappers/        # Translates DTOs to Entities and vice versa
-│   ├── models/         # DTOs (Data Transfer Objects) with fromJson/toJson
-│   └── repositories/   # Concrete implementations of Domain Repository interfaces
-├── domain/
-│   ├── entities/       # Pure Dart classes (No JSON, no Flutter imports)
-│   ├── repositories/   # Abstract classes (Ports) defining what the Data layer must do
-│   └── usecases/       # Classes encapsulating a single business rule/action
-└── presentation/
-    ├── providers/      # State Management (Riverpod/Bloc)
-    ├── screens/        # Full page widgets
-    └── widgets/        # Widgets specific to this feature ONLY (Proximity Rule)
+├── models/         # Data models and DTOs with fromJson/toJson
+├── services/       # Business logic and API data sources
+├── controllers/    # State Management (Riverpod providers / Notifiers)
+├── screens/        # Full page widgets
+└── widgets/        # Widgets specific to this feature ONLY (Proximity Rule)
 ```
 
 ## 3. Boilerplate Generation Templates

@@ -1,6 +1,6 @@
 ---
 name: nestjs-patterns
-description: The ultimate architectural standard for Enterprise Design Patterns in NestJS CQRS, Strategy Pattern via DI, Factory Providers, and Hexagonal Adapters.
+description: The ultimate architectural standard for Enterprise Design Patterns in NestJS CQRS, Strategy Pattern via DI, Factory Providers, and Custom Provider Adapters.
 author: Diego Villanueva
 trigger: When designing complex business logic, refactoring giant services, implementing multi-provider integrations, or applying CQRS.
 ---

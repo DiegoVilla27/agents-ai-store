@@ -114,11 +114,11 @@ A Global Module makes its exported providers available everywhere without explic
 export class DatabaseModule {}
 ```
 
-## 6. Hexagonal Architecture (Ports and Adapters)
+## 6. Loose Coupling with Custom Providers (Interfaces and Adapters)
 
-In a highly scalable monolith, the Domain logic must not know about the Framework (NestJS) or the Database (Postgres/Prisma).
+In a highly scalable modular monolith, modules should not be tightly coupled to concrete external service implementations.
 
-You achieve this by defining an Interface (Port) in the Domain, and creating an Adapter (Prisma Implementation) in the Infrastructure layer, wiring them together using NestJS Custom Providers.
+You achieve this by defining an Interface in your module, creating a concrete provider implementation, and wiring them together using NestJS Custom Providers.
 
 ```typescript
 // ✅ ALWAYS: Depend on Interfaces, not Implementations

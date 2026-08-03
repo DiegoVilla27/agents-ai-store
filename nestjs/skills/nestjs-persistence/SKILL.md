@@ -107,7 +107,7 @@ export class UserMapper {
 
 ## 4. The Unit of Work (Transactions)
 
-Handling transactions across multiple Repositories is the hardest problem in Clean Architecture. If you pass the `Prisma.TransactionClient` into your Repositories, you corrupt the Domain with Prisma types.
+Handling transactions across multiple Repositories is a common challenge in Modular Architecture. If you pass the `Prisma.TransactionClient` into your Repositories, you corrupt the Domain with Prisma types.
 
 The modern Enterprise standard is to use **AsyncLocalStorage (ClsHooked)** to propagate the transaction context implicitly, or abstract it behind a Unit of Work (UoW) interface.
 
