@@ -3,8 +3,8 @@
 # ==============================================================================
 # 🌌 Async Agents - Specialized AI Asset Synchronizer
 # ==============================================================================
-# Synchronizes specialized AI AGENTS.md and skills from the central repository
-# directly into your local project's .agents/ root folder.
+# Synchronizes specialized AI AGENTS.md protocols and skills from the central
+# repository directly into your local project's .agents/ root folder.
 #
 # Usage:
 #   ./async_agents.sh [tech|skill] [--clean] [--branch name] [--local path]
@@ -75,31 +75,54 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# --- Download / Copy Helper ---
-sync_file() {
-    local src_rel_path=$1
-    local dst_rel_path=$2
-    local label=$3
+# --- AGENTS.md Smart Merge Helper ---
+sync_agents_md() {
+    local tech=$1
+    local src_rel_path="$tech/AGENTS.md"
+    local target_file="$AGENT_BASE/AGENTS.md"
+    mkdir -p "$AGENT_BASE"
 
-    local target_file="$AGENT_BASE/$dst_rel_path"
-    mkdir -p "$(dirname "$target_file")"
-
+    local content=""
     if [ -n "$LOCAL_PATH" ]; then
-        local src_file="$LOCAL_PATH/$src_rel_path"
-        if [ -f "$src_file" ]; then
-            cp "$src_file" "$target_file"
-            echo "  📁 $label [COPIED]"
-            return 0
+        if [ -f "$LOCAL_PATH/$src_rel_path" ]; then
+            content=$(cat "$LOCAL_PATH/$src_rel_path")
         fi
     else
         local file_url="$GITHUB_RAW/$BRANCH/$src_rel_path"
         if curl -s --head --fail "$file_url" > /dev/null 2>&1; then
-            curl -s -L "$file_url" -o "$target_file"
-            echo "  🌐 $label [DOWNLOADED]"
-            return 0
+            content=$(curl -s -L "$file_url")
         fi
     fi
-    return 1
+
+    if [ -z "$content" ]; then
+        warn "AGENTS.md not found for technology '$tech'."
+        return 1
+    fi
+
+    if [ ! -f "$target_file" ]; then
+        # Fresh AGENTS.md creation
+        echo "$content" > "$target_file"
+        echo "  🌐 AGENTS.md ($tech) [CREATED]"
+        ((SYNC_COUNT_AGENTS++))
+        return 0
+    else
+        # Smart Merge if AGENTS.md already exists
+        local header_title
+        header_title=$(echo "$content" | grep -E "^# " | head -n 1)
+
+        if [ -n "$header_title" ] && grep -Fq "$header_title" "$target_file"; then
+            echo "  ℹ️  AGENTS.md ($tech protocol already present)"
+            return 0
+        fi
+
+        echo "" >> "$target_file"
+        echo "---" >> "$target_file"
+        echo "" >> "$target_file"
+        echo "$content" >> "$target_file"
+        echo "  🌐 AGENTS.md ($tech protocol [MERGED])"
+        ((SYNC_COUNT_AGENTS++))
+        return 0
+    fi
 }
 
 # --- Skill Sync Logic ---
@@ -169,11 +192,7 @@ sync_technology() {
 
     if [ "$tech" != "shared" ]; then
         info "Processing 🤖 Agent protocol ($tech/AGENTS.md)..."
-        if sync_file "$tech/AGENTS.md" "AGENTS.md" "AGENTS.md ($tech)"; then
-            ((SYNC_COUNT_AGENTS++))
-        else
-            warn "AGENTS.md not found for technology '$tech'."
-        fi
+        sync_agents_md "$tech"
     fi
 
     local skill_names=()
@@ -257,7 +276,7 @@ fi
 
 header "Sync Summary"
 if [ $SYNC_COUNT_AGENTS -gt 0 ]; then
-    success "🤖 AGENTS.md protocol synced to $AGENT_BASE/AGENTS.md"
+    success "🤖 AGENTS.md protocol synced/merged to $AGENT_BASE/AGENTS.md"
 fi
 success "🛠 Skills synced: $SYNC_COUNT_SKILLS"
 info "✨ All assets are ready in $AGENT_BASE/"

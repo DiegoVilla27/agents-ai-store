@@ -1,0 +1,23 @@
+{
+  "name": "agents-ai-store",
+  "version": "1.0.0",
+  "description": "Specialized AI Asset Synchronizer",
+  "main": "bin/cli.js",
+  "bin": {
+    "agents-ai-store": "./bin/cli.js",
+    "async-agents": "./bin/cli.js"
+  },
+  "scripts": {
+    "sync": "node ./bin/cli.js"
+  },
+  "keywords": [
+    "agents",
+    "ai",
+    "antigravity",
+    "cursor",
+    "skills",
+    "architect"
+  ],
+  "author": "Diego Villanueva",
+  "license": "MIT"
+}

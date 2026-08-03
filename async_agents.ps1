@@ -1,8 +1,8 @@
 # ==============================================================================
 # 🌌 Async Agents - Specialized AI Asset Synchronizer (Windows Edition)
 # ==============================================================================
-# Synchronizes specialized AI AGENTS.md and skills from the central repository
-# directly into your local project's .agents/ root folder.
+# Synchronizes specialized AI AGENTS.md protocols and skills from the central
+# repository directly into your local project's .agents/ root folder.
 #
 # Usage:
 #   .\async_agents.ps1 [tech|skill] [-Clean] [-Branch name] [-Local path]
@@ -62,32 +62,54 @@ while ($i -lt $args.Count) {
     $i++
 }
 
-# --- Sync Helper ---
-function Sync-File($srcRelPath, $dstRelPath, $label) {
-    $targetFile = Join-Path $AGENT_BASE $dstRelPath
-    $parentDir = Split-Path -Path $targetFile -Parent
-    if (-not (Test-Path $parentDir)) {
-        New-Item -ItemType Directory -Path $parentDir -Force | Out-Null
+# --- Smart Merge Helper ---
+function Sync-AgentsMd($tech) {
+    $srcRelPath = "$tech/AGENTS.md"
+    $targetFile = Join-Path $AGENT_BASE "AGENTS.md"
+
+    if (-not (Test-Path $AGENT_BASE)) {
+        New-Item -ItemType Directory -Path $AGENT_BASE -Force | Out-Null
     }
 
+    $content = ""
     if ($LOCAL_PATH) {
         $srcFile = Join-Path $LOCAL_PATH $srcRelPath
         if (Test-Path $srcFile) {
-            Copy-Item -Path $srcFile -Destination $targetFile -Force
-            Write-Host "  📁 $label [COPIED]"
-            return $true
+            $content = Get-Content -Raw -Path $srcFile
         }
     } else {
         $fileUrl = "$GITHUB_RAW/$BRANCH/$srcRelPath"
         try {
-            Invoke-WebRequest -Uri $fileUrl -OutFile $targetFile -ErrorAction Stop
-            Write-Host "  🌐 $label [DOWNLOADED]"
-            return $true
+            $content = (Invoke-WebRequest -Uri $fileUrl -ErrorAction Stop).Content
         } catch {
+            warn "AGENTS.md not found for technology '$tech'."
             return $false
         }
     }
-    return $false
+
+    if (-not $content) { return $false }
+
+    if (-not (Test-Path $targetFile)) {
+        Set-Content -Path $targetFile -Value $content -Encoding UTF8
+        Write-Host "  🌐 AGENTS.md ($tech) [CREATED]"
+        $script:SYNC_COUNT_AGENTS++
+        return $true
+    } else {
+        $existingContent = Get-Content -Raw -Path $targetFile
+        $lines = $content -split "`r?\n"
+        $firstHeader = ($lines | Where-Object { $_ -like "# *" } | Select-Object -First 1)
+
+        if ($firstHeader -and $existingContent.Contains($firstHeader)) {
+            Write-Host "  ℹ️  AGENTS.md ($tech protocol already present)"
+            return $true
+        }
+
+        $merged = "`n`n---`n`n" + $content
+        Add-Content -Path $targetFile -Value $merged -Encoding UTF8
+        Write-Host "  🌐 AGENTS.md ($tech protocol [MERGED])"
+        $script:SYNC_COUNT_AGENTS++
+        return $true
+    }
 }
 
 function Sync-SkillByPath($tech, $skillName) {
@@ -168,11 +190,7 @@ function Sync-Technology($tech) {
 
     if ($tech -ne "shared") {
         info "Processing 🤖 Agent protocol ($tech/AGENTS.md)..."
-        if (Sync-File "$tech/AGENTS.md" "AGENTS.md" "AGENTS.md ($tech)") {
-            $script:SYNC_COUNT_AGENTS++
-        } else {
-            warn "AGENTS.md not found for technology '$tech'."
-        }
+        Sync-AgentsMd $tech | Out-Null
     }
 
     $skillNames = @()
@@ -245,7 +263,7 @@ if ($SELECTED_ITEMS.Count -eq 0) {
 
 header "Sync Summary"
 if ($SYNC_COUNT_AGENTS -gt 0) {
-    success "🤖 AGENTS.md protocol synced to $AGENT_BASE/AGENTS.md"
+    success "🤖 AGENTS.md protocol synced/merged to $AGENT_BASE/AGENTS.md"
 }
 success "🛠 Skills synced: $SYNC_COUNT_SKILLS"
 info "✨ All assets are ready in $AGENT_BASE/"
