@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (93 Skills)
+## 📚 Full Specialized Skills Catalog (99 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -250,6 +250,12 @@ Production-grade backend patterns using Express.js.
 |:---|:---|:---|
 | `express-core-middleware` | [SKILL.md](./express/skills/express-core-middleware/SKILL.md) | Custom middleware patterns, global chains, and types. |
 | `express-routing-controllers` | [SKILL.md](./express/skills/express-routing-controllers/SKILL.md) | Decoupled routing, controller DI, and method binding. |
+| `express-auth-jwt` | [SKILL.md](./express/skills/express-auth-jwt/SKILL.md) | JWT access/refresh token rotation, Argon2, and RBAC. |
+| `express-openapi-swagger` | [SKILL.md](./express/skills/express-openapi-swagger/SKILL.md) | OpenAPI 3.0 specs with zod-to-openapi and Swagger UI. |
+| `express-websocket-realtime` | [SKILL.md](./express/skills/express-websocket-realtime/SKILL.md) | Socket.io real-time websockets, rooms, and Redis adapter. |
+| `express-queues-bullmq` | [SKILL.md](./express/skills/express-queues-bullmq/SKILL.md) | Background jobs, Redis queues, and DLQ retries with BullMQ. |
+| `express-observability-metrics` | [SKILL.md](./express/skills/express-observability-metrics/SKILL.md) | Pino JSON logging, Prometheus metrics, and health probes. |
+| `express-file-uploads` | [SKILL.md](./express/skills/express-file-uploads/SKILL.md) | Secure file uploads, magic number MIME check, and S3 streams. |
 | `express-security-hardening` | [SKILL.md](./express/skills/express-security-hardening/SKILL.md) | Helmet headers, CORS policies, and rate-limiting. |
 | `express-error-handling` | [SKILL.md](./express/skills/express-error-handling/SKILL.md) | Asynchronous wrappers, operational errors, and boundaries. |
 | `express-database-persistence` | [SKILL.md](./express/skills/express-database-persistence/SKILL.md) | Client singletons, repositories, and transaction blocks. |
