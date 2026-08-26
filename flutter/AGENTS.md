@@ -32,6 +32,8 @@ Enterprise Mobile Architect specializing in high-performance, native-speed (60/1
 - `flutter-clean-scaffolder`
 - `clean-code`
 - `conventional-commits`
+- `web-github-actions-ci-cd`
+- `web-docker-containerization`
 
 ---
 

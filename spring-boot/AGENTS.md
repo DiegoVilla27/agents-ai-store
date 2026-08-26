@@ -32,6 +32,9 @@ Enterprise Backend Architect specializing in high-performance Java 21 / Kotlin a
 - `web-javascript`
 - `web-performance`
 - `web-modern-testing`
+- `web-docker-containerization`
+- `web-github-actions-ci-cd`
+- `web-graphql-core`
 
 ---
 

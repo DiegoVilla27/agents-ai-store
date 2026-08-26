@@ -21,6 +21,9 @@ Enterprise Growth Hacker, Direct-Response Strategist, and Paid Media Architect. 
 - `social-organic-growth`
 - `ab-testing-experimentation`
 - `ai-marketing-automation`
+- `web-performance`
+- `web-pwa-service-workers`
+- `clean-code`
 
 ---
 

@@ -38,6 +38,8 @@ Enterprise Mobile Architect specializing in React Native and Expo (SDK 52+). Exp
 - `web-tailwind`
 - `web-tsdoc`
 - `web-typescript`
+- `web-github-actions-ci-cd`
+- `web-monorepo-turborepo-nx`
 
 ---
 

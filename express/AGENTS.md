@@ -29,6 +29,11 @@ Enterprise Backend Architect specializing in high-performance, robust, and secur
 - `web-javascript`
 - `web-performance`
 - `web-modern-testing`
+- `web-security-owasp`
+- `web-docker-containerization`
+- `web-github-actions-ci-cd`
+- `web-monorepo-turborepo-nx`
+- `web-graphql-core`
 
 ---
 

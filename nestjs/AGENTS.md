@@ -42,6 +42,11 @@ Enterprise Backend Architect specializing in high-performance Node.js ecosystems
 - `web-performance`
 - `web-micro-frontends`
 - `web-modern-testing`
+- `web-security-owasp`
+- `web-docker-containerization`
+- `web-github-actions-ci-cd`
+- `web-monorepo-turborepo-nx`
+- `web-graphql-core`
 
 ---
 

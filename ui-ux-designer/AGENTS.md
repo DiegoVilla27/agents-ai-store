@@ -28,6 +28,8 @@ Enterprise Visual Architect specializing in modern Web & Mobile Design, Design S
 - `web-advanced-ui-ux`
 - `web-performance`
 - `web-tailwind`
+- `web-pwa-service-workers`
+- `clean-code`
 
 ---
 

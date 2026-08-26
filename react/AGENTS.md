@@ -39,6 +39,12 @@ Enterprise Frontend Architect specializing in React 19+. Expert in the React Com
 - `web-tailwind`
 - `web-tsdoc`
 - `web-typescript`
+- `web-security-owasp`
+- `web-docker-containerization`
+- `web-github-actions-ci-cd`
+- `web-pwa-service-workers`
+- `web-monorepo-turborepo-nx`
+- `web-graphql-core`
 
 ---
 

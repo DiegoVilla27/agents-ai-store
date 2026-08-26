@@ -34,6 +34,7 @@ Enterprise Software Architect specializing in Modern Angular (v18 & v19+). Exper
 - `nx-monorepo`
 - `angular-pwa`
 - `clean-code`
+- `conventional-commits`
 - `web-tsdoc`
 - `web-typescript`
 - `web-javascript`
@@ -43,7 +44,12 @@ Enterprise Software Architect specializing in Modern Angular (v18 & v19+). Exper
 - `web-tailwind`
 - `web-micro-frontends`
 - `web-modern-testing`
-- `conventional-commits`
+- `web-security-owasp`
+- `web-docker-containerization`
+- `web-github-actions-ci-cd`
+- `web-pwa-service-workers`
+- `web-monorepo-turborepo-nx`
+- `web-graphql-core`
 
 ---
 
