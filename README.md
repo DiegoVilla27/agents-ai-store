@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (123 Skills)
+## 📚 Full Specialized Skills Catalog (130 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -181,7 +181,7 @@ The foundation of high-quality software development.
 | `web-javascript` | [SKILL.md](./shared/skills/web-javascript/SKILL.md) | Deep runtime behavior and optimized ESNext. |
 | `web-tsdoc` | [SKILL.md](./shared/skills/web-tsdoc/SKILL.md) | Standardized TSDoc documentation for TypeScript projects. |
 
-### ⚛️ React & Next.js Ecosystem
+### ⚛️ React Ecosystem
 State-of-the-art patterns for the React universe.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
@@ -203,17 +203,29 @@ State-of-the-art patterns for the React universe.
 | `react-a11y` | [SKILL.md](./react/skills/react-a11y/SKILL.md) | Accessibility and inclusive UI standards. |
 | `react-view-transitions` | [SKILL.md](./react/skills/react-view-transitions/SKILL.md) | Native-like page transitions with Browser API. |
 | `vite-react-optimization` | [SKILL.md](./react/skills/vite-react-optimization/SKILL.md) | Build performance, code splitting, and preloading. |
-| `next-core` | [SKILL.md](./nextjs/skills/next-core/SKILL.md) | Next.js 15 App Router, Actions, and Streaming. |
-| `next-routes` | [SKILL.md](./nextjs/skills/next-routes/SKILL.md) | Advanced App Router patterns: Parallel & Intercepting routes. |
-| `nextjs-server-actions` | [SKILL.md](./nextjs/skills/nextjs-server-actions/SKILL.md) | RPC-like mutations and on-demand revalidation. |
-| `nextjs-safe-action` | [SKILL.md](./nextjs/skills/nextjs-safe-action/SKILL.md) | Typed and secure actions with middleware. |
-| `nextjs-auth-js` | [SKILL.md](./nextjs/skills/nextjs-auth-js/SKILL.md) | OAuth, JWT sessions, and route protection. |
-| `nextjs-orm-prisma` | [SKILL.md](./nextjs/skills/nextjs-orm-prisma/SKILL.md) | Type-safe DB access and singleton clients. |
-| `nextjs-seo-metadata` | [SKILL.md](./nextjs/skills/nextjs-seo-metadata/SKILL.md) | Metadata API, Dynamic OG, and Sitemap gen. |
-| `nextjs-i18n-intl` | [SKILL.md](./nextjs/skills/nextjs-i18n-intl/SKILL.md) | next-intl, localized routing, and RTL support. |
-| `nextjs-caching-isr` | [SKILL.md](./nextjs/skills/nextjs-caching-isr/SKILL.md) | Data cache, ISR, and tagging strategies. |
-| `nextjs-middleware` | [SKILL.md](./nextjs/skills/nextjs-middleware/SKILL.md) | Edge Runtime logic, Geo, and global redirects. |
-| `nextjs-shadcn-ui` | [SKILL.md](./nextjs/skills/nextjs-shadcn-ui/SKILL.md) | Accessible UI components with Radix & Tailwind. |
+
+### ▲ Next.js Ecosystem
+Production-grade patterns using Next.js 15+ App Router and React 19.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `next-core` | [SKILL.md](./nextjs/skills/next-core/SKILL.md) | Next.js 15 App Router, React Server Components, and feature modules. |
+| `next-routes` | [SKILL.md](./nextjs/skills/next-routes/SKILL.md) | Route groups, nested layouts, and route handlers. |
+| `nextjs-15-async-request-apis` | [SKILL.md](./nextjs/skills/nextjs-15-async-request-apis/SKILL.md) | Async cookies/headers/params, unstable_after(), and React 19. |
+| `nextjs-server-actions` | [SKILL.md](./nextjs/skills/nextjs-server-actions/SKILL.md) | RPC-like mutations, useOptimistic, and on-demand revalidations. |
+| `nextjs-safe-action` | [SKILL.md](./nextjs/skills/nextjs-safe-action/SKILL.md) | Type-safe Server Actions with Zod validation and middleware. |
+| `nextjs-parallel-intercepting-routes` | [SKILL.md](./nextjs/skills/nextjs-parallel-intercepting-routes/SKILL.md) | Parallel routes @slot, (.)modal interception, and contextual overlays. |
+| `nextjs-streaming-suspense` | [SKILL.md](./nextjs/skills/nextjs-streaming-suspense/SKILL.md) | Progressive SSR, Partial Prerendering (PPR), and Suspense streaming. |
+| `nextjs-auth-js` | [SKILL.md](./nextjs/skills/nextjs-auth-js/SKILL.md) | NextAuth v5 / Auth.js, OAuth providers, and route protection. |
+| `nextjs-orm-prisma` | [SKILL.md](./nextjs/skills/nextjs-orm-prisma/SKILL.md) | Prisma ORM, query acceleration, and singleton clients. |
+| `nextjs-drizzle-orm` | [SKILL.md](./nextjs/skills/nextjs-drizzle-orm/SKILL.md) | Drizzle ORM on Edge/Serverless, migrations, and relational queries. |
+| `nextjs-caching-isr` | [SKILL.md](./nextjs/skills/nextjs-caching-isr/SKILL.md) | Data cache, on-demand ISR, and tag-based revalidations. |
+| `nextjs-middleware` | [SKILL.md](./nextjs/skills/nextjs-middleware/SKILL.md) | Edge Runtime logic, geolocation, and global redirects. |
+| `nextjs-seo-metadata` | [SKILL.md](./nextjs/skills/nextjs-seo-metadata/SKILL.md) | Metadata API, generateMetadata, sitemap.ts, and JSON-LD. |
+| `nextjs-open-graph-images` | [SKILL.md](./nextjs/skills/nextjs-open-graph-images/SKILL.md) | Dynamic social cards with @vercel/og (ImageResponse) on Edge. |
+| `nextjs-web-vitals-analytics` | [SKILL.md](./nextjs/skills/nextjs-web-vitals-analytics/SKILL.md) | next/font, next/image AVIF, Core Web Vitals (INP/LCP/CLS), and Speed Insights. |
+| `nextjs-shadcn-ui` | [SKILL.md](./nextjs/skills/nextjs-shadcn-ui/SKILL.md) | Accessible UI components with Radix UI, Tailwind CSS, and dark mode. |
+| `nextjs-i18n-intl` | [SKILL.md](./nextjs/skills/nextjs-i18n-intl/SKILL.md) | next-intl, localized routing, and RTL support in RSC. |
+| `nextjs-testing-playwright-vitest` | [SKILL.md](./nextjs/skills/nextjs-testing-playwright-vitest/SKILL.md) | Playwright E2E testing with auth fixtures and Vitest for Server Actions. |
 | `web-typescript-react` | [SKILL.md](./shared/skills/web-typescript-react/SKILL.md) | Advanced TS patterns for React and Next.js. |
 | `react-native-core` | [SKILL.md](./react-native/skills/react-native-core/SKILL.md) | Universal mobile development and native performance. |
 | `react-native-expo` | [SKILL.md](./react-native/skills/react-native-expo/SKILL.md) | Managed workflow, EAS, and Expo Router. |
