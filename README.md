@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (136 Skills)
+## 📚 Full Specialized Skills Catalog (144 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -299,17 +299,25 @@ Production-grade backend patterns using Express.js.
 
 
 ### 🍃 Spring Boot Ecosystem
-Production-grade backend patterns using Spring Boot 3.x.
+Production-grade backend patterns using Spring Boot 3.x and Java 21.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
 | `spring-boot-core-di` | [SKILL.md](./spring-boot/skills/spring-boot-core-di/SKILL.md) | IoC container, constructor DI, and validated configuration properties. |
+| `spring-boot-virtual-threads-loom` | [SKILL.md](./spring-boot/skills/spring-boot-virtual-threads-loom/SKILL.md) | Java 21 Project Loom, massive concurrency, and non-blocking I/O. |
 | `spring-boot-security-jwt` | [SKILL.md](./spring-boot/skills/spring-boot-security-jwt/SKILL.md) | Stateless security filters, JWT token parsing, and method authorization. |
+| `spring-boot-security-oauth2-resource-server` | [SKILL.md](./spring-boot/skills/spring-boot-security-oauth2-resource-server/SKILL.md) | Enterprise SSO with OAuth2/OIDC, Keycloak/Auth0, and dynamic JWKS. |
 | `spring-boot-data-jpa` | [SKILL.md](./spring-boot/skills/spring-boot-data-jpa/SKILL.md) | Hibernate mappings, query fetches (N+1 solution), and transactions. |
-| `spring-boot-testing-expert` | [SKILL.md](./spring-boot/skills/spring-boot-testing-expert/SKILL.md) | Mockito unit tests, WebMvc/DataJpa slice tests, and Testcontainers. |
-| `spring-boot-performance-scalability` | [SKILL.md](./spring-boot/skills/spring-boot-performance-scalability/SKILL.md) | JVM tuning, HikariCP pools, Project Loom Virtual Threads, and graceful exits. |
-| `spring-boot-reactive-webflux` | [SKILL.md](./spring-boot/skills/spring-boot-reactive-webflux/SKILL.md) | Asynchronous pipelines, Netty, Reactor Mono/Flux, and R2DBC. |
+| `spring-boot-database-multitenancy` | [SKILL.md](./spring-boot/skills/spring-boot-database-multitenancy/SKILL.md) | Multi-tenancy (Schema/DB/RLS) with AbstractRoutingDataSource. |
+| `spring-boot-springdoc-openapi` | [SKILL.md](./spring-boot/skills/spring-boot-springdoc-openapi/SKILL.md) | OpenAPI 3.0 / Swagger UI with springdoc and Java Records. |
+| `spring-boot-microservices-grpc` | [SKILL.md](./spring-boot/skills/spring-boot-microservices-grpc/SKILL.md) | High-throughput RPC with gRPC, Protobuf, and client stubs. |
 | `spring-boot-messaging-queues` | [SKILL.md](./spring-boot/skills/spring-boot-messaging-queues/SKILL.md) | Kafka message listeners, retry backoffs, DLQ routing, and Outbox writes. |
-| `spring-boot-javadoc` | [SKILL.md](./spring-boot/skills/spring-boot-javadoc/SKILL.md) | Enterprise Javadoc standards for Java 17/21, Records, Controllers, and Services. |
+| `spring-boot-caching-redis` | [SKILL.md](./spring-boot/skills/spring-boot-caching-redis/SKILL.md) | Redis CacheManager, @Cacheable TTL configs, and Redisson locks. |
+| `spring-boot-resilience4j-circuit-breaker` | [SKILL.md](./spring-boot/skills/spring-boot-resilience4j-circuit-breaker/SKILL.md) | Resilience4j Circuit Breakers, retries, bulkheads, and fallbacks. |
+| `spring-boot-observability-micrometer-otel` | [SKILL.md](./spring-boot/skills/spring-boot-observability-micrometer-otel/SKILL.md) | Prometheus metrics, OpenTelemetry tracing, and MDC correlation IDs. |
+| `spring-boot-reactive-webflux` | [SKILL.md](./spring-boot/skills/spring-boot-reactive-webflux/SKILL.md) | Asynchronous pipelines, Netty, Reactor Mono/Flux, and R2DBC. |
+| `spring-boot-performance-scalability` | [SKILL.md](./spring-boot/skills/spring-boot-performance-scalability/SKILL.md) | JVM tuning, HikariCP pools, Project Loom, and graceful exits. |
+| `spring-boot-testing-expert` | [SKILL.md](./spring-boot/skills/spring-boot-testing-expert/SKILL.md) | Mockito unit tests, WebMvc/DataJpa slice tests, and Testcontainers. |
+| `spring-boot-javadoc` | [SKILL.md](./spring-boot/skills/spring-boot-javadoc/SKILL.md) | Enterprise Javadoc standards for Java 17/21, Records, and Services. |
 
 
 ### 🅰️ Angular Ecosystem
