@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (87 Skills)
+## 📚 Full Specialized Skills Catalog (93 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -185,7 +185,24 @@ The foundation of high-quality software development.
 State-of-the-art patterns for the React universe.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `react-core` | [SKILL.md](./react/skills/react-core/SKILL.md) | React 19, Compiler optimization, and Server Components. |
+| `react-core` | [SKILL.md](./react/skills/react-core/SKILL.md) | React 19, Server Components, and Actions. |
+| `react-compiler` | [SKILL.md](./react/skills/react-compiler/SKILL.md) | React 19 Compiler, automatic memoization, and Rules of React. |
+| `react-router-v7` | [SKILL.md](./react/skills/react-router-v7/SKILL.md) | Type-safe loaders, actions, and nested layouts in React Router v7. |
+| `react-tanstack-query` | [SKILL.md](./react/skills/react-tanstack-query/SKILL.md) | v5 Server state, caching, and optimistic updates. |
+| `react-zustand` | [SKILL.md](./react/skills/react-zustand/SKILL.md) | Global state with selectors, slices, and persistence. |
+| `react-virtual-scroll` | [SKILL.md](./react/skills/react-virtual-scroll/SKILL.md) | 120 FPS virtualization of massive collections with TanStack Virtual. |
+| `react-performance-profiling` | [SKILL.md](./react/skills/react-performance-profiling/SKILL.md) | <Profiler> API, DevTools flamegraphs, and memory leak analysis. |
+| `react-microfrontends` | [SKILL.md](./react/skills/react-microfrontends/SKILL.md) | Vite Module Federation 2.0 and resilient remote loading. |
+| `react-testing-vitest` | [SKILL.md](./react/skills/react-testing-vitest/SKILL.md) | In-memory testing with Vitest, RTL, and MSW v2. |
+| `react-testing-jest` | [SKILL.md](./react/skills/react-testing-jest/SKILL.md) | Industry-standard Jest + Testing Library. |
+| `framer-motion` | [SKILL.md](./react/skills/framer-motion/SKILL.md) | High-end animations and complex gesture handling. |
+| `react-hook-form` | [SKILL.md](./react/skills/react-hook-form/SKILL.md) | Performant and flexible form management. |
+| `react-hook-form-zod` | [SKILL.md](./react/skills/react-hook-form-zod/SKILL.md) | Schema-based validation for React Hook Form. |
+| `redux-toolkit` | [SKILL.md](./react/skills/redux-toolkit/SKILL.md) | Enterprise state management and RTK Query. |
+| `react-zod` | [SKILL.md](./react/skills/react-zod/SKILL.md) | Zod 4 schema validation and type inference. |
+| `react-a11y` | [SKILL.md](./react/skills/react-a11y/SKILL.md) | Accessibility and inclusive UI standards. |
+| `react-view-transitions` | [SKILL.md](./react/skills/react-view-transitions/SKILL.md) | Native-like page transitions with Browser API. |
+| `vite-react-optimization` | [SKILL.md](./react/skills/vite-react-optimization/SKILL.md) | Build performance, code splitting, and preloading. |
 | `next-core` | [SKILL.md](./nextjs/skills/next-core/SKILL.md) | Next.js 15 App Router, Actions, and Streaming. |
 | `next-routes` | [SKILL.md](./nextjs/skills/next-routes/SKILL.md) | Advanced App Router patterns: Parallel & Intercepting routes. |
 | `nextjs-server-actions` | [SKILL.md](./nextjs/skills/nextjs-server-actions/SKILL.md) | RPC-like mutations and on-demand revalidation. |
@@ -197,16 +214,6 @@ State-of-the-art patterns for the React universe.
 | `nextjs-caching-isr` | [SKILL.md](./nextjs/skills/nextjs-caching-isr/SKILL.md) | Data cache, ISR, and tagging strategies. |
 | `nextjs-middleware` | [SKILL.md](./nextjs/skills/nextjs-middleware/SKILL.md) | Edge Runtime logic, Geo, and global redirects. |
 | `nextjs-shadcn-ui` | [SKILL.md](./nextjs/skills/nextjs-shadcn-ui/SKILL.md) | Accessible UI components with Radix & Tailwind. |
-| `framer-motion` | [SKILL.md](./react/skills/framer-motion/SKILL.md) | High-end animations and complex gesture handling. |
-| `react-hook-form` | [SKILL.md](./react/skills/react-hook-form/SKILL.md) | Performant and flexible form management. |
-| `react-hook-form-zod` | [SKILL.md](./react/skills/react-hook-form-zod/SKILL.md) | Schema-based validation for React Hook Form. |
-| `react-tanstack-query` | [SKILL.md](./react/skills/react-tanstack-query/SKILL.md) | v5 Server state, caching, and optimistic updates. |
-| `react-zustand` | [SKILL.md](./react/skills/react-zustand/SKILL.md) | Global state with selectors, slices, and persistence. |
-| `redux-toolkit` | [SKILL.md](./react/skills/redux-toolkit/SKILL.md) | Enterprise state management and RTK Query. |
-| `react-zod` | [SKILL.md](./react/skills/react-zod/SKILL.md) | Zod 4 schema validation and type inference. |
-| `react-a11y` | [SKILL.md](./react/skills/react-a11y/SKILL.md) | Accessibility and inclusive UI standards. |
-| `react-view-transitions` | [SKILL.md](./react/skills/react-view-transitions/SKILL.md) | Native-like page transitions with Browser API. |
-| `vite-react-optimization` | [SKILL.md](./react/skills/vite-react-optimization/SKILL.md) | Build performance, code splitting, and preloading. |
 | `web-typescript-react` | [SKILL.md](./shared/skills/web-typescript-react/SKILL.md) | Advanced TS patterns for React and Next.js. |
 | `react-native-core` | [SKILL.md](./react-native/skills/react-native-core/SKILL.md) | Universal mobile development and native performance. |
 | `react-native-expo` | [SKILL.md](./react-native/skills/react-native-expo/SKILL.md) | Managed workflow, EAS, and Expo Router. |
