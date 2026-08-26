@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (144 Skills)
+## 📚 Full Specialized Skills Catalog (150 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -419,18 +419,24 @@ Ensuring software remains immune to regressions.
 | `web-micro-frontends` | [SKILL.md](./shared/skills/web-micro-frontends/SKILL.md) | Module Federation and Vite orchestrations. |
 
 ### 🎨 UI/UX Design Ecosystem
-Professional design patterns and visual excellence.
+Professional design systems, visual excellence, and human-computer interaction.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `3d-and-spatial-design` | [SKILL.md](./ui-ux-designer/skills/3d-and-spatial-design/SKILL.md) | Depth, spatial UI, and 3D implementations. |
-| `accessibility-and-inclusion` | [SKILL.md](./ui-ux-designer/skills/accessibility-and-inclusion/SKILL.md) | WCAG compliance, screen readers, and high contrast. |
-| `branding-and-identity` | [SKILL.md](./ui-ux-designer/skills/branding-and-identity/SKILL.md) | Visual consistency, logo usage, and brand voice. |
-| `color-theory` | [SKILL.md](./ui-ux-designer/skills/color-theory/SKILL.md) | Palettes, contrast ratios, and emotional impact. |
-| `gestalt-psychology` | [SKILL.md](./ui-ux-designer/skills/gestalt-psychology/SKILL.md) | Proximity, similarity, and cognitive load reduction. |
-| `illustration-and-iconography` | [SKILL.md](./ui-ux-designer/skills/illustration-and-iconography/SKILL.md) | Cohesive iconography and custom SVG usage. |
-| `layout-composition` | [SKILL.md](./ui-ux-designer/skills/layout-composition/SKILL.md) | Grids, whitespace, and responsive layouts. |
-| `micro-interactions` | [SKILL.md](./ui-ux-designer/skills/micro-interactions/SKILL.md) | Delightful details and state transitions. |
-| `typography-mastery` | [SKILL.md](./ui-ux-designer/skills/typography-mastery/SKILL.md) | Font pairings, readability, and scale. |
+| `color-theory` | [SKILL.md](./ui-ux-designer/skills/color-theory/SKILL.md) | Harmonious HSL palettes, contrast ratios, and emotional impact. |
+| `typography-mastery` | [SKILL.md](./ui-ux-designer/skills/typography-mastery/SKILL.md) | Font pairings, visual hierarchy, line-heights, and scale. |
+| `layout-composition` | [SKILL.md](./ui-ux-designer/skills/layout-composition/SKILL.md) | CSS Grids, whitespace luxury, and asymmetrical composition. |
+| `design-systems-tokens` | [SKILL.md](./ui-ux-designer/skills/design-systems-tokens/SKILL.md) | 3-Tier Design Tokens, CSS properties, and Figma synchronization. |
+| `dark-mode-theming` | [SKILL.md](./ui-ux-designer/skills/dark-mode-theming/SKILL.md) | Surface luminance elevations, contrast glare, and FOUC prevention. |
+| `micro-interactions` | [SKILL.md](./ui-ux-designer/skills/micro-interactions/SKILL.md) | Delightful hover details, tactile feedback, and transitions. |
+| `motion-design-principles` | [SKILL.md](./ui-ux-designer/skills/motion-design-principles/SKILL.md) | Spring physics, Bézier curves, choreography, and reduced motion. |
+| `data-visualization-dashboards` | [SKILL.md](./ui-ux-designer/skills/data-visualization-dashboards/SKILL.md) | High-density dashboards, chart selection, and accessible palettes. |
+| `responsive-adaptive-ux` | [SKILL.md](./ui-ux-designer/skills/responsive-adaptive-ux/SKILL.md) | CSS Container Queries, clamp() typography, and adaptive tables. |
+| `illustration-and-iconography` | [SKILL.md](./ui-ux-designer/skills/illustration-and-iconography/SKILL.md) | Cohesive iconography, scalable SVG, and visual assets. |
+| `branding-and-identity` | [SKILL.md](./ui-ux-designer/skills/branding-and-identity/SKILL.md) | Visual consistency, logo guidelines, and brand voice. |
+| `gestalt-psychology` | [SKILL.md](./ui-ux-designer/skills/gestalt-psychology/SKILL.md) | Proximity, similarity, continuity, and cognitive load reduction. |
+| `accessibility-and-inclusion` | [SKILL.md](./ui-ux-designer/skills/accessibility-and-inclusion/SKILL.md) | WCAG 2.2 AAA/AA, screen readers, and keyboard navigation. |
+| `user-research-heuristics` | [SKILL.md](./ui-ux-designer/skills/user-research-heuristics/SKILL.md) | Nielsen Norman 10 Usability Heuristics, audits, and journey maps. |
+| `3d-and-spatial-design` | [SKILL.md](./ui-ux-designer/skills/3d-and-spatial-design/SKILL.md) | Spatial UI depth, 3D elevations, multi-layer shadows, and glassmorphism. |
 
 ### 📈 Digital Marketing Ecosystem
 Strategies for full-funnel growth, conversion, paid scaling, and retention.
