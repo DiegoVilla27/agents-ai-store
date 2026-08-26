@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (83 Skills)
+## 📚 Full Specialized Skills Catalog (87 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -265,18 +265,20 @@ Production-grade backend patterns using Spring Boot 3.x.
 
 
 ### 🅰️ Angular Ecosystem
-Enterprise-grade patterns for modern Angular apps.
+Enterprise-grade patterns for modern Angular (v18 & v19+) applications.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `angular-core` | [SKILL.md](./angular/skills/angular-core/SKILL.md) | Standalone components and modern Signal inputs. |
-| `angular-signals` | [SKILL.md](./angular/signals/SKILL.md) | Fine-grained reactivity, computed and effects. |
+| `angular-core` | [SKILL.md](./angular/skills/angular-core/SKILL.md) | Standalone by default, inject(), and afterNextRender. |
+| `angular-signals` | [SKILL.md](./angular/skills/angular-signals/SKILL.md) | Fine-grained reactivity, computed, linkedSignal, and model. |
+| `angular-resource-api` | [SKILL.md](./angular/skills/angular-resource-api/SKILL.md) | Asynchronous data fetching with resource() and rxResource(). |
+| `angular-zoneless` | [SKILL.md](./angular/skills/angular-zoneless/SKILL.md) | 100% Zoneless architecture without zone.js overhead. |
 | `angular-architecture` | [SKILL.md](./angular/skills/angular-architecture/SKILL.md) | Modular Architecture and Feature-First design. |
 | `angular-routing` | [SKILL.md](./angular/skills/angular-routing/SKILL.md) | Functional guards, lazy loading, and deep links. |
-| `angular-http` | [SKILL.md](./angular/skills/angular-http/SKILL.md) | Type-safe API communication and rxResource. |
+| `angular-http` | [SKILL.md](./angular/skills/angular-http/SKILL.md) | Type-safe API communication and withFetch(). |
 | `angular-di` | [SKILL.md](./angular/skills/angular-di/SKILL.md) | Mastery of inject() and modern DI patterns. |
 | `angular-forms` | [SKILL.md](./angular/skills/angular-forms/SKILL.md) | Reactive Forms and advanced validation. |
-| `angular-performance` | [SKILL.md](./angular/skills/angular-performance/SKILL.md) | Zoneless, @defer, and SSR optimizations. |
-| `angular-ssr-hydration` | [SKILL.md](./angular/skills/angular-ssr-hydration/SKILL.md) | Non-destructive hydration and TransferState. |
+| `angular-performance` | [SKILL.md](./angular/skills/angular-performance/SKILL.md) | Zoneless, @defer, and Core Web Vitals optimization. |
+| `angular-ssr-hydration` | [SKILL.md](./angular/skills/angular-ssr-hydration/SKILL.md) | Incremental Hydration, withEventReplay, and TransferState. |
 | `angular-animations` | [SKILL.md](./angular/skills/angular-animations/SKILL.md) | DSL animations, coordinated triggers and staggering. |
 | `angular-i18n` | [SKILL.md](./angular/skills/angular-i18n/SKILL.md) | Internationalization and localized formatting. |
 | `angular-material-cdk` | [SKILL.md](./angular/skills/angular-material-cdk/SKILL.md) | Official UI components and low-level behaviors. |
@@ -284,6 +286,9 @@ Enterprise-grade patterns for modern Angular apps.
 | `angular-query` | [SKILL.md](./angular/skills/angular-query/SKILL.md) | Asynchronous server state with TanStack. |
 | `angular-modern-syntax` | [SKILL.md](./angular/skills/angular-modern-syntax/SKILL.md) | New control flow (@if, @for) and @defer. |
 | `angular-security` | [SKILL.md](./angular/skills/angular-security/SKILL.md) | Auth, Interceptors, and Sanitization. |
+| `angular-testing-vitest` | [SKILL.md](./angular/skills/angular-testing-vitest/SKILL.md) | Fast in-memory unit testing with Vitest and Signal tests. |
+| `angular-testing-jasmine` | [SKILL.md](./angular/skills/angular-testing-jasmine/SKILL.md) | Enterprise-standard Jasmine & Karma. |
+| `angular-microfrontends` | [SKILL.md](./angular/skills/angular-microfrontends/SKILL.md) | Native Federation microfrontend architecture. |
 | `rxjs-advanced` | [SKILL.md](./angular/skills/rxjs-advanced/SKILL.md) | Mastery of operators and action streams. |
 | `nx-monorepo` | [SKILL.md](./angular/skills/nx-monorepo/SKILL.md) | Scaling with libraries and workspace tags. |
 | `angular-pwa` | [SKILL.md](./angular/skills/angular-pwa/SKILL.md) | Service Workers and offline reliability. |

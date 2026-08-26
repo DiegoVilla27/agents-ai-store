@@ -1,154 +1,109 @@
 ---
 name: angular-performance
-description: The ultimate architectural standard for Enterprise Angular Performance OnPush, NgOptimizedImage, RunOutsideAngular, Bundle Budgets, and Core Web Vitals.
+description: The ultimate architectural standard for Enterprise Angular Performance Zoneless Change Detection, NgOptimizedImage, esbuild/Vite Budgets, and Core Web Vitals (LCP, CLS, INP).
 author: Diego Villanueva
-trigger: When optimizing performance, loading images, configuring change detection, or managing heavy DOM events.
+trigger: When optimizing performance, eliminating Zone.js overhead, configuring images, reducing bundle sizes, or improving Core Web Vitals.
 ---
 
-# Enterprise Angular Performance Architecture
+# Enterprise Angular Performance Architecture (v18 & v19+)
 
-In an Enterprise application, performance is not an afterthought; it is a strict requirement. A slow application destroys conversion rates and user trust. 
+In an enterprise web application, performance directly correlates with conversion rates, SEO ranking, and user retention. You MUST architect applications to achieve **95+ Lighthouse scores**, sub-second Largest Contentful Paint (LCP), near-zero Cumulative Layout Shift (CLS), and optimal Interaction to Next Paint (INP).
 
-You MUST architect the application to respect Core Web Vitals (LCP, CLS, INP) and maintain a 60fps render cycle.
+---
 
-## 1. Change Detection (`OnPush`)
+## 1. 100% Zoneless Performance (`provideExperimentalZonelessChangeDetection`)
 
-Angular's default change detection strategy checks the entire component tree (from root to leaves) every time a DOM event fires, a timer ticks, or an HTTP request completes. In a large app, this causes massive CPU spikes.
+The single largest performance win in modern Angular is removing `zone.js`.
 
-**❌ NEVER** use `ChangeDetectionStrategy.Default`.
-**✅ ALWAYS** set `ChangeDetectionStrategy.OnPush` on every single component.
-
-With `OnPush`, Angular only checks the component if:
-1. An `@Input()` reference changes.
-2. A `Signal` read in the template updates.
-3. An event originates from the component itself (e.g., a button click).
+- **Zero Monkey-Patching Overhead**: Browser events execute with zero interceptor latency.
+- **-100KB Bundle Reduction**: Instant initial script parse speedup.
+- **Fine-Grained Signal Scheduling**: Angular checks only components whose Signals have emitted new values.
 
 ```typescript
-// ✅ ALWAYS: Enforce OnPush change detection
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-
-@Component({
-  selector: 'app-heavy-dashboard',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush, // MANDATORY
-  template: `...`
-})
-export class HeavyDashboardComponent {}
-```
-
-## 2. Image Optimization (`NgOptimizedImage`)
-
-Unoptimized images are the #1 cause of terrible LCP (Largest Contentful Paint) and CLS (Cumulative Layout Shift) scores.
-
-**❌ NEVER** use the standard `<img src="...">` tag for content images.
-**✅ ALWAYS** use the `NgOptimizedImage` directive (`ngSrc`).
-
-### A. The Core Rules of `NgOptimizedImage`
-
-```html
-<!-- 1. LCP Images: The largest image visible on load MUST have 'priority' -->
-<!-- 'priority' adds a <link rel="preload"> tag to the document head automatically -->
-<img ngSrc="hero-banner.jpg" width="1200" height="600" priority alt="Hero" />
-
-<!-- 2. Standard Images: Lazy loaded by default, prevents CLS -->
-<!-- You MUST provide width and height, or the compiler will throw an error -->
-<img ngSrc="user-avatar.jpg" width="150" height="150" alt="Avatar" />
-
-<!-- 3. Fill Mode: When you don't know the exact dimensions (e.g., responsive grids) -->
-<!-- The parent container MUST have position: relative, absolute, or fixed -->
-<div style="position: relative; width: 100%; aspect-ratio: 16/9;">
-  <img ngSrc="gallery-image.jpg" fill alt="Gallery" />
-</div>
-
-<!-- 4. Placeholders (Angular 17+) -->
-<!-- Shows a blurry 20x20 base64 version while the high-res image loads -->
-<img ngSrc="high-res.jpg" width="800" height="600" placeholder alt="Photo" />
-```
-
-### B. Image Loaders (CDNs)
-
-If you use a CDN (Cloudflare, Imgix, Cloudinary), you must configure a loader in `app.config.ts`. This allows Angular to automatically request resized, WebP/AVIF versions of your images based on the user's screen size (generating `srcset` automatically).
-
-```typescript
-// ✅ ALWAYS: Configure a CDN loader for automatic srcset generation
-import { provideCloudinaryLoader } from '@angular/common';
+// app.config.ts
+import { ApplicationConfig, provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideCloudinaryLoader('https://res.cloudinary.com/enterprise-app')
-  ]
+    // ✅ ALWAYS: Enable Zoneless change detection
+    provideExperimentalZonelessChangeDetection(),
+  ],
 };
 ```
 
-## 3. Escaping Zone.js (`runOutsideAngular`)
+---
 
-If your app is not yet fully Zoneless (Angular 18+ Experimental), `zone.js` is still intercepting every asynchronous event to trigger Change Detection.
+## 2. Image Optimization (`NgOptimizedImage`)
 
-If you listen to high-frequency events like `scroll`, `mousemove`, `drag`, or run a `requestAnimationFrame`, Zone.js will trigger Change Detection 60 times per second, completely freezing the browser UI.
+Unoptimized images are the #1 cause of poor LCP and CLS scores.
 
-**✅ ALWAYS** run high-frequency events outside of Angular's zone.
+**❌ NEVER** use standard `<img src="...">` for critical content images.
+**✅ ALWAYS** use the `NgOptimizedImage` directive (`ngSrc`).
 
-```typescript
-// ✅ ALWAYS: Escape the Angular Zone for heavy DOM events
-import { Component, inject, NgZone, ElementRef, AfterViewInit } from '@angular/core';
-import { fromEvent } from 'rxjs';
+```html
+<!-- 1. LCP Hero Image: Preloaded automatically via 'priority' -->
+<img ngSrc="hero-banner.webp" width="1200" height="600" priority alt="Hero Product" />
 
-export class ScrollTrackerComponent implements AfterViewInit {
-  private readonly ngZone = inject(NgZone);
-  private readonly el = inject(ElementRef);
+<!-- 2. Lazy Loaded Image: Generates layout-safe dimensions to prevent CLS -->
+<img ngSrc="avatar.webp" width="150" height="150" alt="User Profile" />
 
-  ngAfterViewInit() {
-    // 1. Leave the Angular Zone
-    this.ngZone.runOutsideAngular(() => {
-      
-      // 2. Attach the high-frequency listener
-      fromEvent(this.el.nativeElement, 'scroll').subscribe((e) => {
-        const scrollTop = e.target.scrollTop;
-        
-        // Pure DOM manipulation is fine here, it won't trigger Angular
-        if (scrollTop > 500) {
-          
-          // 3. Re-enter the Zone ONLY when you need to update the UI State
-          this.ngZone.run(() => {
-            this.showBackToTopButton.set(true);
-          });
-        }
-      });
-      
-    });
-  }
+<!-- 3. Responsive Container Fill Mode -->
+<div class="banner-container" style="position: relative; width: 100%; aspect-ratio: 16/9;">
+  <img ngSrc="responsive-banner.webp" fill alt="Promo" />
+</div>
+```
+
+---
+
+## 3. Component Lazy Loading with `@defer`
+
+Any component that is below the fold, hidden inside a tab/modal, or heavy (charts, rich editors, video players) MUST be loaded using `@defer`.
+
+```html
+<!-- Below-the-fold chart only downloads JS chunk when scrolled into view -->
+@defer (on viewport) {
+  <app-heavy-analytics-chart [data]="metrics()" />
+} @placeholder {
+  <div class="chart-skeleton" style="height: 320px; background: #1e1e2f; border-radius: 12px;"></div>
+} @loading (minimum 200ms) {
+  <app-spinner />
 }
 ```
 
-## 4. Lazy Loading & Code Splitting
+---
 
-Never ship the entire application in a single `main.js` file.
+## 4. Method Calls in Templates (Banned Anti-Pattern)
 
-1. **Route-Level Lazy Loading**:
-   ```typescript
-   // ✅ ALWAYS: Lazy load route components using loadComponent
-   export const routes: Routes = [
-     { 
-       path: 'admin', 
-       loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent) 
-     }
-   ];
-   ```
+**❌ NEVER** bind a component method in a template expression:
 
-2. **Component-Level Lazy Loading**: 
-   Use `@defer` (as documented in `angular-modern-syntax`) to lazy-load heavy components that live "below the fold" on the same page.
+```html
+<!-- ❌ DISASTROUS: Runs on EVERY render cycle, causing massive CPU waste -->
+<div [class.active]="checkIfUserIsActive(user)">
+  <span>{{ calculateTax(item.price) }}</span>
+</div>
+```
 
-## 5. Bundle Budgets (`angular.json`)
+**✅ ALWAYS** use **Signals (`computed()`)** or **Pure Pipes**:
 
-You must enforce strict bundle size limits to prevent developers from accidentally importing massive libraries like `lodash` or `moment.js` (instead of `date-fns`).
+```html
+<!-- ✅ ALWAYS: Computed Signal (Memoized) or Pure Pipe -->
+<div [class.active]="user.isActive()">
+  <span>{{ item.price | taxCalculator }}</span>
+</div>
+```
+
+---
+
+## 5. Strict Bundle Budgets (`angular.json`)
+
+Enforce strict bundle thresholds with the new esbuild/Vite application builder:
 
 ```json
-// ✅ ALWAYS: Configure strict budgets in angular.json
 "budgets": [
   {
     "type": "initial",
-    "maximumWarning": "500kb",
-    "maximumError": "1mb"
+    "maximumWarning": "400kb",
+    "maximumError": "700kb"
   },
   {
     "type": "anyComponentStyle",
@@ -161,6 +116,7 @@ You must enforce strict bundle size limits to prevent developers from accidental
 ---
 
 **Execution Protocol**
-1. **Never use method calls in templates**: Binding `<div [class.active]="checkIfActive(user)">` is a catastrophic performance failure. Angular will execute `checkIfActive` on every single change detection cycle. ALWAYS use a `Signal` or a `Pipe` instead.
-2. **Memoize Pure Pipes**: Angular Pipes are highly optimized. If you need to filter a list or format a string in the template, write a `@Pipe({ name: 'format', pure: true })`. Angular caches the result and only recalculates if the input arguments change.
-3. **Avoid memory leaks**: Refer to the `takeUntilDestroyed` protocol (angular-core) to ensure RxJS subscriptions don't pile up in memory.
+1. **Always enforce `ChangeDetectionStrategy.OnPush`**: Ensures fine-grained change detection and Zoneless compatibility.
+2. **Always set explicit `width` and `height` on images**: Prevents CLS layout shifts.
+3. **Always use pure pipes or computed signals instead of template functions**: Guarantees memoization.
+4. **Always defer below-the-fold content**: Lowers initial bundle download and execution time.

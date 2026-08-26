@@ -1,153 +1,160 @@
 ---
 name: angular-ssr-hydration
-description: The ultimate architectural standard for Enterprise Angular SSR Non-Destructive Hydration, TransferState, afterRender, and Browser API safety.
+description: The ultimate architectural standard for Enterprise Angular SSR Non-Destructive Hydration, Incremental Hydration (@defer), withEventReplay, and TransferState.
 author: Diego Villanueva
-trigger: When configuring SSR, optimizing SEO, fixing 'window is not defined' errors, or handling hydration.
+trigger: When configuring SSR, optimizing SEO, setting up Incremental Hydration, fixing hydration errors, or managing TransferState.
 ---
 
-# Enterprise Angular SSR & Hydration Architecture
+# Enterprise Angular SSR & Incremental Hydration (v18 & v19+)
 
-Server-Side Rendering (SSR) is critical for Search Engine Optimization (SEO) and perceived load speed (LCP). However, running Angular in a Node.js environment introduces severe architectural constraints.
+Server-Side Rendering (SSR) is critical for Search Engine Optimization (SEO), Core Web Vitals (LCP/INP), and instant initial page renders. Angular provides **Non-Destructive Hydration** and **Incremental Hydration** to eliminate layout shift, avoid duplicate network calls, and activate JavaScript only when needed.
 
-If you architect SSR poorly, the app will crash on the server, or worse, cause a massive "flicker" when the client takes over (Destructive Hydration).
+---
 
-## 1. Non-Destructive Hydration
+## 1. Global SSR & Hydration Setup (`app.config.ts`)
 
-Historically, Angular SSR would send HTML to the browser, and when the JavaScript finally loaded, Angular would delete all the HTML and redraw it from scratch, causing the screen to flash white.
-
-Angular 16+ introduced **Non-Destructive Hydration**. Angular reuses the DOM nodes created by the server and simply attaches event listeners to them.
-
-**✅ ALWAYS** enable `provideClientHydration()` in `app.config.ts`.
+Enable hydration with **Event Replay** in `app.config.ts`:
 
 ```typescript
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+// app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideClientHydration, withEventReplay, withIncrementalHydration } from '@angular/platform-browser';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
 
-export const appConfig = {
+export const appConfig: ApplicationConfig = {
   providers: [
-    // withEventReplay() ensures that if a user clicks a button BEFORE Angular 
-    // has finished downloading its JS, the click event is captured and replayed!
-    provideClientHydration(withEventReplay())
-  ]
+    provideRouter(routes),
+    provideHttpClient(withFetch()), // Mandatory: withFetch uses native browser fetch & HTTP TransferState caching
+    provideClientHydration(
+      withEventReplay(), // Replays user clicks performed before JS was loaded
+      withIncrementalHydration() // Angular 19+ Incremental Hydration via @defer
+    ),
+  ],
 };
 ```
 
-## 2. The Golden Rule of SSR: Browser APIs
+---
 
-Node.js does not have a screen. It does not have a DOM.
-Therefore, `window`, `document`, `navigator`, and `localStorage` **DO NOT EXIST** on the server. If your component reads them during initialization, the server will crash with a `ReferenceError`.
+## 2. Incremental Hydration with `@defer (hydrate ...)` (Angular 19+)
 
-**❌ NEVER** access browser-specific globals directly in constructors, `ngOnInit`, or class properties.
+Historically, all HTML sent by the server had to be hydrated simultaneously upon boot, consuming CPU and delaying Time to Interactive (TTI).
 
-### A. Safe Platform Checking
-If you must execute logic conditionally, use Angular's platform ID.
+With **Incremental Hydration**, the server renders the full HTML for SEO, but JavaScript and event listeners are loaded and activated **only when triggered by user interaction or viewport scroll**.
+
+```html
+<main>
+  <!-- 1. Critical Header: Hydrated immediately on page load -->
+  <header>
+    <h1>Enterprise Portal</h1>
+  </header>
+
+  <!-- 2. Comment Section: Server renders HTML, but JS hydrates only when scrolled into view -->
+  @defer (hydrate on viewport) {
+    <app-comments-feed [postId]="postId()" />
+  } @placeholder {
+    <div class="comments-skeleton">Loading comments...</div>
+  }
+
+  <!-- 3. Heavy Analytics Widget: Server renders HTML, JS hydrates only on user hover/interaction -->
+  @defer (hydrate on interaction; hydrate on hover) {
+    <app-analytics-dashboard [userId]="userId()" />
+  } @placeholder {
+    <div class="dashboard-placeholder">Hover or click to activate analytics</div>
+  }
+</main>
+```
+
+### Supported Hydration Triggers:
+- `hydrate on viewport` — Hydrate when DOM enters viewport.
+- `hydrate on interaction` — Hydrate when clicked/focused.
+- `hydrate on hover` — Hydrate when mouse moves over element.
+- `hydrate on idle` — Hydrate when browser reaches `requestIdleCallback`.
+- `hydrate when condition()` — Hydrate when Signal boolean evaluates to true.
+
+---
+
+## 3. The Golden Rule of SSR: Browser APIs
+
+Node.js has no `window`, `document`, `navigator`, or `localStorage`.
+
+**❌ NEVER** access browser-specific globals in constructors or `ngOnInit`.
+**✅ ALWAYS** use `afterNextRender()` or `isPlatformBrowser(inject(PLATFORM_ID))`.
 
 ```typescript
-// ✅ ALWAYS: Check the platform before accessing browser APIs
-import { Component, PLATFORM_ID, inject, OnInit } from '@angular/core';
+import { Component, PLATFORM_ID, inject, afterNextRender } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-export class TrackingComponent implements OnInit {
+export class SafeSsrComponent {
   private readonly platformId = inject(PLATFORM_ID);
 
-  ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      // Safe to use localStorage here. It will not execute on the server.
-      const theme = localStorage.getItem('theme');
-    }
-  }
-}
-```
-
-### B. Injecting the Document
-If you need to manipulate the `<head>` or read the `document`, **NEVER** use the global `document` variable. Always inject it.
-
-```typescript
-import { DOCUMENT } from '@angular/common';
-
-export class SeoService {
-  private readonly doc = inject(DOCUMENT); // ✅ Safe for SSR
-
-  setCanonicalUrl(url: string) {
-    const link: HTMLLinkElement = this.doc.createElement('link');
-    link.setAttribute('rel', 'canonical');
-    this.doc.head.appendChild(link);
-  }
-}
-```
-
-## 3. The `afterRender` Lifecycle
-
-If you are using a third-party library that requires the DOM (like D3.js, Chart.js, or Leaflet maps), you cannot initialize it in `ngOnInit`, because `ngOnInit` runs on the server!
-
-**✅ ALWAYS** use the new `afterRender` or `afterNextRender` lifecycle hooks. These hooks **ONLY execute in the browser**, guaranteeing that the DOM is fully rendered and safe to manipulate.
-
-```typescript
-import { Component, afterNextRender, ElementRef, viewChild } from '@angular/core';
-
-export class ChartComponent {
-  readonly canvas = viewChild.required<ElementRef<HTMLCanvasElement>>('chartCanvas');
-
   constructor() {
-    // ✅ ALWAYS: Initialize DOM-heavy libraries here
-    // This will NEVER run on the Node.js server
+    // ✅ ALWAYS: Browser-only initialization using afterNextRender
     afterNextRender(() => {
-      const ctx = this.canvas().nativeElement.getContext('2d');
-      new ThirdPartyChartLibrary(ctx, { data: [1, 2, 3] });
+      const storedTheme = localStorage.getItem('app-theme');
+      console.log('Running in browser:', storedTheme);
     });
   }
+
+  get isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
+  }
 }
 ```
+
+---
 
 ## 4. TransferState (Preventing Double API Calls)
 
-If your app fetches the "User Profile" during SSR, the server waits for the DB, renders the HTML, and sends it to the browser. 
-When the browser wakes up and runs Angular, it will immediately make a *second* HTTP request to fetch the "User Profile" again. This is a massive waste of resources and causes flickering.
+When `HttpClient` with `withFetch()` is used, Angular automatically caches HTTP `GET` requests in `TransferState` between Server and Client.
 
-**✅ ALWAYS** transfer state from the Server to the Client.
-
-*Note: If you use the native `HttpClient` with `provideClientHydration()`, Angular caches HTTP GET requests automatically! You don't need TransferState for standard HTTP calls anymore.*
-
-However, if you are using GraphQL, Firebase, or custom data loading, you MUST use `TransferState`:
+For custom data sources (GraphQL, Firebase, SQLite), use `TransferState` manually:
 
 ```typescript
-import { TransferState, makeStateKey, Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { Injectable, TransferState, makeStateKey, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
-const USER_KEY = makeStateKey<User>('user-data');
+const PROFILE_KEY = makeStateKey<UserProfile>('profile-cache-key');
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class ProfileService {
   private readonly transferState = inject(TransferState);
   private readonly platformId = inject(PLATFORM_ID);
 
-  async getUser(id: string): Promise<User> {
-    // 1. Is the data already in the TransferState? (Browser Side)
-    if (this.transferState.hasKey(USER_KEY)) {
-      const cachedData = this.transferState.get(USER_KEY, null);
-      this.transferState.remove(USER_KEY); // Clean up RAM
-      return cachedData!;
+  async getProfile(id: string): Promise<UserProfile> {
+    // 1. Client Check: Read from transferred state
+    if (this.transferState.hasKey(PROFILE_KEY)) {
+      const cached = this.transferState.get(PROFILE_KEY, null);
+      this.transferState.remove(PROFILE_KEY); // Clean up memory
+      return cached!;
     }
 
-    // 2. Fetch the data from the DB/Custom API
-    const user = await this.myCustomApi.fetchUser(id);
+    // 2. Fetch from DB
+    const profile = await fetchProfileFromDatabase(id);
 
-    // 3. If we are on the server, inject this data into the HTML payload
+    // 3. Server Action: Save into transfer state HTML payload
     if (isPlatformServer(this.platformId)) {
-      this.transferState.set(USER_KEY, user);
+      this.transferState.set(PROFILE_KEY, profile);
     }
 
-    return user;
+    return profile;
   }
 }
 ```
 
-## 5. SSR & Deferrable Views (`@defer`)
+---
 
-`@defer` blocks (lazy-loaded components) **DO NOT RENDER ON THE SERVER**. 
+## 5. Hydration Error Avoidance Checklist
 
-When the Node.js server encounters a `@defer` block, it instantly renders the `@placeholder` block and sends that to the client.
+1. **No Direct DOM Manipulation**: Modifying the DOM using raw `document.getElementById().appendChild()` will break Angular's hydration tree mapping.
+2. **Valid HTML Nesting**: Browser auto-correction (e.g. putting a `<div>` inside a `<p>` or putting `<tr>` directly under `<table>` without `<tbody>`) creates DOM mismatches.
+3. **Consistent Dates & Random IDs**: Do NOT use `new Date()` or `Math.random()` to generate template content directly during render, as server time and client time will differ, triggering hydration warnings. Use static or transferred values.
+
+---
 
 **Execution Protocol**
-1. **Never `@defer` SEO Content**: Do not place H1 tags, critical text, or Hero images inside a `@defer` block. Search engine crawlers will only see your placeholder.
-2. **Timeouts on Server**: Do not use `setInterval` without clearing it in `ngOnDestroy`. A runaway interval on the Node.js server will keep the process alive indefinitely, causing memory leaks and eventual server crashes. Use RxJS `timer` or `interval` and ensure they complete.
-3. **Absolute URLs**: Relative URLs (`/api/data`) work in the browser, but crash on the server (the server doesn't know what domain it is running on). Ensure you provide a global `API_URL` injection token that resolves to a full absolute URL (`https://api.mycompany.com`) during SSR HTTP calls.
+1. **Always use `withEventReplay()`**: Prevents missed user interactions during page boot.
+2. **Leverage `@defer (hydrate ...)` on below-the-fold content**: Significantly lowers TTI (Time to Interactive).
+3. **Always use `provideHttpClient(withFetch())`**: Activates automatic HTTP TransferState caching.
+4. **Never manipulate DOM directly**: Always use Angular template bindings to maintain hydration integrity.
