@@ -190,10 +190,8 @@ sync_technology() {
     local tech=$1
     header "Syncing Technology Package: $tech"
 
-    if [ "$tech" != "shared" ]; then
-        info "Processing 🤖 Agent protocol ($tech/AGENTS.md)..."
-        sync_agents_md "$tech"
-    fi
+    info "Processing 🤖 Agent protocol ($tech/AGENTS.md)..."
+    sync_agents_md "$tech"
 
     local skill_names=()
     if [ -n "$LOCAL_PATH" ]; then

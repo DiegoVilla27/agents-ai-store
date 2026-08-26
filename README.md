@@ -167,19 +167,32 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (150 Skills)
+## 📚 Full Specialized Skills Catalog (156 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
-### 🛠 Core Engineering & Languages (Shared)
-The foundation of high-quality software development.
-| Skill Name | Documentation | Mission |
+### 🛠 Core Engineering & Architecture (Shared Foundation)
+Universal engineering excellence, web security, DevOps, testing, and modern language foundations.
+| Skill Name | Documentation | Mission / Focus |
 |:---|:---|:---|
-| `clean-code` | [SKILL.md](./shared/skills/clean-code/SKILL.md) | Universal engineering excellence and sustainability. |
-| `conventional-commits` | [SKILL.md](./shared/skills/conventional-commits/SKILL.md) | Semantic and impeccable Git history. |
-| `web-typescript` | [SKILL.md](./shared/skills/web-typescript/SKILL.md) | Strict typing and advanced generic patterns. |
-| `web-javascript` | [SKILL.md](./shared/skills/web-javascript/SKILL.md) | Deep runtime behavior and optimized ESNext. |
+| `clean-code` | [SKILL.md](./shared/skills/clean-code/SKILL.md) | Universal engineering excellence, SOLID principles, and sustainability. |
+| `conventional-commits` | [SKILL.md](./shared/skills/conventional-commits/SKILL.md) | Semantic and impeccable Git history with Conventional Commits. |
+| `web-typescript` | [SKILL.md](./shared/skills/web-typescript/SKILL.md) | Strict typing, generics, template literals, and advanced TS patterns. |
+| `web-typescript-react` | [SKILL.md](./shared/skills/web-typescript-react/SKILL.md) | Advanced TS patterns for React and Next.js. |
+| `web-javascript` | [SKILL.md](./shared/skills/web-javascript/SKILL.md) | Deep runtime behavior, Event Loop, closures, and optimized ESNext. |
 | `web-tsdoc` | [SKILL.md](./shared/skills/web-tsdoc/SKILL.md) | Standardized TSDoc documentation for TypeScript projects. |
+| `web-tailwind` | [SKILL.md](./shared/skills/web-tailwind/SKILL.md) | Tailwind CSS 4, semantic tokens, and `cn()` utilities. |
+| `web-advanced-ui-ux` | [SKILL.md](./shared/skills/web-advanced-ui-ux/SKILL.md) | Container Queries, CSS Layers, and Anchor Positioning. |
+| `web-gsap-animation` | [SKILL.md](./shared/skills/web-gsap-animation/SKILL.md) | GSAP 3, ScrollTrigger, pinning, scrub, and responsive motion. |
+| `web-performance` | [SKILL.md](./shared/skills/web-performance/SKILL.md) | Core Web Vitals (LCP, CLS, INP) optimization and resource hints. |
+| `web-micro-frontends` | [SKILL.md](./shared/skills/web-micro-frontends/SKILL.md) | Module Federation 2.0, runtime sharing, and Vite orchestrations. |
+| `web-modern-testing` | [SKILL.md](./shared/skills/web-modern-testing/SKILL.md) | Vitest, MSW v2, Testing Library, and automated a11y testing. |
+| `web-security-owasp` | [SKILL.md](./shared/skills/web-security-owasp/SKILL.md) | OWASP Top 10, Content Security Policy (CSP), XSS/CSRF, and secure cookies. |
+| `web-docker-containerization` | [SKILL.md](./shared/skills/web-docker-containerization/SKILL.md) | Multi-stage Dockerfiles, non-root users, and minimal Alpine images. |
+| `web-github-actions-ci-cd` | [SKILL.md](./shared/skills/web-github-actions-ci-cd/SKILL.md) | CI/CD pipelines, matrix builds, caching, and semantic releases. |
+| `web-pwa-service-workers` | [SKILL.md](./shared/skills/web-pwa-service-workers/SKILL.md) | Progressive Web Apps, Workbox caching strategies, and offline manifests. |
+| `web-graphql-core` | [SKILL.md](./shared/skills/web-graphql-core/SKILL.md) | GraphQL schema design, resolvers, and DataLoader N+1 batching. |
+| `web-monorepo-turborepo-nx` | [SKILL.md](./shared/skills/web-monorepo-turborepo-nx/SKILL.md) | Turborepo & Nx monorepo topology, task graphs, and remote caching. |
 
 ### ⚛️ React Ecosystem
 State-of-the-art patterns for the React universe.
@@ -409,14 +422,6 @@ Ensuring software remains immune to regressions.
 | `angular-testing-jasmine` | [SKILL.md](./angular/skills/angular-testing-jasmine/SKILL.md) | Enterprise-standard Jasmine & Karma. |
 | `flutter-testing` | [SKILL.md](./flutter/skills/flutter-testing/SKILL.md) | Unit, Widget, and Integration tests in Flutter. |
 
-### 🎨 Advanced UI, Performance & Architecture (Shared)
-| Skill Name | Documentation | Focus |
-|:---|:---|:---|
-| `web-tailwind` | [SKILL.md](./shared/skills/web-tailwind/SKILL.md) | Tailwind CSS 4, semantic tokens, and `cn()`. |
-| `web-advanced-ui-ux` | [SKILL.md](./shared/skills/web-advanced-ui-ux/SKILL.md) | Container Queries, CSS Layers, and Anchor Positioning. |
-| `web-gsap-animation` | [SKILL.md](./shared/skills/web-gsap-animation/SKILL.md) | GSAP 3, ScrollTrigger, pinning, scrub, and responsive motion. |
-| `web-performance` | [SKILL.md](./shared/skills/web-performance/SKILL.md) | Core Web Vitals (LCP, CLS, INP) optimization. |
-| `web-micro-frontends` | [SKILL.md](./shared/skills/web-micro-frontends/SKILL.md) | Module Federation and Vite orchestrations. |
 
 ### 🎨 UI/UX Design Ecosystem
 Professional design systems, visual excellence, and human-computer interaction.

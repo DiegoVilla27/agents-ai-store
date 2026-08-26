@@ -188,10 +188,8 @@ function Find-And-Sync-Skill($skillName) {
 function Sync-Technology($tech) {
     header "Syncing Technology Package: $tech"
 
-    if ($tech -ne "shared") {
-        info "Processing 🤖 Agent protocol ($tech/AGENTS.md)..."
-        Sync-AgentsMd $tech | Out-Null
-    }
+    info "Processing 🤖 Agent protocol ($tech/AGENTS.md)..."
+    Sync-AgentsMd $tech | Out-Null
 
     $skillNames = @()
     if ($LOCAL_PATH) {
