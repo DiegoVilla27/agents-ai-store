@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (130 Skills)
+## 📚 Full Specialized Skills Catalog (136 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -226,17 +226,27 @@ Production-grade patterns using Next.js 15+ App Router and React 19.
 | `nextjs-shadcn-ui` | [SKILL.md](./nextjs/skills/nextjs-shadcn-ui/SKILL.md) | Accessible UI components with Radix UI, Tailwind CSS, and dark mode. |
 | `nextjs-i18n-intl` | [SKILL.md](./nextjs/skills/nextjs-i18n-intl/SKILL.md) | next-intl, localized routing, and RTL support in RSC. |
 | `nextjs-testing-playwright-vitest` | [SKILL.md](./nextjs/skills/nextjs-testing-playwright-vitest/SKILL.md) | Playwright E2E testing with auth fixtures and Vitest for Server Actions. |
-| `web-typescript-react` | [SKILL.md](./shared/skills/web-typescript-react/SKILL.md) | Advanced TS patterns for React and Next.js. |
-| `react-native-core` | [SKILL.md](./react-native/skills/react-native-core/SKILL.md) | Universal mobile development and native performance. |
-| `react-native-expo` | [SKILL.md](./react-native/skills/react-native-expo/SKILL.md) | Managed workflow, EAS, and Expo Router. |
+
+### 📱 React Native & Expo Ecosystem
+Cross-platform mobile applications using React Native (New Architecture) and Expo SDK 52+.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `react-native-core` | [SKILL.md](./react-native/skills/react-native-core/SKILL.md) | Mobile fundamentals, feature modules, and component lifecycles. |
+| `react-native-new-architecture-fabric` | [SKILL.md](./react-native/skills/react-native-new-architecture-fabric/SKILL.md) | Fabric Renderer, TurboModules, C++ JSI, and Bridgeless mode. |
+| `react-native-expo` | [SKILL.md](./react-native/skills/react-native-expo/SKILL.md) | Managed workflow, EAS, Universal Links, and Expo Router. |
 | `react-native-navigation-advanced` | [SKILL.md](./react-native/skills/react-native-navigation-advanced/SKILL.md) | Nested navigators, deep links, and transitions. |
-| `react-native-reanimated` | [SKILL.md](./react-native/skills/react-native-reanimated/SKILL.md) | Worklets, shared values, and 60fps animations. |
-| `react-native-performance` | [SKILL.md](./react-native/skills/react-native-performance/SKILL.md) | FlashList, Hermes, and memory optimization. |
-| `react-native-native-modules` | [SKILL.md](./react-native/skills/react-native-native-modules/SKILL.md) | Bridging Swift/Kotlin and Expo Modules API. |
-| `mobile-offline-support` | [SKILL.md](./react-native/skills/mobile-offline-support/SKILL.md) | MMKV, WatermelonDB, and sync strategies. |
-| `react-native-testing-library` | [SKILL.md](./react-native/skills/react-native-testing-library/SKILL.md) | User-centric unit and integration testing. |
-| `react-native-styling-tailwind` | [SKILL.md](./react-native/skills/react-native-styling-tailwind/SKILL.md) | NativeWind v4 and utility-first mobile UI. |
-| `mobile-debugging-sentry` | [SKILL.md](./react-native/skills/mobile-debugging-sentry/SKILL.md) | Crash reporting and performance monitoring. |
+| `react-native-reanimated` | [SKILL.md](./react-native/skills/react-native-reanimated/SKILL.md) | Worklets, shared values, and 120fps native thread animations. |
+| `react-native-performance` | [SKILL.md](./react-native/skills/react-native-performance/SKILL.md) | Shopify FlashList, Hermes engine, and memory optimization. |
+| `react-native-push-notifications` | [SKILL.md](./react-native/skills/react-native-push-notifications/SKILL.md) | expo-notifications, FCM, APNs, and background tasks. |
+| `react-native-biometrics-secure-store` | [SKILL.md](./react-native/skills/react-native-biometrics-secure-store/SKILL.md) | FaceID/TouchID, expo-secure-store Keychain/Keystore. |
+| `react-native-camera-media` | [SKILL.md](./react-native/skills/react-native-camera-media/SKILL.md) | expo-camera, photo picking, barcode scanning, and uploads. |
+| `react-native-native-modules` | [SKILL.md](./react-native/skills/react-native-native-modules/SKILL.md) | Custom Swift/Kotlin modules with Expo Modules API. |
+| `mobile-offline-support` | [SKILL.md](./react-native/skills/mobile-offline-support/SKILL.md) | Fast MMKV persistence, TanStack Query persister, and WatermelonDB. |
+| `react-native-eas-ci-cd` | [SKILL.md](./react-native/skills/react-native-eas-ci-cd/SKILL.md) | EAS Build, EAS Submit store deployment, and EAS Update OTA patches. |
+| `react-native-styling-tailwind` | [SKILL.md](./react-native/skills/react-native-styling-tailwind/SKILL.md) | NativeWind v4, utility-first mobile UI, and dark mode. |
+| `react-native-i18n-accessibility` | [SKILL.md](./react-native/skills/react-native-i18n-accessibility/SKILL.md) | WCAG AA, VoiceOver/TalkBack, RTL layouts, and i18next. |
+| `react-native-testing-library` | [SKILL.md](./react-native/skills/react-native-testing-library/SKILL.md) | User-centric unit and integration testing with RNTL. |
+| `mobile-debugging-sentry` | [SKILL.md](./react-native/skills/mobile-debugging-sentry/SKILL.md) | Crash reporting, breadcrumbs, and performance traces. |
 
 ### 🟢 NestJS Ecosystem
 Production-grade backend patterns using NestJS 10+ and Enterprise Cloud Architecture.
