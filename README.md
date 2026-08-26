@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (110 Skills)
+## 📚 Full Specialized Skills Catalog (123 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -227,21 +227,34 @@ State-of-the-art patterns for the React universe.
 | `mobile-debugging-sentry` | [SKILL.md](./react-native/skills/mobile-debugging-sentry/SKILL.md) | Crash reporting and performance monitoring. |
 
 ### 🟢 NestJS Ecosystem
-Production-grade backend patterns using NestJS 10+.
+Production-grade backend patterns using NestJS 10+ and Enterprise Cloud Architecture.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `nestjs-core` | [SKILL.md](./nestjs/skills/nestjs-core/SKILL.md) | DI, Dynamic Modules, Interceptors & Filters. |
-| `nestjs-security` | [SKILL.md](./nestjs/skills/nestjs-security/SKILL.md) | JWT, Passport, Guards and RBAC. |
-| `nestjs-persistence` | [SKILL.md](./nestjs/skills/nestjs-persistence/SKILL.md) | Repository Pattern, Prisma/TypeORM & Mappers. |
-| `nestjs-testing-expert` | [SKILL.md](./nestjs/skills/nestjs-testing-expert/SKILL.md) | Advanced unit, integration, and E2E testing. |
-| `nestjs-websocket` | [SKILL.md](./nestjs/skills/nestjs-websocket/SKILL.md) | Real-time gateways, rooms, and socket.io. |
-| `nestjs-openapi-docs` | [SKILL.md](./nestjs/skills/nestjs-openapi-docs/SKILL.md) | Swagger integration and API documentation. |
-| `nestjs-queue-architect`| [SKILL.md](./nestjs/skills/nestjs-queue-architect/SKILL.md) | BullMQ background jobs and Redis queues. |
-| `nestjs-health-audit` | [SKILL.md](./nestjs/skills/nestjs-health-audit/SKILL.md) | Terminus health checks and readiness probes. |
-| `nestjs-patterns` | [SKILL.md](./nestjs/skills/nestjs-patterns/SKILL.md) | Strategy, Factory, and SOLID in NestJS. |
-| `nestjs-guards-interceptors` | [SKILL.md](./nestjs/skills/nestjs-guards-interceptors/SKILL.md) | Request lifecycle and response mapping. |
+| `nestjs-core` | [SKILL.md](./nestjs/skills/nestjs-core/SKILL.md) | DI, Dynamic Modules, Custom Providers, and IoC. |
+| `nestjs-modular-monolith`| [SKILL.md](./nestjs/skills/nestjs-modular-monolith/SKILL.md) | Modular Architecture, Bounded Contexts, and DDD. |
+| `nestjs-patterns` | [SKILL.md](./nestjs/skills/nestjs-patterns/SKILL.md) | Strategy, Factory, Observer, and SOLID patterns in NestJS. |
+| `nestjs-persistence` | [SKILL.md](./nestjs/skills/nestjs-persistence/SKILL.md) | Repository Pattern, Prisma/TypeORM, and Unit of Work. |
+| `nestjs-database-multitenancy` | [SKILL.md](./nestjs/skills/nestjs-database-multitenancy/SKILL.md) | Multi-tenancy (Schema/DB/RLS) with nestjs-cls (AsyncLocalStorage). |
+| `nestjs-cqrs-event-sourcing` | [SKILL.md](./nestjs/skills/nestjs-cqrs-event-sourcing/SKILL.md) | @nestjs/cqrs, Event Store, Read Model Projections, and Sagas. |
+| `nestjs-microservices-kafka` | [SKILL.md](./nestjs/skills/nestjs-microservices-kafka/SKILL.md) | Event-driven microservices with Kafka, partition keys, and DLQs. |
+| `nestjs-microservices-grpc` | [SKILL.md](./nestjs/skills/nestjs-microservices-grpc/SKILL.md) | High-throughput RPC with gRPC, Protobuf, and client streaming. |
+| `nestjs-microservices-rabbitmq` | [SKILL.md](./nestjs/skills/nestjs-microservices-rabbitmq/SKILL.md) | AMQP messaging with RabbitMQ, manual Ack/Nack, and DLX. |
+| `nestjs-security` | [SKILL.md](./nestjs/skills/nestjs-security/SKILL.md) | Passport, Argon2, JWT refresh token rotation, and HTTP-only cookies. |
+| `nestjs-authorization-casl` | [SKILL.md](./nestjs/skills/nestjs-authorization-casl/SKILL.md) | ABAC granular permissions with CASL and @CheckPolicies(). |
+| `nestjs-authentication-auth0-oidc` | [SKILL.md](./nestjs/skills/nestjs-authentication-auth0-oidc/SKILL.md) | Enterprise SSO with Auth0/Keycloak/OIDC and dynamic RS256 JWKS. |
+| `nestjs-guards-interceptors` | [SKILL.md](./nestjs/skills/nestjs-guards-interceptors/SKILL.md) | Request lifecycle execution order and response mapping. |
+| `nestjs-openapi-docs` | [SKILL.md](./nestjs/skills/nestjs-openapi-docs/SKILL.md) | Swagger / OpenAPI 3.0 CLI plugin, DTO decorators, and UI. |
+| `nestjs-graphql-federation` | [SKILL.md](./nestjs/skills/nestjs-graphql-federation/SKILL.md) | Apollo Federation 2.0 subgraphs, @key entities, and DataLoader. |
+| `nestjs-websocket` | [SKILL.md](./nestjs/skills/nestjs-websocket/SKILL.md) | Real-time gateways, rooms, and Redis adapter clustering. |
+| `nestjs-queue-architect`| [SKILL.md](./nestjs/skills/nestjs-queue-architect/SKILL.md) | BullMQ background jobs, Redis queues, and sandboxed workers. |
+| `nestjs-caching-redis` | [SKILL.md](./nestjs/skills/nestjs-caching-redis/SKILL.md) | Redis cluster caching, CacheInterceptor, and Redlock distributed locks. |
+| `nestjs-search-elasticsearch` | [SKILL.md](./nestjs/skills/nestjs-search-elasticsearch/SKILL.md) | Full-text fuzzy search, aggregations, and event-based DB sync. |
+| `nestjs-file-uploads-s3` | [SKILL.md](./nestjs/skills/nestjs-file-uploads-s3/SKILL.md) | Secure multipart uploads, S3/R2 streams, and Magic Number checks. |
+| `nestjs-task-scheduling-cron` | [SKILL.md](./nestjs/skills/nestjs-task-scheduling-cron/SKILL.md) | @nestjs/schedule, dynamic intervals, and Redis cron leader locks. |
+| `nestjs-observability-opentelemetry` | [SKILL.md](./nestjs/skills/nestjs-observability-opentelemetry/SKILL.md) | Distributed tracing with OpenTelemetry (OTel) and nestjs-pino. |
+| `nestjs-health-audit` | [SKILL.md](./nestjs/skills/nestjs-health-audit/SKILL.md) | Terminus health checks (/health/live & /health/ready) and probes. |
+| `nestjs-testing-expert` | [SKILL.md](./nestjs/skills/nestjs-testing-expert/SKILL.md) | Unit testing, integration with Testcontainers, and Supertest E2E. |
 | `nestjs-lgtm-metrics` | [SKILL.md](./nestjs/skills/nestjs-lgtm-metrics/SKILL.md) | Prometheus metrics, logging, and tracing. |
-| `nestjs-modular-monolith`| [SKILL.md](./nestjs/skills/nestjs-modular-monolith/SKILL.md) | Scaling with Bounded Contexts and DDD. |
 
 
 ### 🚂 Express.js Ecosystem
