@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (63 Skills)
+## 📚 Full Specialized Skills Catalog (83 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -306,6 +306,31 @@ Comprehensive suite for high-performance Cross-Platform apps.
 | `flutter-http-json` | [SKILL.md](./flutter/skills/flutter-http-json/SKILL.md) | Advanced API clients with Dio and Type-safety. |
 | `flutter-concurrency` | [SKILL.md](./flutter/skills/flutter-concurrency/SKILL.md) | Isolate-based multithreading and heavy tasks. |
 | `flutter-layouts` | [SKILL.md](./flutter/skills/flutter-layouts/SKILL.md) | Slivers, adaptive UI, and complex constraints. |
+
+### ⚡ Ionic & Capacitor Ecosystem
+Universal cross-platform hybrid suite using modern Angular (v18+) & Capacitor 6+.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `ionic-core` | [SKILL.md](./ionic/skills/ionic-core/SKILL.md) | Standalone components, ion-page lifecycle, and adaptive UI. |
+| `ionic-capacitor` | [SKILL.md](./ionic/skills/ionic-capacitor/SKILL.md) | Capacitor 6+ native bridge and injectable plugin wrappers. |
+| `ionic-navigation` | [SKILL.md](./ionic/skills/ionic-navigation/SKILL.md) | Stack navigation, IonTabs, modals, sheets, and deep linking. |
+| `ionic-forms-validation` | [SKILL.md](./ionic/skills/ionic-forms-validation/SKILL.md) | Reactive forms, floating labels, inputmodes, and mobile UX. |
+| `ionic-theming` | [SKILL.md](./ionic/skills/ionic-theming/SKILL.md) | CSS custom properties, dark mode, design tokens, and safe areas. |
+| `ionic-storage` | [SKILL.md](./ionic/skills/ionic-storage/SKILL.md) | SQLite persistence, Preferences, and secure credential vaults. |
+| `ionic-http-networking` | [SKILL.md](./ionic/skills/ionic-http-networking/SKILL.md) | Dual HTTP strategy, functional interceptors, and network listeners. |
+| `ionic-push-notifications` | [SKILL.md](./ionic/skills/ionic-push-notifications/SKILL.md) | FCM, APNs, in-app notifications, and push-based routing. |
+| `ionic-camera-media` | [SKILL.md](./ionic/skills/ionic-camera-media/SKILL.md) | Camera capture, photo gallery, filesystem storage, and sharing. |
+| `ionic-geolocation-maps` | [SKILL.md](./ionic/skills/ionic-geolocation-maps/SKILL.md) | Native Google Maps, GPS tracking, and permission flows. |
+| `ionic-biometrics-security` | [SKILL.md](./ionic/skills/ionic-biometrics-security/SKILL.md) | FaceID/TouchID, Secure Enclave/Keystore, and SSL pinning. |
+| `ionic-offline-first` | [SKILL.md](./ionic/skills/ionic-offline-first/SKILL.md) | Outbox mutation queue, background sync engine, and conflict resolution. |
+| `ionic-performance` | [SKILL.md](./ionic/skills/ionic-performance/SKILL.md) | CDK Virtual Scroll, Web Workers, GPU composition, and @defer. |
+| `ionic-animations` | [SKILL.md](./ionic/skills/ionic-animations/SKILL.md) | Web Animations API (createAnimation) and GestureController. |
+| `ionic-testing` | [SKILL.md](./ionic/skills/ionic-testing/SKILL.md) | Capacitor mocking, lifecycle unit tests, and Playwright E2E. |
+| `ionic-native-plugins` | [SKILL.md](./ionic/skills/ionic-native-plugins/SKILL.md) | Custom plugins in Swift (iOS) & Kotlin (Android) with TS bridges. |
+| `ionic-pwa` | [SKILL.md](./ionic/skills/ionic-pwa/SKILL.md) | Service Workers, ngsw-config cache strategies, and install banners. |
+| `ionic-deployment` | [SKILL.md](./ionic/skills/ionic-deployment/SKILL.md) | Live OTA updates, Fastlane automation, and GitHub Actions CI/CD. |
+| `ionic-i18n` | [SKILL.md](./ionic/skills/ionic-i18n/SKILL.md) | Transloco, device locale auto-detection, and RTL mirroring. |
+| `ionic-accessibility` | [SKILL.md](./ionic/skills/ionic-accessibility/SKILL.md) | WCAG 2.2 AA, VoiceOver/TalkBack, and dynamic type scaling. |
 
 ### 🧪 Testing Strategies
 Ensuring software remains immune to regressions.
