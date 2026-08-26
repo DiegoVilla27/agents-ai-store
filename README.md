@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (105 Skills)
+## 📚 Full Specialized Skills Catalog (110 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -311,7 +311,12 @@ Comprehensive suite for high-performance Cross-Platform apps.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
 | `flutter-architect` | [SKILL.md](./flutter/skills/flutter-architect/SKILL.md) | Atomic scoping and modular go_router setup. |
-| `flutter-riverpod` | [SKILL.md](./flutter/skills/flutter-riverpod/SKILL.md) | Reactive data flow with code generation. |
+| `flutter-dart-3-mastery` | [SKILL.md](./flutter/skills/flutter-dart-3-mastery/SKILL.md) | Sealed classes, pattern matching, records, and class modifiers. |
+| `flutter-riverpod` | [SKILL.md](./flutter/skills/flutter-riverpod/SKILL.md) | Reactive data flow with code generation (@riverpod). |
+| `flutter-offline-sync-drift` | [SKILL.md](./flutter/skills/flutter-offline-sync-drift/SKILL.md) | Drift (SQLite ORM), outbox sync queues, and optimistic UI. |
+| `flutter-push-notifications` | [SKILL.md](./flutter/skills/flutter-push-notifications/SKILL.md) | FCM, APNs, background handlers, and GoRouter payload links. |
+| `flutter-ci-cd-fastlane-shorebird` | [SKILL.md](./flutter/skills/flutter-ci-cd-fastlane-shorebird/SKILL.md) | Fastlane automation, Shorebird OTA code push, and App Store releases. |
+| `flutter-accessibility-i18n` | [SKILL.md](./flutter/skills/flutter-accessibility-i18n/SKILL.md) | Multi-language ARB, RTL layouts, Semantics, and VoiceOver/TalkBack. |
 | `flutter-performance` | [SKILL.md](./flutter/skills/flutter-performance/SKILL.md) | 120 FPS rendering and memory management. |
 | `flutter-biometrics` | [SKILL.md](./flutter/skills/flutter-biometrics/SKILL.md) | Face ID / Fingerprint implementation. |
 | `flutter-security-architect` | [SKILL.md](./flutter/skills/flutter-security-architect/SKILL.md) | Secure storage and encryption protocols. |
@@ -324,6 +329,8 @@ Comprehensive suite for high-performance Cross-Platform apps.
 | `flutter-http-json` | [SKILL.md](./flutter/skills/flutter-http-json/SKILL.md) | Advanced API clients with Dio and Type-safety. |
 | `flutter-concurrency` | [SKILL.md](./flutter/skills/flutter-concurrency/SKILL.md) | Isolate-based multithreading and heavy tasks. |
 | `flutter-layouts` | [SKILL.md](./flutter/skills/flutter-layouts/SKILL.md) | Slivers, adaptive UI, and complex constraints. |
+| `flutter-testing` | [SKILL.md](./flutter/skills/flutter-testing/SKILL.md) | Unit, Widget, and Integration tests with Mocktail. |
+| `flutter-clean-scaffolder` | [SKILL.md](./flutter/skills/flutter-clean-scaffolder/SKILL.md) | Enterprise clean architecture folder scaffolding. |
 
 ### ⚡ Ionic & Capacitor Ecosystem
 Universal cross-platform hybrid suite using modern Angular (v18+) & Capacitor 6+.
