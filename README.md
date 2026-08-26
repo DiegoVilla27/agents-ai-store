@@ -167,7 +167,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (99 Skills)
+## 📚 Full Specialized Skills Catalog (105 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -383,15 +383,21 @@ Professional design patterns and visual excellence.
 | `typography-mastery` | [SKILL.md](./ui-ux-designer/skills/typography-mastery/SKILL.md) | Font pairings, readability, and scale. |
 
 ### 📈 Digital Marketing Ecosystem
-Strategies for growth, conversion, and compelling messaging.
+Strategies for full-funnel growth, conversion, paid scaling, and retention.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
-| `conversion-rate-optimization` | [SKILL.md](./digital-marketer/skills/conversion-rate-optimization/SKILL.md) | A/B testing, funnels, and reducing friction. |
-| `direct-response-copywriting` | [SKILL.md](./digital-marketer/skills/direct-response-copywriting/SKILL.md) | Actionable, high-converting persuasive writing. |
-| `email-marketing-automation` | [SKILL.md](./digital-marketer/skills/email-marketing-automation/SKILL.md) | Drip campaigns, segmentation, and retention. |
-| `performance-marketing` | [SKILL.md](./digital-marketer/skills/performance-marketing/SKILL.md) | ROI, CAC/LTV, and ad spend efficiency. |
-| `persuasive-psychology` | [SKILL.md](./digital-marketer/skills/persuasive-psychology/SKILL.md) | Social proof, urgency, and cognitive biases. |
-| `seo-and-sem` | [SKILL.md](./digital-marketer/skills/seo-and-sem/SKILL.md) | On-page SEO, keyword targeting, and SERP visibility. |
+| `growth-hacking-funnels` | [SKILL.md](./digital-marketer/skills/growth-hacking-funnels/SKILL.md) | AARRR Pirate Funnels, Product-Led Growth (PLG), and viral loops. |
+| `meta-google-ads-scaling` | [SKILL.md](./digital-marketer/skills/meta-google-ads-scaling/SKILL.md) | Scaling Meta Ads (Advantage+, CBO) and Google Ads (PMax, tROAS). |
+| `retention-churn-reduction` | [SKILL.md](./digital-marketer/skills/retention-churn-reduction/SKILL.md) | Cohort analysis, NRR, churn prevention, and win-back automation. |
+| `conversion-rate-optimization` | [SKILL.md](./digital-marketer/skills/conversion-rate-optimization/SKILL.md) | A/B testing, funnels, and reducing checkout friction. |
+| `direct-response-copywriting` | [SKILL.md](./digital-marketer/skills/direct-response-copywriting/SKILL.md) | Actionable, high-converting persuasive sales writing. |
+| `social-organic-growth` | [SKILL.md](./digital-marketer/skills/social-organic-growth/SKILL.md) | Viral short-form video hooks, LinkedIn B2B, and content flywheels. |
+| `ab-testing-experimentation` | [SKILL.md](./digital-marketer/skills/ab-testing-experimentation/SKILL.md) | MECLABS heuristics, statistical significance (p-value), and ICE scoring. |
+| `ai-marketing-automation` | [SKILL.md](./digital-marketer/skills/ai-marketing-automation/SKILL.md) | Programmatic SEO, predictive lead scoring, and automated journeys. |
+| `email-marketing-automation` | [SKILL.md](./digital-marketer/skills/email-marketing-automation/SKILL.md) | Drip campaigns, segmentation, and automated lifecycle triggers. |
+| `performance-marketing` | [SKILL.md](./digital-marketer/skills/performance-marketing/SKILL.md) | Unit economics, CAC/LTV, and ad spend efficiency. |
+| `persuasive-psychology` | [SKILL.md](./digital-marketer/skills/persuasive-psychology/SKILL.md) | Social proof, urgency, cognitive biases, and risk reversal. |
+| `seo-and-sem` | [SKILL.md](./digital-marketer/skills/seo-and-sem/SKILL.md) | On-page SEO, keyword clusters, and SERP visibility. |
 
 ---
 
