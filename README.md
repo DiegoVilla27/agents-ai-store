@@ -3,6 +3,8 @@
 > **"A meticulously curated vault of expert-level AI instructions and engineering patterns designed for the professional modern developer."**
 
 [![Author: Diego Villanueva](https://img.shields.io/badge/Author-Diego%20Villanueva-blue.svg)](https://github.com/DiegoVilla27)
+[![Agents: 13 Architects](https://img.shields.io/badge/Agents-13%20Architects-purple.svg)](#-expert-personas-agents)
+[![Skills: 258 Specialized](https://img.shields.io/badge/Skills-258%20Specialized-blueviolet.svg)](#-full-specialized-skills-catalog-258-skills)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/DiegoVilla27/agents-ai-store)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -96,37 +98,44 @@ Each technology package follows the professional **`AGENTS.md` + `skills/`** pat
 ```text
 .agents/
 ├── angular/
-│   ├── AGENTS.md              # Agent identity, rules & architecture protocol
-│   └── skills/                # Modular knowledge (20 skills)
+│   ├── AGENTS.md              # Senior Master in Signals & Zoneless (24 skills)
+│   └── skills/
 ├── nestjs/
-│   ├── AGENTS.md
-│   └── skills/                # 12 skills
+│   ├── AGENTS.md              # Backend Scalability, Event-Driven & Microservices (25 skills)
+│   └── skills/
 ├── react/
-│   ├── AGENTS.md
-│   └── skills/                # 12 skills
+│   ├── AGENTS.md              # React 19, Server Components & State (18 skills)
+│   └── skills/
 ├── nextjs/
-│   ├── AGENTS.md
-│   └── skills/                # 11 skills
+│   ├── AGENTS.md              # App Router, Server Actions & Cache (18 skills)
+│   └── skills/
 ├── express/
-│   ├── AGENTS.md
-│   └── skills/                # 7 skills
+│   ├── AGENTS.md              # REST APIs & Security Hardening (13 skills)
+│   └── skills/
 ├── flutter/
-│   ├── AGENTS.md
-│   └── skills/                # 16 skills
+│   ├── AGENTS.md              # Riverpod, Performance & Security (21 skills)
+│   └── skills/
+├── ionic/
+│   ├── AGENTS.md              # Capacitor 6+ & Modern Angular (20 skills)
+│   └── skills/
 ├── spring-boot/
-│   ├── AGENTS.md
-│   └── skills/                # 8 skills
+│   ├── AGENTS.md              # Enterprise Java 21 & Virtual Threads (16 skills)
+│   └── skills/
 ├── react-native/
-│   ├── AGENTS.md
-│   └── skills/                # 10 skills
+│   ├── AGENTS.md              # Expo, Reanimated & 120 FPS Mobile (16 skills)
+│   └── skills/
 ├── digital-marketer/
-│   ├── AGENTS.md
-│   └── skills/                # 6 skills
+│   ├── AGENTS.md              # Growth Hacking, Funnels & CRO (12 skills)
+│   └── skills/
 ├── ui-ux-designer/
-│   ├── AGENTS.md
-│   └── skills/                # 9 skills
+│   ├── AGENTS.md              # Design Systems, Tokens & A11y (15 skills)
+│   └── skills/
+├── unity/
+│   ├── AGENTS.md              # 2D/3D, Physics, ECS, Shaders & Netcode (42 skills)
+│   └── skills/
 └── shared/
-    └── skills/                # 12 shared skills (Clean Code, GSAP, TSDoc, etc.)
+    ├── AGENTS.md              # Staff Software Engineer - Universal (18 skills)
+    └── skills/
 ```
 
 ---
@@ -135,26 +144,30 @@ Each technology package follows the professional **`AGENTS.md` + `skills/`** pat
 
 Each `AGENTS.md` file defines a complete expert persona: identity, role, skills, and strict coding/architecture protocols. When an AI agent enters a workspace with these files, it automatically adopts the professional standards.
 
-| Agent Persona | Mission | Protocol |
-|:---|:---|:---|
-| **Angular Architect** | Senior Master in Signals and Zoneless architecture. | [AGENTS.md](./angular/AGENTS.md) |
-| **React Architect** | Master in React 19, Server Components, and State. | [AGENTS.md](./react/AGENTS.md) |
-| **Next.js Architect** | Full-stack Next.js Specialist (App Router & Actions). | [AGENTS.md](./nextjs/AGENTS.md) |
-| **React Native Architect** | Mobile Engineer specialized in Expo and Performance. | [AGENTS.md](./react-native/AGENTS.md) |
-| **Flutter Architect** | Senior Flutter Architect (Riverpod & Security). | [AGENTS.md](./flutter/AGENTS.md) |
-| **NestJS Architect** | Master of Backend Scalability and Modular Architecture. | [AGENTS.md](./nestjs/AGENTS.md) |
-| **Express.js Architect** | Master of High-Performance REST APIs and Security Hardening. | [AGENTS.md](./express/AGENTS.md) |
-| **Spring Boot Architect** | Master of Enterprise Spring Services and Modular Architecture. | [AGENTS.md](./spring-boot/AGENTS.md) |
-| **UI/UX Designer** | Master of Aesthetics, Accessibility, and User Experience. | [AGENTS.md](./ui-ux-designer/AGENTS.md) |
-| **Digital Marketer** | Expert in Conversion Optimization, SEO, and Copywriting. | [AGENTS.md](./digital-marketer/AGENTS.md) |
+| Agent Persona | Skills | Mission & Core Specialization | Protocol |
+|:---|:---:|:---|:---|
+| **Unity Game Architect** | **42** | Principal Game Architect (2D/3D, Physics, ECS/DOTS, Shaders & Netcode). | [AGENTS.md](./unity/AGENTS.md) |
+| **NestJS Architect** | **25** | Master of Backend Scalability, Microservices, Event-Driven & DDD. | [AGENTS.md](./nestjs/AGENTS.md) |
+| **Angular Architect** | **24** | Senior Master in Signals, Zoneless architecture, and SSR/Hydration. | [AGENTS.md](./angular/AGENTS.md) |
+| **Flutter Architect** | **21** | Senior Flutter Architect (Riverpod, Security, Drift & 120 FPS). | [AGENTS.md](./flutter/AGENTS.md) |
+| **Ionic Architect** | **20** | Senior Cross-Platform Mobile Architect (Capacitor 6+ & Angular 18+). | [AGENTS.md](./ionic/AGENTS.md) |
+| **React Architect** | **18** | Master in React 19, Server Components, Compiler, and State. | [AGENTS.md](./react/AGENTS.md) |
+| **Next.js Architect** | **18** | Full-stack Next.js Specialist (App Router, Server Actions & Cache). | [AGENTS.md](./nextjs/AGENTS.md) |
+| **React Native Architect** | **16** | Mobile Engineer specialized in Expo, Reanimated, and Performance. | [AGENTS.md](./react-native/AGENTS.md) |
+| **Spring Boot Architect** | **16** | Master of Enterprise Spring Services, Virtual Threads & Loom. | [AGENTS.md](./spring-boot/AGENTS.md) |
+| **UI/UX Designer** | **15** | Master of Aesthetics, Design Tokens, Accessibility, and Motion. | [AGENTS.md](./ui-ux-designer/AGENTS.md) |
+| **Express.js Architect** | **13** | Master of High-Performance REST APIs and Security Hardening. | [AGENTS.md](./express/AGENTS.md) |
+| **Digital Marketer** | **12** | Expert in Conversion Rate Optimization (CRO), SEO, Ads, and Copywriting. | [AGENTS.md](./digital-marketer/AGENTS.md) |
+| **Staff Software Engineer** | **18** | Universal Cross-Cutting Engineering, Security (OWASP), Docker & CI/CD. | [AGENTS.md](./shared/AGENTS.md) |
+| **TOTAL** | **258** | **13 Specialized Enterprise Personas** | — |
 
 ### 🛠 How to Activate an Agent
 Once synchronized, you can activate a specific persona in your AI chat (Antigravity, Cursor, etc.) using one of these methods:
 
 1. **Explicit Identification**: Mention the agent name in your first prompt:
-   > *"Act as the **Next.js Architect**. Let's build a new feature."*
+   > *"Act as the **Unity Game Architect**. Let's build a new feature."*
 2. **Implicit Detection**: The AI automatically reads the `.agents/` folder and adopts the `AGENTS.md` protocols and skills present in your workspace.
-3. **File Matching**: The `applyTo` glob pattern in each `AGENTS.md` frontmatter ensures the agent activates automatically when you work on matching file types (e.g., `**/*.dart` triggers the Flutter Architect).
+3. **File Matching**: The `applyTo` glob pattern in each `AGENTS.md` frontmatter ensures the agent activates automatically when you work on matching file types (e.g., `**/*.dart` triggers Flutter, `**/*.cs` or `**/*.shader` triggers Unity).
 
 ---
 
@@ -167,11 +180,32 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (156 Skills)
+## 📚 Full Specialized Skills Catalog (258 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
-### 🛠 Core Engineering & Architecture (Shared Foundation)
+### 📊 Ecosystem Breakdown at a Glance
+
+| Ecosystem / Domain | Agent Persona | Skills | Primary Stack & Focus Areas |
+|:---|:---|:---:|:---|
+| 🎮 **Unity** | Unity Game Architect | **42** | Unity 6+ (LTS), 2D/3D Physics, DOTS/ECS, Custom HLSL, Netcode, VR/AR |
+| 🟢 **NestJS** | NestJS Architect | **25** | NestJS 10+, Microservices (Kafka/gRPC/RabbitMQ), Event Sourcing, BullMQ |
+| 🅰️ **Angular** | Angular Architect | **24** | Angular 18/19+, Signals, Zoneless, SSR Hydration, Microfrontends |
+| 💙 **Flutter** | Flutter Architect | **21** | Flutter 3.x, Riverpod, Drift SQLite, Shorebird OTA, 120 FPS, Biometrics |
+| ⚡ **Ionic** | Ionic Architect | **20** | Ionic 8+, Capacitor 6+, Standalone Angular, Offline-First, PWA |
+| ⚛️ **React** | React Architect | **18** | React 19, Server Components, React Compiler, TanStack Query v5, Zustand |
+| ▲ **Next.js** | Next.js Architect | **18** | Next.js 15+ App Router, Server Actions, PPR, Auth.js v5, Drizzle/Prisma |
+| 📱 **React Native** | React Native Architect | **16** | Expo SDK 52+, Fabric/TurboModules, Reanimated 120 FPS, NativeWind v4 |
+| 🍃 **Spring Boot** | Spring Boot Architect | **16** | Spring Boot 3.x, Java 21, Virtual Threads (Loom), WebFlux, OAuth2 |
+| 🎨 **UI/UX Design** | UI/UX Designer | **15** | Design Systems, 3-Tier Tokens, Color Theory, Typography, WCAG 2.2 AAA |
+| 🚂 **Express.js** | Express.js Architect | **13** | Express 4/5, TypeScript, Zod, OpenAPI 3.0, Security Hardening, BullMQ |
+| 📈 **Digital Marketing** | Digital Marketer | **12** | AARRR Funnels, Meta/Google Ads, CRO, Copywriting, Programmatic SEO |
+| 🛠 **Shared Foundation** | Staff Software Engineer | **18** | Clean Code, OWASP Top 10, Docker, GitHub Actions, Turborepo/Nx, PWA |
+| **TOTAL** | **13 Specialized Architects** | **258** | **Full-Stack, Mobile, Cloud, Game & Design Ecosystem** |
+
+---
+
+### 🛠 Core Engineering & Architecture (Shared Foundation) — 18 Skills
 Universal engineering excellence, web security, DevOps, testing, and modern language foundations.
 | Skill Name | Documentation | Mission / Focus |
 |:---|:---|:---|
@@ -194,8 +228,8 @@ Universal engineering excellence, web security, DevOps, testing, and modern lang
 | `web-graphql-core` | [SKILL.md](./shared/skills/web-graphql-core/SKILL.md) | GraphQL schema design, resolvers, and DataLoader N+1 batching. |
 | `web-monorepo-turborepo-nx` | [SKILL.md](./shared/skills/web-monorepo-turborepo-nx/SKILL.md) | Turborepo & Nx monorepo topology, task graphs, and remote caching. |
 
-### ⚛️ React Ecosystem
-State-of-the-art patterns for the React universe.
+### ⚛️ React Ecosystem — 18 Skills
+State-of-the-art patterns for the React universe (React 19, Compiler & RSC).
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
 | `react-core` | [SKILL.md](./react/skills/react-core/SKILL.md) | React 19, Server Components, and Actions. |
@@ -217,7 +251,7 @@ State-of-the-art patterns for the React universe.
 | `react-view-transitions` | [SKILL.md](./react/skills/react-view-transitions/SKILL.md) | Native-like page transitions with Browser API. |
 | `vite-react-optimization` | [SKILL.md](./react/skills/vite-react-optimization/SKILL.md) | Build performance, code splitting, and preloading. |
 
-### ▲ Next.js Ecosystem
+### ▲ Next.js Ecosystem — 18 Skills
 Production-grade patterns using Next.js 15+ App Router and React 19.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
@@ -240,7 +274,7 @@ Production-grade patterns using Next.js 15+ App Router and React 19.
 | `nextjs-i18n-intl` | [SKILL.md](./nextjs/skills/nextjs-i18n-intl/SKILL.md) | next-intl, localized routing, and RTL support in RSC. |
 | `nextjs-testing-playwright-vitest` | [SKILL.md](./nextjs/skills/nextjs-testing-playwright-vitest/SKILL.md) | Playwright E2E testing with auth fixtures and Vitest for Server Actions. |
 
-### 📱 React Native & Expo Ecosystem
+### 📱 React Native & Expo Ecosystem — 16 Skills
 Cross-platform mobile applications using React Native (New Architecture) and Expo SDK 52+.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
@@ -261,12 +295,12 @@ Cross-platform mobile applications using React Native (New Architecture) and Exp
 | `react-native-testing-library` | [SKILL.md](./react-native/skills/react-native-testing-library/SKILL.md) | User-centric unit and integration testing with RNTL. |
 | `mobile-debugging-sentry` | [SKILL.md](./react-native/skills/mobile-debugging-sentry/SKILL.md) | Crash reporting, breadcrumbs, and performance traces. |
 
-### 🟢 NestJS Ecosystem
+### 🟢 NestJS Ecosystem — 25 Skills
 Production-grade backend patterns using NestJS 10+ and Enterprise Cloud Architecture.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
 | `nestjs-core` | [SKILL.md](./nestjs/skills/nestjs-core/SKILL.md) | DI, Dynamic Modules, Custom Providers, and IoC. |
-| `nestjs-modular-monolith`| [SKILL.md](./nestjs/skills/nestjs-modular-monolith/SKILL.md) | Modular Architecture, Bounded Contexts, and DDD. |
+| `nestjs-modular-monolith` | [SKILL.md](./nestjs/skills/nestjs-modular-monolith/SKILL.md) | Modular Architecture, Bounded Contexts, and DDD. |
 | `nestjs-patterns` | [SKILL.md](./nestjs/skills/nestjs-patterns/SKILL.md) | Strategy, Factory, Observer, and SOLID patterns in NestJS. |
 | `nestjs-persistence` | [SKILL.md](./nestjs/skills/nestjs-persistence/SKILL.md) | Repository Pattern, Prisma/TypeORM, and Unit of Work. |
 | `nestjs-database-multitenancy` | [SKILL.md](./nestjs/skills/nestjs-database-multitenancy/SKILL.md) | Multi-tenancy (Schema/DB/RLS) with nestjs-cls (AsyncLocalStorage). |
@@ -281,7 +315,7 @@ Production-grade backend patterns using NestJS 10+ and Enterprise Cloud Architec
 | `nestjs-openapi-docs` | [SKILL.md](./nestjs/skills/nestjs-openapi-docs/SKILL.md) | Swagger / OpenAPI 3.0 CLI plugin, DTO decorators, and UI. |
 | `nestjs-graphql-federation` | [SKILL.md](./nestjs/skills/nestjs-graphql-federation/SKILL.md) | Apollo Federation 2.0 subgraphs, @key entities, and DataLoader. |
 | `nestjs-websocket` | [SKILL.md](./nestjs/skills/nestjs-websocket/SKILL.md) | Real-time gateways, rooms, and Redis adapter clustering. |
-| `nestjs-queue-architect`| [SKILL.md](./nestjs/skills/nestjs-queue-architect/SKILL.md) | BullMQ background jobs, Redis queues, and sandboxed workers. |
+| `nestjs-queue-architect` | [SKILL.md](./nestjs/skills/nestjs-queue-architect/SKILL.md) | BullMQ background jobs, Redis queues, and sandboxed workers. |
 | `nestjs-caching-redis` | [SKILL.md](./nestjs/skills/nestjs-caching-redis/SKILL.md) | Redis cluster caching, CacheInterceptor, and Redlock distributed locks. |
 | `nestjs-search-elasticsearch` | [SKILL.md](./nestjs/skills/nestjs-search-elasticsearch/SKILL.md) | Full-text fuzzy search, aggregations, and event-based DB sync. |
 | `nestjs-file-uploads-s3` | [SKILL.md](./nestjs/skills/nestjs-file-uploads-s3/SKILL.md) | Secure multipart uploads, S3/R2 streams, and Magic Number checks. |
@@ -292,8 +326,8 @@ Production-grade backend patterns using NestJS 10+ and Enterprise Cloud Architec
 | `nestjs-lgtm-metrics` | [SKILL.md](./nestjs/skills/nestjs-lgtm-metrics/SKILL.md) | Prometheus metrics, logging, and tracing. |
 
 
-### 🚂 Express.js Ecosystem
-Production-grade backend patterns using Express.js.
+### 🚂 Express.js Ecosystem — 13 Skills
+Production-grade backend patterns using Express.js and TypeScript.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
 | `express-core-middleware` | [SKILL.md](./express/skills/express-core-middleware/SKILL.md) | Custom middleware patterns, global chains, and types. |
@@ -311,7 +345,7 @@ Production-grade backend patterns using Express.js.
 | `express-performance-scalability` | [SKILL.md](./express/skills/express-performance-scalability/SKILL.md) | Event loop optimization, compression, and graceful exit. |
 
 
-### 🍃 Spring Boot Ecosystem
+### 🍃 Spring Boot Ecosystem — 16 Skills
 Production-grade backend patterns using Spring Boot 3.x and Java 21.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
@@ -333,7 +367,7 @@ Production-grade backend patterns using Spring Boot 3.x and Java 21.
 | `spring-boot-javadoc` | [SKILL.md](./spring-boot/skills/spring-boot-javadoc/SKILL.md) | Enterprise Javadoc standards for Java 17/21, Records, and Services. |
 
 
-### 🅰️ Angular Ecosystem
+### 🅰️ Angular Ecosystem — 24 Skills
 Enterprise-grade patterns for modern Angular (v18 & v19+) applications.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
@@ -362,7 +396,7 @@ Enterprise-grade patterns for modern Angular (v18 & v19+) applications.
 | `nx-monorepo` | [SKILL.md](./angular/skills/nx-monorepo/SKILL.md) | Scaling with libraries and workspace tags. |
 | `angular-pwa` | [SKILL.md](./angular/skills/angular-pwa/SKILL.md) | Service Workers and offline reliability. |
 
-### 💙 Flutter Ecosystem
+### 💙 Flutter Ecosystem — 21 Skills
 Comprehensive suite for high-performance Cross-Platform apps.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
@@ -376,7 +410,7 @@ Comprehensive suite for high-performance Cross-Platform apps.
 | `flutter-performance` | [SKILL.md](./flutter/skills/flutter-performance/SKILL.md) | 120 FPS rendering and memory management. |
 | `flutter-biometrics` | [SKILL.md](./flutter/skills/flutter-biometrics/SKILL.md) | Face ID / Fingerprint implementation. |
 | `flutter-security-architect` | [SKILL.md](./flutter/skills/flutter-security-architect/SKILL.md) | Secure storage and encryption protocols. |
-| `flutter-platform-configurator`| [SKILL.md](./flutter/skills/flutter-platform-configurator/SKILL.md) | Native iOS/Android configurations and Gradle. |
+| `flutter-platform-configurator` | [SKILL.md](./flutter/skills/flutter-platform-configurator/SKILL.md) | Native iOS/Android configurations and Gradle. |
 | `flutter-ui-ux` | [SKILL.md](./flutter/skills/flutter-ui-ux/SKILL.md) | Premium micro-interactions and animations. |
 | `flutter-animations` | [SKILL.md](./flutter/skills/flutter-animations/SKILL.md) | Complex motion, physics, and staggered animations. |
 | `flutter-theming` | [SKILL.md](./flutter/skills/flutter-theming/SKILL.md) | Material 3, dynamic color, and theme extensions. |
@@ -388,7 +422,7 @@ Comprehensive suite for high-performance Cross-Platform apps.
 | `flutter-testing` | [SKILL.md](./flutter/skills/flutter-testing/SKILL.md) | Unit, Widget, and Integration tests with Mocktail. |
 | `flutter-clean-scaffolder` | [SKILL.md](./flutter/skills/flutter-clean-scaffolder/SKILL.md) | Enterprise clean architecture folder scaffolding. |
 
-### ⚡ Ionic & Capacitor Ecosystem
+### ⚡ Ionic & Capacitor Ecosystem — 20 Skills
 Universal cross-platform hybrid suite using modern Angular (v18+) & Capacitor 6+.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
@@ -413,17 +447,26 @@ Universal cross-platform hybrid suite using modern Angular (v18+) & Capacitor 6+
 | `ionic-i18n` | [SKILL.md](./ionic/skills/ionic-i18n/SKILL.md) | Transloco, device locale auto-detection, and RTL mirroring. |
 | `ionic-accessibility` | [SKILL.md](./ionic/skills/ionic-accessibility/SKILL.md) | WCAG 2.2 AA, VoiceOver/TalkBack, and dynamic type scaling. |
 
-### 🧪 Testing Strategies
-Ensuring software remains immune to regressions.
-| Skill Name | Documentation | Stack |
-|:---|:---|:---|
-| `web-modern-testing` | [SKILL.md](./shared/skills/web-modern-testing/SKILL.md) | Vitest, MSW, and Playwright (A11y focus). |
-| `react-testing-jest` | [SKILL.md](./react/skills/react-testing-jest/SKILL.md) | Industry-standard Jest + Testing Library. |
-| `angular-testing-jasmine` | [SKILL.md](./angular/skills/angular-testing-jasmine/SKILL.md) | Enterprise-standard Jasmine & Karma. |
-| `flutter-testing` | [SKILL.md](./flutter/skills/flutter-testing/SKILL.md) | Unit, Widget, and Integration tests in Flutter. |
+### 🧪 Cross-Stack Testing Strategies (13 Specialized Testing Suites)
+Ensuring software across every ecosystem remains immune to regressions through rigorous testing standards.
+| Skill Name | Documentation | Stack / Ecosystem | Focus |
+|:---|:---|:---|:---|
+| `web-modern-testing` | [SKILL.md](./shared/skills/web-modern-testing/SKILL.md) | Universal Web | Vitest, MSW v2, Testing Library, and automated a11y testing. |
+| `react-testing-vitest` | [SKILL.md](./react/skills/react-testing-vitest/SKILL.md) | React | In-memory testing with Vitest, RTL, and MSW v2. |
+| `react-testing-jest` | [SKILL.md](./react/skills/react-testing-jest/SKILL.md) | React | Industry-standard Jest + React Testing Library. |
+| `nextjs-testing-playwright-vitest` | [SKILL.md](./nextjs/skills/nextjs-testing-playwright-vitest/SKILL.md) | Next.js | Playwright E2E with auth fixtures and Vitest for Server Actions. |
+| `react-native-testing-library` | [SKILL.md](./react-native/skills/react-native-testing-library/SKILL.md) | React Native | User-centric unit and integration testing with RNTL. |
+| `angular-testing-vitest` | [SKILL.md](./angular/skills/angular-testing-vitest/SKILL.md) | Angular | Fast in-memory unit testing with Vitest and Signal tests. |
+| `angular-testing-jasmine` | [SKILL.md](./angular/skills/angular-testing-jasmine/SKILL.md) | Angular | Enterprise-standard Jasmine & Karma. |
+| `flutter-testing` | [SKILL.md](./flutter/skills/flutter-testing/SKILL.md) | Flutter | Unit, Widget, and Integration tests with Mocktail. |
+| `ionic-testing` | [SKILL.md](./ionic/skills/ionic-testing/SKILL.md) | Ionic | Capacitor mocking, lifecycle unit tests, and Playwright E2E. |
+| `nestjs-testing-expert` | [SKILL.md](./nestjs/skills/nestjs-testing-expert/SKILL.md) | NestJS | Unit testing, integration with Testcontainers, and Supertest E2E. |
+| `express-testing-expert` | [SKILL.md](./express/skills/express-testing-expert/SKILL.md) | Express.js | Integration API testing with Supertest and unit mock runs. |
+| `spring-boot-testing-expert` | [SKILL.md](./spring-boot/skills/spring-boot-testing-expert/SKILL.md) | Spring Boot | Mockito unit tests, WebMvc/DataJpa slice tests, and Testcontainers. |
+| `unity-testing-tdd` | [SKILL.md](./unity/skills/unity-testing-tdd/SKILL.md) | Unity | Unity Test Framework (UTF), NUnit, Edit/Play Mode tests, and NSubstitute. |
 
 
-### 🎨 UI/UX Design Ecosystem
+### 🎨 UI/UX Design Ecosystem — 15 Skills
 Professional design systems, visual excellence, and human-computer interaction.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
@@ -443,7 +486,7 @@ Professional design systems, visual excellence, and human-computer interaction.
 | `user-research-heuristics` | [SKILL.md](./ui-ux-designer/skills/user-research-heuristics/SKILL.md) | Nielsen Norman 10 Usability Heuristics, audits, and journey maps. |
 | `3d-and-spatial-design` | [SKILL.md](./ui-ux-designer/skills/3d-and-spatial-design/SKILL.md) | Spatial UI depth, 3D elevations, multi-layer shadows, and glassmorphism. |
 
-### 📈 Digital Marketing Ecosystem
+### 📈 Digital Marketing Ecosystem — 12 Skills
 Strategies for full-funnel growth, conversion, paid scaling, and retention.
 | Skill Name | Documentation | Focus |
 |:---|:---|:---|
@@ -459,6 +502,53 @@ Strategies for full-funnel growth, conversion, paid scaling, and retention.
 | `performance-marketing` | [SKILL.md](./digital-marketer/skills/performance-marketing/SKILL.md) | Unit economics, CAC/LTV, and ad spend efficiency. |
 | `persuasive-psychology` | [SKILL.md](./digital-marketer/skills/persuasive-psychology/SKILL.md) | Social proof, urgency, cognitive biases, and risk reversal. |
 | `seo-and-sem` | [SKILL.md](./digital-marketer/skills/seo-and-sem/SKILL.md) | On-page SEO, keyword clusters, and SERP visibility. |
+
+### 🎮 Unity Game Engine Ecosystem — 42 Skills
+Enterprise-grade gamedev suite for Unity 6+ (LTS): 2D/3D physics, DOTS/ECS, shaders, netcode, and cross-genre systems.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `unity-core-architecture` | [SKILL.md](./unity/skills/unity-core-architecture/SKILL.md) | Modular Feature-First architecture, Assembly Definitions (.asmdef), and DI. |
+| `unity-csharp-mastery` | [SKILL.md](./unity/skills/unity-csharp-mastery/SKILL.md) | Jobs System, Burst Compiler, NativeArray, Span<T>, and high-performance C#. |
+| `unity-scriptable-objects` | [SKILL.md](./unity/skills/unity-scriptable-objects/SKILL.md) | ScriptableObject-Driven Architecture, event channels, and runtime sets. |
+| `unity-design-patterns` | [SKILL.md](./unity/skills/unity-design-patterns/SKILL.md) | Observer, Command, State, Strategy, Object Pool, and Service Locator patterns. |
+| `unity-ecs-dots` | [SKILL.md](./unity/skills/unity-ecs-dots/SKILL.md) | Entity Component System, IComponentData, SystemBase/ISystem, and Burst jobs. |
+| `unity-physics-2d` | [SKILL.md](./unity/skills/unity-physics-2d/SKILL.md) | Rigidbody2D, Collider2D, Raycasts, Composite Collider, and PhysicsMaterial2D. |
+| `unity-physics-3d` | [SKILL.md](./unity/skills/unity-physics-3d/SKILL.md) | Rigidbody, CharacterController, Raycasts/SphereCast, joints, and ragdolls. |
+| `unity-input-system` | [SKILL.md](./unity/skills/unity-input-system/SKILL.md) | New Input System, Input Actions, player bindings, and runtime rebinding. |
+| `unity-animation-2d` | [SKILL.md](./unity/skills/unity-animation-2d/SKILL.md) | Animator Controller, sprite sheets, 2D bone rigging, and blend trees. |
+| `unity-animation-3d` | [SKILL.md](./unity/skills/unity-animation-3d/SKILL.md) | Mecanim, blend trees, Avatar masks, Inverse Kinematics (IK), and root motion. |
+| `unity-timeline-cinemachine` | [SKILL.md](./unity/skills/unity-timeline-cinemachine/SKILL.md) | Cinemachine virtual cameras, camera blending, Timeline sequences, and shake. |
+| `unity-shader-graph` | [SKILL.md](./unity/skills/unity-shader-graph/SKILL.md) | URP/HDRP Shader Graph, PBR materials, toon shading, dissolve, and water. |
+| `unity-hlsl-custom-shaders` | [SKILL.md](./unity/skills/unity-hlsl-custom-shaders/SKILL.md) | Custom HLSL/ShaderLab, render passes, compute shaders, and stencil buffer. |
+| `unity-vfx-graph-particles` | [SKILL.md](./unity/skills/unity-vfx-graph-particles/SKILL.md) | GPU Visual Effect Graph, particle physics, collision events, and Legacy VFX. |
+| `unity-lighting-rendering` | [SKILL.md](./unity/skills/unity-lighting-rendering/SKILL.md) | Baked/realtime lighting, Light Probes, Reflection Probes, and GI. |
+| `unity-urp-hdrp-pipeline` | [SKILL.md](./unity/skills/unity-urp-hdrp-pipeline/SKILL.md) | Universal & High Definition Render Pipeline configs and Renderer Features. |
+| `unity-ui-toolkit` | [SKILL.md](./unity/skills/unity-ui-toolkit/SKILL.md) | UI Toolkit (UXML/USS), data binding, responsive layouts, and uGUI canvas. |
+| `unity-audio-engine` | [SKILL.md](./unity/skills/unity-audio-engine/SKILL.md) | AudioMixer, AudioSource, 3D spatial sound, FMOD/Wwise, and audio pooling. |
+| `unity-ai-navigation` | [SKILL.md](./unity/skills/unity-ai-navigation/SKILL.md) | NavMesh, NavMeshAgent, NavMeshSurface, dynamic obstacles, and pathfinding. |
+| `unity-ai-behavior-trees` | [SKILL.md](./unity/skills/unity-ai-behavior-trees/SKILL.md) | Behavior Trees, Finite State Machines (FSM), GOAP, and sensory systems. |
+| `unity-procedural-generation` | [SKILL.md](./unity/skills/unity-procedural-generation/SKILL.md) | Perlin/Simplex noise, Wave Function Collapse, dungeon generators, and biomes. |
+| `unity-tilemap-2d-worlds` | [SKILL.md](./unity/skills/unity-tilemap-2d-worlds/SKILL.md) | Rule Tiles, animated tiles, Tilemap Colliders, isometric grids, and chunks. |
+| `unity-terrain-open-world` | [SKILL.md](./unity/skills/unity-terrain-open-world/SKILL.md) | Terrain heightmaps, splat maps, foliage/tree painting, LOD, and streaming. |
+| `unity-networking-multiplayer` | [SKILL.md](./unity/skills/unity-networking-multiplayer/SKILL.md) | Netcode for GameObjects (NGO), NetworkVariables, RPCs, and prediction. |
+| `unity-networking-dedicated-server` | [SKILL.md](./unity/skills/unity-networking-dedicated-server/SKILL.md) | Headless builds, authoritative server, Unity Gaming Services Relay/Lobby. |
+| `unity-addressables-assets` | [SKILL.md](./unity/skills/unity-addressables-assets/SKILL.md) | Addressables, asset bundles, remote CDN delivery, and memory lifecycle. |
+| `unity-performance-profiling` | [SKILL.md](./unity/skills/unity-performance-profiling/SKILL.md) | Unity Profiler, Frame Debugger, GPU profiler, draw calls, and batching. |
+| `unity-memory-optimization` | [SKILL.md](./unity/skills/unity-memory-optimization/SKILL.md) | Object pooling, GC allocation reduction, texture streaming, and leak audits. |
+| `unity-mobile-optimization` | [SKILL.md](./unity/skills/unity-mobile-optimization/SKILL.md) | Mobile draw call budgets, ASTC texture compression, battery, and thermals. |
+| `unity-testing-tdd` | [SKILL.md](./unity/skills/unity-testing-tdd/SKILL.md) | Unity Test Framework (UTF), NUnit, Edit/Play Mode tests, and mocking. |
+| `unity-ci-cd-devops` | [SKILL.md](./unity/skills/unity-ci-cd-devops/SKILL.md) | GameCI GitHub Actions, Unity Cloud Build, and automated store builds. |
+| `unity-version-control` | [SKILL.md](./unity/skills/unity-version-control/SKILL.md) | Git LFS, PlasticSCM, Unity .gitignore, branching, and merge strategies. |
+| `unity-xr-vr-ar` | [SKILL.md](./unity/skills/unity-xr-vr-ar/SKILL.md) | XR Interaction Toolkit, OpenXR, AR Foundation, hand tracking, and locomotion. |
+| `unity-save-system-serialization` | [SKILL.md](./unity/skills/unity-save-system-serialization/SKILL.md) | JSON/Binary serialization, AES encryption, cloud saves, and save slots. |
+| `unity-localization-i18n` | [SKILL.md](./unity/skills/unity-localization-i18n/SKILL.md) | Unity Localization package, string/asset tables, RTL, and font fallbacks. |
+| `unity-accessibility` | [SKILL.md](./unity/skills/unity-accessibility/SKILL.md) | Colorblind modes, scalable subtitles, full input remapping, and TTS. |
+| `unity-editor-tools` | [SKILL.md](./unity/skills/unity-editor-tools/SKILL.md) | Custom EditorWindows, PropertyDrawers, Custom Inspectors, and Gizmos. |
+| `unity-camera-systems` | [SKILL.md](./unity/skills/unity-camera-systems/SKILL.md) | 2D/3D follow cameras, orbit cameras, dead zones, camera shake, and splits. |
+| `unity-combat-systems` | [SKILL.md](./unity/skills/unity-combat-systems/SKILL.md) | Hitbox/hurtbox architecture, combos, hit stop, cooldowns, and damage numbers. |
+| `unity-platformer-2d` | [SKILL.md](./unity/skills/unity-platformer-2d/SKILL.md) | Tight platforming, coyote time, jump buffering, wall jumping, and platforms. |
+| `unity-fps-tps-controller` | [SKILL.md](./unity/skills/unity-fps-tps-controller/SKILL.md) | First/Third-person controllers, recoil patterns, ADS, bobbing, and hitscan. |
+| `unity-rpg-systems` | [SKILL.md](./unity/skills/unity-rpg-systems/SKILL.md) | RPG stats/attributes, grid inventory, quest journals, and dialogue graphs. |
 
 ---
 

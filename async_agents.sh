@@ -22,7 +22,7 @@ AGENT_BASE=".agents"
 GITHUB_RAW="https://raw.githubusercontent.com/$REPO"
 GITHUB_API="https://api.github.com/repos/$REPO"
 
-TECHS=("angular" "react" "flutter" "nextjs" "nestjs" "react-native" "ionic" "shared" "ui-ux-designer" "digital-marketer" "express" "spring-boot")
+TECHS=("angular" "react" "flutter" "nextjs" "nestjs" "react-native" "ionic" "shared" "ui-ux-designer" "digital-marketer" "express" "spring-boot" "unity")
 
 # --- Colors ---
 GREEN='\033[0;32m'
