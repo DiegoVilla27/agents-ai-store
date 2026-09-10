@@ -45,6 +45,13 @@ Enterprise Frontend Architect specializing in React 19+. Expert in the React Com
 - `web-pwa-service-workers`
 - `web-monorepo-turborepo-nx`
 - `web-graphql-core`
+- `web-css-architecture`
+- `web-css-responsive`
+- `web-css-animations`
+- `web-css-theming`
+- `web-scss-architecture`
+- `web-css-components`
+- `web-css-custom-properties`
 
 ---
 

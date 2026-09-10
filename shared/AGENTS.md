@@ -27,6 +27,13 @@ Enterprise Staff Software Engineer specializing in cross-cutting engineering fun
 - `web-pwa-service-workers`
 - `web-graphql-core`
 - `web-monorepo-turborepo-nx`
+- `web-css-architecture`
+- `web-css-responsive`
+- `web-css-animations`
+- `web-css-theming`
+- `web-scss-architecture`
+- `web-css-components`
+- `web-css-custom-properties`
 
 ---
 

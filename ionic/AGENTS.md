@@ -50,6 +50,13 @@ Enterprise Hybrid/Cross-Platform Architect specializing in Modern Ionic (v8+) wi
 - `web-github-actions-ci-cd`
 - `web-pwa-service-workers`
 - `web-monorepo-turborepo-nx`
+- `web-css-architecture`
+- `web-css-responsive`
+- `web-css-animations`
+- `web-css-theming`
+- `web-scss-architecture`
+- `web-css-components`
+- `web-css-custom-properties`
 
 ---
 
