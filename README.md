@@ -3,8 +3,8 @@
 > **"A meticulously curated vault of expert-level AI instructions and engineering patterns designed for the professional modern developer."**
 
 [![Author: Diego Villanueva](https://img.shields.io/badge/Author-Diego%20Villanueva-blue.svg)](https://github.com/DiegoVilla27)
-[![Agents: 13 Architects](https://img.shields.io/badge/Agents-13%20Architects-purple.svg)](#-expert-personas-agents)
-[![Skills: 258 Specialized](https://img.shields.io/badge/Skills-258%20Specialized-blueviolet.svg)](#-full-specialized-skills-catalog-258-skills)
+[![Agents: 14 Architects](https://img.shields.io/badge/Agents-14%20Architects-purple.svg)](#-expert-personas-agents)
+[![Skills: 281 Specialized](https://img.shields.io/badge/Skills-281%20Specialized-blueviolet.svg)](#-full-specialized-skills-catalog-281-skills)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/DiegoVilla27/agents-ai-store)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -53,6 +53,9 @@ npx github:DiegoVilla27/agents-ai-store <technology>
 ```bash
 # Sync Angular protocol & skills into .agents/
 npx github:DiegoVilla27/agents-ai-store angular
+
+# Sync Lit Web Components protocol & skills into .agents/
+npx github:DiegoVilla27/agents-ai-store lit
 
 # Sync NestJS into .agents/ (Smart Merges with existing protocols for full-stack apps!)
 npx github:DiegoVilla27/agents-ai-store nestjs
@@ -118,6 +121,9 @@ Each technology package follows the professional **`AGENTS.md` + `skills/`** pat
 ├── ionic/
 │   ├── AGENTS.md              # Capacitor 6+ & Modern Angular (20 skills)
 │   └── skills/
+├── lit/
+│   ├── AGENTS.md              # Principal Web Components Architect (16 skills)
+│   └── skills/
 ├── spring-boot/
 │   ├── AGENTS.md              # Enterprise Java 21 & Virtual Threads (16 skills)
 │   └── skills/
@@ -134,7 +140,7 @@ Each technology package follows the professional **`AGENTS.md` + `skills/`** pat
 │   ├── AGENTS.md              # 2D/3D, Physics, ECS, Shaders & Netcode (42 skills)
 │   └── skills/
 └── shared/
-    ├── AGENTS.md              # Staff Software Engineer - Universal (18 skills)
+    ├── AGENTS.md              # Staff Software Engineer - Universal (25 skills)
     └── skills/
 ```
 
@@ -153,13 +159,14 @@ Each `AGENTS.md` file defines a complete expert persona: identity, role, skills,
 | **Ionic Architect** | **20** | Senior Cross-Platform Mobile Architect (Capacitor 6+ & Angular 18+). | [AGENTS.md](./ionic/AGENTS.md) |
 | **React Architect** | **18** | Master in React 19, Server Components, Compiler, and State. | [AGENTS.md](./react/AGENTS.md) |
 | **Next.js Architect** | **18** | Full-stack Next.js Specialist (App Router, Server Actions & Cache). | [AGENTS.md](./nextjs/AGENTS.md) |
+| **Lit Web Components Architect** | **16** | Principal Web Components Architect (Lit 3+, Shadow DOM, Reactive Controllers, SSR & Hydration). | [AGENTS.md](./lit/AGENTS.md) |
 | **React Native Architect** | **16** | Mobile Engineer specialized in Expo, Reanimated, and Performance. | [AGENTS.md](./react-native/AGENTS.md) |
 | **Spring Boot Architect** | **16** | Master of Enterprise Spring Services, Virtual Threads & Loom. | [AGENTS.md](./spring-boot/AGENTS.md) |
 | **UI/UX Designer** | **15** | Master of Aesthetics, Design Tokens, Accessibility, and Motion. | [AGENTS.md](./ui-ux-designer/AGENTS.md) |
 | **Express.js Architect** | **13** | Master of High-Performance REST APIs and Security Hardening. | [AGENTS.md](./express/AGENTS.md) |
 | **Digital Marketer** | **12** | Expert in Conversion Rate Optimization (CRO), SEO, Ads, and Copywriting. | [AGENTS.md](./digital-marketer/AGENTS.md) |
-| **Staff Software Engineer** | **18** | Universal Cross-Cutting Engineering, Security (OWASP), Docker & CI/CD. | [AGENTS.md](./shared/AGENTS.md) |
-| **TOTAL** | **258** | **13 Specialized Enterprise Personas** | — |
+| **Staff Software Engineer** | **25** | Universal Cross-Cutting Engineering, Modern CSS/SCSS Architecture, Security (OWASP), Docker & CI/CD. | [AGENTS.md](./shared/AGENTS.md) |
+| **TOTAL** | **281** | **14 Specialized Enterprise Personas** | — |
 
 ### 🛠 How to Activate an Agent
 Once synchronized, you can activate a specific persona in your AI chat (Antigravity, Cursor, etc.) using one of these methods:
@@ -180,7 +187,7 @@ Every framework in this store is governed by two uncompromising architectural ru
 
 ---
 
-## 📚 Full Specialized Skills Catalog (258 Skills)
+## 📚 Full Specialized Skills Catalog (281 Skills)
 
 Our library is organized by ecosystem and domain. All skills are authored and maintained by **Diego Villanueva**.
 
@@ -195,18 +202,19 @@ Our library is organized by ecosystem and domain. All skills are authored and ma
 | ⚡ **Ionic** | Ionic Architect | **20** | Ionic 8+, Capacitor 6+, Standalone Angular, Offline-First, PWA |
 | ⚛️ **React** | React Architect | **18** | React 19, Server Components, React Compiler, TanStack Query v5, Zustand |
 | ▲ **Next.js** | Next.js Architect | **18** | Next.js 15+ App Router, Server Actions, PPR, Auth.js v5, Drizzle/Prisma |
+| 🔥 **Lit Web Components** | Lit Architect | **16** | Lit 3+, Shadow DOM, Reactive Controllers, Directives, SSR Hydration, Task |
 | 📱 **React Native** | React Native Architect | **16** | Expo SDK 52+, Fabric/TurboModules, Reanimated 120 FPS, NativeWind v4 |
 | 🍃 **Spring Boot** | Spring Boot Architect | **16** | Spring Boot 3.x, Java 21, Virtual Threads (Loom), WebFlux, OAuth2 |
 | 🎨 **UI/UX Design** | UI/UX Designer | **15** | Design Systems, 3-Tier Tokens, Color Theory, Typography, WCAG 2.2 AAA |
 | 🚂 **Express.js** | Express.js Architect | **13** | Express 4/5, TypeScript, Zod, OpenAPI 3.0, Security Hardening, BullMQ |
 | 📈 **Digital Marketing** | Digital Marketer | **12** | AARRR Funnels, Meta/Google Ads, CRO, Copywriting, Programmatic SEO |
-| 🛠 **Shared Foundation** | Staff Software Engineer | **18** | Clean Code, OWASP Top 10, Docker, GitHub Actions, Turborepo/Nx, PWA |
-| **TOTAL** | **13 Specialized Architects** | **258** | **Full-Stack, Mobile, Cloud, Game & Design Ecosystem** |
+| 🛠 **Shared Foundation** | Staff Software Engineer | **25** | Modern CSS/SCSS Architecture, Clean Code, OWASP Top 10, Docker, CI/CD, Turborepo/Nx, PWA |
+| **TOTAL** | **14 Specialized Architects** | **281** | **Full-Stack, Mobile, Cloud, Game, Web Components & Design Ecosystem** |
 
 ---
 
-### 🛠 Core Engineering & Architecture (Shared Foundation) — 18 Skills
-Universal engineering excellence, web security, DevOps, testing, and modern language foundations.
+### 🛠 Core Engineering & Architecture (Shared Foundation) — 25 Skills
+Universal engineering excellence, modern CSS/SCSS architecture, web security, DevOps, testing, and modern language foundations.
 | Skill Name | Documentation | Mission / Focus |
 |:---|:---|:---|
 | `clean-code` | [SKILL.md](./shared/skills/clean-code/SKILL.md) | Universal engineering excellence, SOLID principles, and sustainability. |
@@ -215,6 +223,13 @@ Universal engineering excellence, web security, DevOps, testing, and modern lang
 | `web-typescript-react` | [SKILL.md](./shared/skills/web-typescript-react/SKILL.md) | Advanced TS patterns for React and Next.js. |
 | `web-javascript` | [SKILL.md](./shared/skills/web-javascript/SKILL.md) | Deep runtime behavior, Event Loop, closures, and optimized ESNext. |
 | `web-tsdoc` | [SKILL.md](./shared/skills/web-tsdoc/SKILL.md) | Standardized TSDoc documentation for TypeScript projects. |
+| `web-css-architecture` | [SKILL.md](./shared/skills/web-css-architecture/SKILL.md) | CSS Architecture, @layer cascade, CSS nesting, @scope, logical properties, and BEM. |
+| `web-css-responsive` | [SKILL.md](./shared/skills/web-css-responsive/SKILL.md) | Modern responsive design, Container Queries, clamp(), fluid typography, Subgrid, and dvh. |
+| `web-css-animations` | [SKILL.md](./shared/skills/web-css-animations/SKILL.md) | High-performance CSS animations, @keyframes, Scroll-Driven Animations, View Transitions, and GPU compositing. |
+| `web-css-theming` | [SKILL.md](./shared/skills/web-css-theming/SKILL.md) | Modern theming, dark/light mode, light-dark(), color-mix(), multi-theme, and WCAG contrast. |
+| `web-scss-architecture` | [SKILL.md](./shared/skills/web-scss-architecture/SKILL.md) | Enterprise SCSS/SASS, modern @use/@forward modules, mixins, functions, maps, and 7-1 pattern. |
+| `web-css-components` | [SKILL.md](./shared/skills/web-css-components/SKILL.md) | Pure CSS UI patterns, glassmorphism, neumorphism, gradients, skeletons, clip-path, and scroll-snap. |
+| `web-css-custom-properties` | [SKILL.md](./shared/skills/web-css-custom-properties/SKILL.md) | CSS custom properties, Houdini @property, typed variables, animated properties, and component API. |
 | `web-tailwind` | [SKILL.md](./shared/skills/web-tailwind/SKILL.md) | Tailwind CSS 4, semantic tokens, and `cn()` utilities. |
 | `web-advanced-ui-ux` | [SKILL.md](./shared/skills/web-advanced-ui-ux/SKILL.md) | Container Queries, CSS Layers, and Anchor Positioning. |
 | `web-gsap-animation` | [SKILL.md](./shared/skills/web-gsap-animation/SKILL.md) | GSAP 3, ScrollTrigger, pinning, scrub, and responsive motion. |
@@ -447,7 +462,28 @@ Universal cross-platform hybrid suite using modern Angular (v18+) & Capacitor 6+
 | `ionic-i18n` | [SKILL.md](./ionic/skills/ionic-i18n/SKILL.md) | Transloco, device locale auto-detection, and RTL mirroring. |
 | `ionic-accessibility` | [SKILL.md](./ionic/skills/ionic-accessibility/SKILL.md) | WCAG 2.2 AA, VoiceOver/TalkBack, and dynamic type scaling. |
 
-### 🧪 Cross-Stack Testing Strategies (13 Specialized Testing Suites)
+### 🔥 Lit & Web Components Ecosystem — 16 Skills
+Enterprise-grade Web Components engineering using Lit 3+, Shadow DOM, and standards-first architecture.
+| Skill Name | Documentation | Focus |
+|:---|:---|:---|
+| `lit-core` | [SKILL.md](./lit/skills/lit-core/SKILL.md) | LitElement, tagged templates (html), reactive properties, decorators, and update lifecycle. |
+| `lit-components-shadow-dom` | [SKILL.md](./lit/skills/lit-components-shadow-dom/SKILL.md) | Shadow DOM encapsulation, named slots, :host, ::slotted(), and ::part() styling API. |
+| `lit-reactive-controllers` | [SKILL.md](./lit/skills/lit-reactive-controllers/SKILL.md) | Composition over inheritance, lifecycle-aware logic reuse, and decoupled controllers. |
+| `lit-directives` | [SKILL.md](./lit/skills/lit-directives/SKILL.md) | Built-in & custom directives (repeat, classMap, styleMap, when, choose, guard, cache, ref). |
+| `lit-context` | [SKILL.md](./lit/skills/lit-context/SKILL.md) | Dependency injection & hierarchical state with @lit/context providers and consumers. |
+| `lit-task` | [SKILL.md](./lit/skills/lit-task/SKILL.md) | Declarative async data fetching, status rendering, debouncing, and AbortController with @lit/task. |
+| `lit-forms` | [SKILL.md](./lit/skills/lit-forms/SKILL.md) | Form-associated custom elements (FACE), ElementInternals, Constraint Validation, and FormData. |
+| `lit-routing` | [SKILL.md](./lit/skills/lit-routing/SKILL.md) | Client-side routing with @lit-labs/router, URL patterns, guards, and lazy-loaded routes. |
+| `lit-state-management` | [SKILL.md](./lit/skills/lit-state-management/SKILL.md) | Reactive stores, Signals integration, Event Bus, and controller-driven global state. |
+| `lit-styling-theming` | [SKILL.md](./lit/skills/lit-styling-theming/SKILL.md) | CSS tagged template literals, constructable stylesheets, CSS custom property theming, and tokens. |
+| `lit-animations` | [SKILL.md](./lit/skills/lit-animations/SKILL.md) | Web Animations API (WAAPI), @lit-labs/motion, FLIP transitions, and coordinated keyframes. |
+| `lit-testing` | [SKILL.md](./lit/skills/lit-testing/SKILL.md) | Component testing with @open-wc/testing, Web Test Runner, Shadow DOM queries, and a11y audits. |
+| `lit-ssr-hydration` | [SKILL.md](./lit/skills/lit-ssr-hydration/SKILL.md) | Server-Side Rendering with @lit-labs/ssr, Declarative Shadow DOM (DSD), and client hydration. |
+| `lit-performance` | [SKILL.md](./lit/skills/lit-performance/SKILL.md) | @lit-labs/virtualizer, async rendering, CSS containment, tree-shaking, and bundle optimization. |
+| `lit-accessibility` | [SKILL.md](./lit/skills/lit-accessibility/SKILL.md) | WCAG 2.2 AA/AAA, ARIA in Shadow DOM, focus delegation, keyboard navigation, and live regions. |
+| `lit-i18n` | [SKILL.md](./lit/skills/lit-i18n/SKILL.md) | Internationalization with @lit/localize, runtime/build-time message compilation, and XLIFF export. |
+
+### 🧪 Cross-Stack Testing Strategies (14 Specialized Testing Suites)
 Ensuring software across every ecosystem remains immune to regressions through rigorous testing standards.
 | Skill Name | Documentation | Stack / Ecosystem | Focus |
 |:---|:---|:---|:---|
@@ -460,6 +496,7 @@ Ensuring software across every ecosystem remains immune to regressions through r
 | `angular-testing-jasmine` | [SKILL.md](./angular/skills/angular-testing-jasmine/SKILL.md) | Angular | Enterprise-standard Jasmine & Karma. |
 | `flutter-testing` | [SKILL.md](./flutter/skills/flutter-testing/SKILL.md) | Flutter | Unit, Widget, and Integration tests with Mocktail. |
 | `ionic-testing` | [SKILL.md](./ionic/skills/ionic-testing/SKILL.md) | Ionic | Capacitor mocking, lifecycle unit tests, and Playwright E2E. |
+| `lit-testing` | [SKILL.md](./lit/skills/lit-testing/SKILL.md) | Lit / Web Components | Component testing with @open-wc/testing, Web Test Runner, and Shadow DOM queries. |
 | `nestjs-testing-expert` | [SKILL.md](./nestjs/skills/nestjs-testing-expert/SKILL.md) | NestJS | Unit testing, integration with Testcontainers, and Supertest E2E. |
 | `express-testing-expert` | [SKILL.md](./express/skills/express-testing-expert/SKILL.md) | Express.js | Integration API testing with Supertest and unit mock runs. |
 | `spring-boot-testing-expert` | [SKILL.md](./spring-boot/skills/spring-boot-testing-expert/SKILL.md) | Spring Boot | Mockito unit tests, WebMvc/DataJpa slice tests, and Testcontainers. |
